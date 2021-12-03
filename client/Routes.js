@@ -26,9 +26,9 @@ const Routes = () => {
           </Switch>
         ) : (
           <Switch>
-            <Route path='/' exact component={ Login } />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+            <Route path='/' exact >{Login}</Route>
+            <Route path="/login">{Login}</Route>
+            <Route path="/signup">{Signup}</Route>
           </Switch>
         )}
       </div>
