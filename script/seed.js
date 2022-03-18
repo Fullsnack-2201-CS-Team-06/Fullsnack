@@ -37,53 +37,53 @@ async function seed() {
 
   const [carrot, tofu, wine, mochi] = await Promise.all([
     Ingredient.create({
-      name: 'carrot', 
+      name: 'carrot',
       uom: 'lb',
-      cost: 4.50,
+      cost: 4.5,
       type: 'produce',
       caloriesPerUnit: 200,
       proteinPerUnit: 0,
-      carbsPerUnit: 21, 
+      carbsPerUnit: 21,
       fatsPerUnit: 200,
     }),
     Ingredient.create({
-      name: 'tofu', 
+      name: 'tofu',
       uom: 'oz',
       cost: 2.25,
       type: 'meat',
       caloriesPerUnit: 50,
       proteinPerUnit: 50,
-      carbsPerUnit: 0, 
+      carbsPerUnit: 0,
       fatsPerUnit: 3000,
     }),
     Ingredient.create({
-      name: 'wine', 
+      name: 'wine',
       uom: 'fl-oz.',
-      cost: 14.50,
+      cost: 14.5,
       type: 'beverage',
       caloriesPerUnit: 3000,
       proteinPerUnit: 4000,
-      carbsPerUnit: 22, 
+      carbsPerUnit: 22,
       fatsPerUnit: 0,
     }),
     Ingredient.create({
-      name: 'mochi', 
+      name: 'mochi',
       uom: 'oz',
-      cost: 12.50,
+      cost: 12.5,
       type: 'produce',
       caloriesPerUnit: 500,
       proteinPerUnit: 20,
-      carbsPerUnit: 0, 
+      carbsPerUnit: 0,
       fatsPerUnit: 900,
     }),
   ]);
 
-    
-  await pantry.addIngredient(carrot, { pantryQty: 3})
+  await pantry.addIngredient(carrot, { through: { pantryQty: 3 } });
+  await pantry.addIngredient(tofu, { through: { pantryQty: 7 } });
+  await pantry.addIngredient(wine, { through: { pantryQty: 15 } });
+  await pantry.addIngredient(mochi, { through: { pantryQty: 6 } });
 
-  // console.log("Pantry prototype", Pantry.prototype)
-
-
+  await pantry.setUser(admin);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
