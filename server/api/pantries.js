@@ -17,6 +17,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// POST /api/pantries
 router.post('/', async (req, res, next) => {
   try {
     const { name } = req.body;
@@ -27,6 +28,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+// PUT /api/pantries/:id
 router.put('/:id', async (req, res, next) => {
   try {
     const pantry = await Pantry.findByPk(req.params.id);
@@ -34,13 +36,19 @@ router.put('/:id', async (req, res, next) => {
       next({ status: 404, message: 'No pantries found at this id' });
     }
     const { name } = req.body;
-    const result = await pantry.update(name);
+    if (name === undefined) {
+      next({ status: 404, message: "No 'name' on req.body." });
+    }
+    const result = await pantry.update({
+      name: name,
+    });
     res.send(result);
   } catch (error) {
     next(error);
   }
 });
 
+// DELETE /api/pantries/:id
 router.delete('/:id', async (req, res, next) => {
   try {
     const pantry = await Pantry.findByPk(req.params.id);
