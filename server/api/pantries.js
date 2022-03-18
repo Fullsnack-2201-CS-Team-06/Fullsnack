@@ -1,5 +1,6 @@
 const router = require('express').Router();
 module.exports = router;
+const PantryIngredient = require('../db/models/PantryIngredient');
 const Pantry = require('../db/models/Pantry');
 
 //GET /api/pantries?userId=1
@@ -7,6 +8,7 @@ router.get('/', async (req, res, next) => {
   try {
     const pantries = await Pantry.findAll({
       where: { userId: req.query.userId },
+      include: PantryIngredient
     });
     if (!pantries) {
       next({ status: 404, message: 'No pantries found for this userId' });
