@@ -1,6 +1,5 @@
 const router = require('express').Router();
 module.exports = router;
-// const PantryIngredient = require('../db/models/PantryIngredient');
 const Ingredient = require('../db/models/Ingredient');
 const Pantry = require('../db/models/Pantry');
 
