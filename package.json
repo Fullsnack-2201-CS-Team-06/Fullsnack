@@ -27,7 +27,8 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "pg": "^8.5.1",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "victory": "^36.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
