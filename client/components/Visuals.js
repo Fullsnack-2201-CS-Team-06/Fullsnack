@@ -62,7 +62,7 @@ const Visuals = () => {
           </option>
         ))}
       </select>
-      <VictoryChart>
+      <VictoryChart domainPadding={{ x:20 }} height={200} width={300}>
         <VictoryBar data={data} x="item" y="pantryQty" />
       </VictoryChart>
     </div>
