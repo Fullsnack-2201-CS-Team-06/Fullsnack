@@ -35,7 +35,15 @@ async function seed() {
     name: 'adminPantry',
   });
 
-  const [carrot, tofu, wine, mochi] = await Promise.all([
+  const pantry2 = await Pantry.create({
+    name: 'adminPantry2',
+  });
+
+  const pantry3 = await Pantry.create({
+    name: 'adminPantry3',
+  });
+
+  const [carrot, tofu, wine, mochi, cereal, pasta, bourbon] = await Promise.all([
     Ingredient.create({
       name: 'carrot',
       uom: 'lb',
@@ -76,6 +84,36 @@ async function seed() {
       carbsPerUnit: 0,
       fatsPerUnit: 900,
     }),
+    Ingredient.create({
+      name: 'cereal',
+      uom: 'oz',
+      cost: 5.00,
+      type: 'dry goods',
+      caloriesPerUnit: 10000,
+      proteinPerUnit: 90000,
+      carbsPerUnit: 0,
+      fatsPerUnit: 900,
+    }),
+    Ingredient.create({
+      name: 'pasta',
+      uom: 'oz',
+      cost: 200.00,
+      type: 'dry goods',
+      caloriesPerUnit: 1,
+      proteinPerUnit: 20,
+      carbsPerUnit: 0,
+      fatsPerUnit: 900,
+    }),
+    Ingredient.create({
+      name: 'bourbon',
+      uom: 'oz',
+      cost: 3000.00,
+      type: 'beverages',
+      caloriesPerUnit: 40,
+      proteinPerUnit: 0,
+      carbsPerUnit: 0,
+      fatsPerUnit: 0,
+    })
   ]);
 
   await pantry.addIngredient(carrot, { through: { pantryQty: 3 } });
@@ -83,7 +121,17 @@ async function seed() {
   await pantry.addIngredient(wine, { through: { pantryQty: 15 } });
   await pantry.addIngredient(mochi, { through: { pantryQty: 6 } });
 
+  await pantry2.addIngredient(cereal, { through: { pantryQty: 3 } });
+  await pantry2.addIngredient(pasta, { through: { pantryQty: 10 } });
+  await pantry2.addIngredient(bourbon, { through: { pantryQty: 4 } });
+
+  await pantry3.addIngredient(cereal, { through: { pantryQty: 1 } });
+  await pantry3.addIngredient(pasta, { through: { pantryQty: 1 } });
+  await pantry3.addIngredient(bourbon, { through: { pantryQty: 1 } });
+
   await pantry.setUser(admin);
+  await pantry2.setUser(admin);
+  await pantry3.setUser(admin)
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
