@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel } from 'victory';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllPantries } from '../store/pantries';
 
@@ -62,9 +62,17 @@ const Visuals = () => {
           </option>
         ))}
       </select>
+        
       <VictoryChart theme={VictoryTheme.material} domainPadding={{ x:20 }} height={200} width={300} animate={{ duration: 500}} >
-        <VictoryAxis crossAxis style={{ tickLabels: { angle: -45 } }} />
-        <VictoryAxis dependentAxis tickFormat = {(t) => (Number.isInteger(t) ? t : null)} />
+        <VictoryAxis crossAxis style={{ tickLabels: { angle: -45, fontSize: 5, axisLabel: {
+              label: "My Food",
+              fontFamily: "inherit",
+              fontWeight: 100,
+              letterSpacing: "1px",
+              fontSize: 20,
+              padding: 60
+            }, } }} />
+        <VictoryAxis dependentAxis tickFormat = {(t) => (Number.isInteger(t) ? t : null)} style={{ tickLabels: { fontSize: 5 }}} />
         <VictoryBar  data={data} x="item" y="pantryQty" />
       </VictoryChart>
     </div>
