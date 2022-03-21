@@ -63,7 +63,7 @@ const Visuals = () => {
         ))}
       </select>
       <VictoryChart theme={VictoryTheme.material} domainPadding={{ x:20 }} height={200} width={300} animate={{ duration: 500}} >
-        <VictoryAxis crossAxis />
+        <VictoryAxis crossAxis fixLabelOverlap={true} />
         <VictoryAxis dependentAxis tickFormat = {(t) => (Number.isInteger(t) ? t : null)} />
         <VictoryBar data={data} x="item" y="pantryQty" />
       </VictoryChart>
