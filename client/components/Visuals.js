@@ -59,7 +59,7 @@ const Visuals = () => {
   };
 
   return (
-    <div>
+    <div style={{ height: '650px' }}>
       <select name="pantries" onChange={(e) => handlePantryChange(e)}>
         <option value="View All Pantries">View All Pantries</option>
         {pantries.map((pantry) => (
