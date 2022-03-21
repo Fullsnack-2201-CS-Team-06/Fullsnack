@@ -77,26 +77,40 @@ const Visuals = () => {
         animate={{ duration: 500 }}
       >
         <VictoryAxis
+          axisLabelComponent={<VictoryLabel />}
+          label={'My Food'}
           crossAxis
           style={{
             tickLabels: {
               angle: -45,
               fontSize: 5,
-              axisLabel: {
-                label: 'My Food',
-                fontFamily: 'inherit',
-                fontWeight: 100,
-                letterSpacing: '1px',
-                fontSize: 20,
-                padding: 60,
-              },
+            },
+            axisLabel: {
+              label: 'My Food',
+              fontFamily: 'inherit',
+              fontWeight: 100,
+              letterSpacing: '1px',
+              fontSize: 6,
+              padding: 30,
             },
           }}
         />
         <VictoryAxis
           dependentAxis
+          axisLabelComponent={<VictoryLabel />}
+          label={'Quantity'}
           tickFormat={(t) => (Number.isInteger(t) ? t : null)}
-          style={{ tickLabels: { fontSize: 5 } }}
+          style={{
+            tickLabels: { fontSize: 5 },
+            axisLabel: {
+              label: 'Quantity',
+              fontFamily: 'inherit',
+              fontWeight: 100,
+              letterSpacing: '1px',
+              fontSize: 6,
+              padding: 30,
+            },
+          }}
         />
         <VictoryBar data={data} x="item" y="pantryQty" />
       </VictoryChart>
