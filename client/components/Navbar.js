@@ -15,6 +15,11 @@ const Navbar = () =>  {
           <div>
             {/* The navbar will show these links after you log in */}
             <Link to="/home">Home</Link>
+            <Link to="">Account</Link>
+            <Link to="">My Shopping List</Link>
+            <Link to="">My Pantry</Link>
+            <Link to="">All Foods</Link>
+            <Link to="">My Recipes</Link>
             <a href="#" onClick={ () => dispatch(logout()) }>
               Logout
             </a>
