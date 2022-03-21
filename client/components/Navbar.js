@@ -17,9 +17,9 @@ const Navbar = () => {
             <Link to="/home">Home</Link>
             <Link to="/account">Account</Link>
             <Link to="/list">My Shopping List</Link>
-            <Link to="/pantry">My Pantry</Link>
+            <Link to="/pantries">Pantries</Link>
             <Link to="/foods">All Foods</Link>
-            <Link to="/recipe">My Recipes</Link>
+            <Link to="/recipes">My Recipes</Link>
             <a href="#" onClick={() => dispatch(logout())}>
               Logout
             </a>

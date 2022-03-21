@@ -59,7 +59,7 @@ const Visuals = () => {
   };
 
   return (
-    <div>
+    <div style={{ height: '650px' }}>
       <select name="pantries" onChange={(e) => handlePantryChange(e)}>
         <option value="View All Pantries">View All Pantries</option>
         {pantries.map((pantry) => (
@@ -76,27 +76,47 @@ const Visuals = () => {
         width={300}
         animate={{ duration: 500 }}
       >
+        <VictoryLabel
+          text={selectedPantry}
+          x={225}
+          y={30}
+          textAnchor="middle"
+        />
         <VictoryAxis
+          axisLabelComponent={<VictoryLabel />}
+          label={'My Food'}
           crossAxis
           style={{
             tickLabels: {
               angle: -45,
               fontSize: 5,
-              axisLabel: {
-                label: 'My Food',
-                fontFamily: 'inherit',
-                fontWeight: 100,
-                letterSpacing: '1px',
-                fontSize: 20,
-                padding: 60,
-              },
+            },
+            axisLabel: {
+              label: 'My Food',
+              fontFamily: 'inherit',
+              fontWeight: 100,
+              letterSpacing: '1px',
+              fontSize: 6,
+              padding: 30,
             },
           }}
         />
         <VictoryAxis
           dependentAxis
+          axisLabelComponent={<VictoryLabel />}
+          label={'Quantity'}
           tickFormat={(t) => (Number.isInteger(t) ? t : null)}
-          style={{ tickLabels: { fontSize: 5 } }}
+          style={{
+            tickLabels: { fontSize: 5 },
+            axisLabel: {
+              label: 'Quantity',
+              fontFamily: 'inherit',
+              fontWeight: 100,
+              letterSpacing: '1px',
+              fontSize: 6,
+              padding: 30,
+            },
+          }}
         />
         <VictoryBar data={data} x="item" y="pantryQty" />
       </VictoryChart>
