@@ -76,6 +76,12 @@ const Visuals = () => {
         width={300}
         animate={{ duration: 500 }}
       >
+        <VictoryLabel
+          text={selectedPantry}
+          x={225}
+          y={30}
+          textAnchor="middle"
+        />
         <VictoryAxis
           axisLabelComponent={<VictoryLabel />}
           label={'My Food'}
