@@ -20,17 +20,21 @@ router.get('/', async (req, res, next) => {
 });
 
 //GET /api/pantries/:pantryId
-router.get('/:pantryId', async(req, res, next) => {
+router.get('/:pantryId', async (req, res, next) => {
   try {
-    console.log("WE REACHED OUR TRY CATCH")
-    const singlePantry = await Pantry.findByPk(req.params.pantryId, 
-      { include: Ingredient })
-    res.send(singlePantry)
+    const singlePantry = await Pantry.findByPk(
+      req.params.pantryId,
+      // { where: { userId: req.query.userId } },
+      { include: Ingredient }
+    );
+    if (!singlePantry) {
+      next({ status: 404, message: 'No pantries found for this userId' });
+    }
+    res.send(singlePantry);
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
-)
+});
 
 // POST /api/pantries
 router.post('/', async (req, res, next) => {

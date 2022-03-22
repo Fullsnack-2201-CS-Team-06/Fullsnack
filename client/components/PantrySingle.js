@@ -1,23 +1,18 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router'
+import { useParams } from 'react-router';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
-import { fetchOnePantry } from '../store/pantry'
+import { fetchOnePantry } from '../store/pantry';
 
-const PantrySingle = () => {
-  const dispatch = useDispatch()
+const PantrySingle = ( { match }) => {
+  const dispatch = useDispatch();
   const { id } = useSelector((state) => state.auth);
   // const { pantry } = useSelector((state) => state);
-  const params = useParams();
-
-  console.log("What are my params", params)
-  // console.log("What is my state", state)
 
   useEffect(() => {
-    console.log("OUR USE EFFECT HOOK FIRED.")
-    dispatch(fetchOnePantry(params))
-  }, [])
+    dispatch(fetchOnePantry(match.params.id));
+  }, []);
 
   return (
     <div className='PantrySingle'>
@@ -33,7 +28,15 @@ const PantrySingle = () => {
             </tr>
           </thead>
           <tbody>
-        </tbody>
+            {/* {singlePantry.map((ingredient) => {
+              <tr>
+                <td>{ingredient.name}</td>
+                <td>{Placeholder}</td>
+                <td>{ingredient.cost}</td>
+                <td>{ingredient.uom}</td>
+              </tr>;
+            })} */}
+          </tbody>
         </Table>
       </Container>
     </div>
