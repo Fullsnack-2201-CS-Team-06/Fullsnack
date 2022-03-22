@@ -73,8 +73,19 @@ router.post('/', async (req, res, next) => {
   try {
     const newFood = req.body;
     if (newFood) {
-      const newIngredient = await Ingredient.create(newFood);
-      res.send(newIngredient);
+      //Is there already an ingredient matching this name?
+      const prevIngredient = await Ingredient.findOne({
+        where: { name: newFood.name },
+      });
+      if (prevIngredient) {
+        //If so, update that ingredient and return it.
+        const newIngredient = await prevIngredient.update(newFood);
+        res.send(newIngredient);
+      } else {
+        //Otherwise, create a new ingredient and return it.
+        const newIngredient = await Ingredient.create(newFood);
+        res.send(newIngredient);
+      }
     }
   } catch (error) {
     next(error);

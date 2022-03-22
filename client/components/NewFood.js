@@ -124,8 +124,8 @@ const NewFood = () => {
             Fat:{' '}
             <input
               type="number"
-              name="fatPerUnit"
-              value={newFood.fatPerUnit}
+              name="fatsPerUnit"
+              value={newFood.fatsPerUnit}
               min="0"
               onChange={handleUpdate}
             />

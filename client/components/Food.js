@@ -15,7 +15,7 @@ const Food = () => {
   const dispatch = useDispatch();
   const [searchCriteria, setSearchCriteria] = useState('');
 
-  //Get all foods associated with that user in some way.
+  //Get all foods associated with that user's pantries, recipes, and shopping lists.
   useEffect(() => {
     dispatch(getFoods(id));
   }, []);
