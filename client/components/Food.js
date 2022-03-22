@@ -20,7 +20,10 @@ const Food = () => {
           <tr>
             <th>Food</th>
             <th>Cost</th>
-            <th>Unit of Measure</th>
+            <th>Fat</th>
+            <th>Protein</th>
+            <th>Carbs</th>
+            <th>Calories</th>
             <th>Category</th>
           </tr>
         </thead>
@@ -28,8 +31,11 @@ const Food = () => {
           {foods.map((food, i) => (
             <tr key={i}>
               <td>{food.name}</td>
-              <td>{food.cost}</td>
-              <td>{food.uom}</td>
+              <td>{`${food.cost} per ${food.uom}`}</td>
+              <td>{food.fatsPerUnit}</td>
+              <td>{food.proteinPerUnit}</td>
+              <td>{food.carbsPerUnit}</td>
+              <td>{food.caloriesPerUnit}</td>
               <td>{food.category}</td>
             </tr>
           ))}
