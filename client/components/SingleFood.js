@@ -21,7 +21,7 @@ const SingleFood = (props) => {
           Carbs: {food.carbsPerUnit} per {food.uom}
         </ListGroupItem>
         <ListGroupItem>
-          Fat: {food.fatPerUnit} per {food.uom}
+          Fat: {food.fatPerUnit ? `${food.fatPerUnit} per ${food.uom}` : ''}
         </ListGroupItem>
       </ListGroup>
       <Card.Body>
