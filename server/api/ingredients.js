@@ -6,7 +6,7 @@ const Pantry = require('../db/models/Pantry');
 //GET /api/ingredients?userId=INT
 router.get('/', async (req, res, next) => {
   try {
-    //INCOMPLETE. How do we get ingredient info associated only with one user? Cost is relative to a user. We need a direct association between the user and their ingredients with the cost on a through table. For now, I will render all ingredients that are on a user's pantries. Changing the cost will do so for all users.
+    //INCOMPLETE. How do we get ingredient info associated only with one user? Cost depends on a user's input (Users buy at different locations). We need a direct association between the user and their ingredients with the cost on a through table. For now, I will render all ingredients that are on a user's pantries. Changing the cost will do so for all users.
     let ingredients = [];
 
     //Get all the pantries of the user and their associated ingredients.
