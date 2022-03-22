@@ -68,3 +68,34 @@ router.get('/', async (req, res, next) => {
     next(error);
   }
 });
+
+//POST api/ingredients?userId=INT
+router.post('/', async (req, res, next) => {
+  try {
+    const newFood = req.body;
+    if (newFood) {
+      const newIngredient = await Ingredient.create(newFood);
+      res.send(newIngredient);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+//PUT api/ingredients/:id
+router.put('/:id', async (req, res, next) => {
+  try {
+    const newFood = req.body;
+    if (newFood) {
+      const prevFood = await Ingredient.findByPk(req.params.id);
+      if (prevFood) {
+        const updatedFood = await prevFood.update(newFood);
+        res.send(updatedFood);
+      } else {
+        console.log('Failed to find the existing food by its id');
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+});

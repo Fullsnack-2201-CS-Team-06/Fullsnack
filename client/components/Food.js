@@ -34,7 +34,7 @@ const Food = () => {
     <div>
       <div className={styles.search}>
         <label htmlFor="search">Search Foods</label>
-        <input name="search" type="text" onChange={(e) => editSearch(e)} />
+        <input name="search" type="text" onChange={editSearch} />
       </div>
       <div className={styles.foodcards}>
         <NewFood />
