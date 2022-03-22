@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import styles from './SingleFood.module.css';
 
 /* The card view of a single food ingredient on the All Foods page.*/
 const SingleFood = (props) => {
@@ -8,30 +9,28 @@ const SingleFood = (props) => {
     <Card>
       <Card.Img variant="top" src={food.image} />
       <Card.Body>
-        <Card.Title>{food.name}</Card.Title>
+        <Card.Title>
+          {food.name} ({food.uom})
+        </Card.Title>
         <ListGroup>
           <ListGroupItem>
-            Category: {food.category ? `${food.category}` : ''}
+            Category: {food.category ? food.category : ''}
           </ListGroupItem>
           <ListGroupItem>
-            Calories: {food.caloriesPerUnit ? `${food.caloriesPerUnit}` : ''}
+            Calories: {food.caloriesPerUnit ? food.caloriesPerUnit : ''}
           </ListGroupItem>
           <ListGroupItem>
-            Protein:{' '}
-            {food.proteinPerUnit
-              ? `${food.proteinPerUnit} per ${food.uom}`
-              : ''}
+            Protein: {food.proteinPerUnit ? food.proteinPerUnit : ''}
           </ListGroupItem>
           <ListGroupItem>
-            Carbs:{' '}
-            {food.carbsPerUnit ? `${food.carbsPerUnit} per ${food.uom}` : ''}
+            Carbs: {food.carbsPerUnit ? food.carbsPerUnit : ''}
           </ListGroupItem>
           <ListGroupItem>
             {' '}
-            Fat: {food.fatPerUnit ? `${food.fatPerUnit} per ${food.uom}` : ''}
+            Fat: {food.fatPerUnit ? food.fatPerUnit : ''}
           </ListGroupItem>
         </ListGroup>
-        <Button>Add to Shopping List</Button>
+        <Button className={styles.button}>Add to Shopping List</Button>
       </Card.Body>
     </Card>
   );
