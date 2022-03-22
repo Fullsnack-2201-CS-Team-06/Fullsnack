@@ -292,14 +292,16 @@ async function seed() {
   });
 
   // --- BELOW: Ingredients added to recipes by Evan 3/22/22 ---
-  await roastMutton.setRecipeIngredient(legOfMutton);
-  await roastMutton.setRecipeIngredient(rosemary);
-  await scotchEggs.setRecipeIngredient(eggs);
-  await scotchEggs.setRecipeIngredient(breakfastSausage);
-  await jelliedEels.setRecipeIngredient(eels);
-  await jelliedEels.setRecipeIngredient(maltVinegar);
-  await pieAndMash.setRecipeIngredient(groundBeef);
-  await pieAndMash.setRecipeIngredient(fishStock);
+  await roastMutton.addIngredient(legOfMutton, { through: { recipeQty: 1 } });
+  await roastMutton.addIngredient(rosemary, { through: { recipeQty: 2 } });
+  await scotchEggs.addIngredient(eggs, { through: { recipeQty: 6 } });
+  await scotchEggs.addIngredient(breakfastSausage, {
+    through: { recipeQty: 1 },
+  });
+  await jelliedEels.addIngredient(eels, { through: { recipeQty: 2 } });
+  await jelliedEels.addIngredient(maltVinegar, { through: { recipeQty: 12 } });
+  await pieAndMash.addIngredient(groundBeef, { through: { recipeQty: 1 } });
+  await pieAndMash.addIngredient(fishStock, { through: { recipeQty: 16 } });
   // --- ABOVE: Ingredients added to recipes by Evan 3/22/22 ---
 
   await pantry.setUser(admin);
