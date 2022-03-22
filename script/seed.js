@@ -28,7 +28,7 @@ async function seed() {
     User.create({ username: 'cody', password: '123' }),
     User.create({ username: 'murphy', password: '123' }),
   ]);
-
+  //Creating Shopping Lists
   const [margaritaTime, boozeRun, needProduce] = await Promise.all([
     ShoppingList.create({ name: 'margaritaTime' }),
     ShoppingList.create({ name: 'boozeRun', status: 'closed', totalCost: 72, checkoutDate: Date.now() }),
@@ -49,6 +49,7 @@ async function seed() {
     name: 'adminPantry3',
   });
 
+  //Setting shopping lists to admin user
   margaritaTime.setUser(admin)
   boozeRun.setUser(admin)
   needProduce.setUser(admin)
