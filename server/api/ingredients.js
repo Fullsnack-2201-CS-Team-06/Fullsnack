@@ -22,7 +22,14 @@ router.get('/', async (req, res, next) => {
       }, []);
 
       //Eliminate duplicates of ingredients existing in multiple pantries.
-      ingredients = [...new Set(ingredients)];
+      const foundFoods = [];
+      ingredients = ingredients.filter((food) => {
+        const isFound = foundFoods.includes(food.id);
+        if (!isFound) {
+          foundFoods.push(food.id);
+        }
+        return !isFound;
+      });
     }
     res.send(ingredients);
   } catch (error) {
