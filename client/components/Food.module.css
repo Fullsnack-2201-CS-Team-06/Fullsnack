@@ -1,11 +1,21 @@
-.container {
+.search {
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.search > input {
+  width: 400px;
+}
+
+.foodcards {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
 }
 
-.container > * {
+.foodcards > * {
   width: 400px;
   height: 750px;
   margin: 15px;
