@@ -7,12 +7,15 @@ import { fetchOnePantry } from '../store/pantry'
 
 const PantrySingle = () => {
   const dispatch = useDispatch()
-  // const pantry = useSelector(state => state.singlePantry)
-  const { params } = useParams();
+  const { id } = useSelector((state) => state.auth);
+  // const { pantry } = useSelector((state) => state);
+  const params = useParams();
 
   console.log("What are my params", params)
+  // console.log("What is my state", state)
 
   useEffect(() => {
+    console.log("OUR USE EFFECT HOOK FIRED.")
     dispatch(fetchOnePantry(params))
   }, [])
 

@@ -16,7 +16,8 @@ export const showOne = (singlePantry) => ({
 export const fetchOnePantry = (id) => {
     return async (dispatch) => {
       try {
-        const { data } = await axios.get(`/api/pantries?${id}`);
+        console.log("OUR THUNK FIRED.")
+        const { data } = await axios.get(`/api/pantries/${id}`);
         dispatch(showOne(data));
       } catch (error) {
         console.log(error);
@@ -30,6 +31,7 @@ const initialState = [];
 const pantryReducer = (state = initialState, action) => {
   switch (action.type) {
     case SHOW_ONE:
+      console.log("OUR REDUCER GOT HIT.")
     return action.singlePantry
     default:
       return state;

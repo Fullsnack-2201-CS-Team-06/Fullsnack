@@ -22,6 +22,7 @@ router.get('/', async (req, res, next) => {
 //GET /api/pantries/:pantryId
 router.get('/:pantryId', async(req, res, next) => {
   try {
+    console.log("WE REACHED OUR TRY CATCH")
     const singlePantry = await Pantry.findByPk(req.params.pantryId, 
       { include: Ingredient })
     res.send(singlePantry)
