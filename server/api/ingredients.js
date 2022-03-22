@@ -9,7 +9,6 @@ const Recipe = require('../db/models/Recipe');
 router.get('/', async (req, res, next) => {
   try {
     let ingredients = [];
-
     //Get all the pantries of the user and their associated ingredients.
     const pantries = await Pantry.findAll({
       where: { userId: req.query.userId },

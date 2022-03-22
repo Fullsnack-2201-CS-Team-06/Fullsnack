@@ -31,8 +31,13 @@ const _updateFood = (food) => {
 export const getFoods = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/ingredients?userId=${id}`);
-      dispatch(_getFoods(data));
+      if (id) {
+        const { data } = await axios.get(`/api/ingredients?userId=${id}`);
+        dispatch(_getFoods(data));
+      } else {
+        const { data } = await axios.get('/api/ingredients');
+        dispatch(_getFoods(data));
+      }
     } catch (error) {
       console.error('Failed to retrieve the foods', error);
     }
@@ -65,7 +70,7 @@ export const updateFood = (food, id) => {
 const foodsReducer = (state = [], action) => {
   switch (action.type) {
     case ADD_FOOD: {
-      return [...state, action.food];
+      return [action.food, ...state];
     }
     case UPDATE_FOOD: {
       return state.map((food) => {

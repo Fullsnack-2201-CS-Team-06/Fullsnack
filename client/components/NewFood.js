@@ -131,7 +131,7 @@ const NewFood = () => {
             />
           </ListGroupItem>
         </ListGroup>
-        <Button onClick={handleSubmit}>Add Food</Button>
+        <Button onClick={handleSubmit}>Update Foods</Button>
       </Card.Body>
     </Card>
   );
