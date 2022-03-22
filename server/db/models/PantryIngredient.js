@@ -6,8 +6,20 @@ const PantryIngredient = db.define('pantryIngredient', {
     type: Sequelize.INTEGER,
     validate: {
       min: 1,
-    }
-  }
-})
+    },
+  },
 
-module.exports = PantryIngredient
+  cost: {
+    type: Sequelize.DECIMAL,
+    validate: {
+      min: 0.0,
+    },
+  },
+
+  uom: {
+    type: Sequelize.STRING,
+    defaultValue: 'each',
+  },
+});
+
+module.exports = PantryIngredient;
