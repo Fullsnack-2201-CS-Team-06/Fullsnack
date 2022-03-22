@@ -1,6 +1,7 @@
 const router = require('express').Router();
 module.exports = router;
 const Recipe = require('../db/models/Recipe');
+const Ingredient = require('../db/models/Ingredient');
 
 // GET /api/recipes
 router.get('/', async (req, res, next) => {
