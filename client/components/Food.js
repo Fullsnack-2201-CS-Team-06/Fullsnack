@@ -18,10 +18,14 @@ const Food = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
-      {foods.map((food) => (
-        <SingleFood key={food.id} food={food} />
-      ))}
+    <div>
+      <label htmlFor="search">Search Foods</label>
+      <input name="search" type="text" />
+      <div className={styles.container}>
+        {foods.map((food) => (
+          <SingleFood key={food.id} food={food} />
+        ))}
+      </div>
     </div>
   );
 };
