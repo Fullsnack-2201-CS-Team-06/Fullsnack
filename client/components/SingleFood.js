@@ -12,15 +12,22 @@ const SingleFood = (props) => {
         <Card.Text></Card.Text>
       </Card.Body>
       <ListGroup>
-        <ListGroupItem>Category: {food.category}</ListGroupItem>
-        <ListGroupItem>Calories: {food.caloriesPerUnit}</ListGroupItem>
         <ListGroupItem>
-          Protein: {food.proteinPerUnit} per {food.uom}
+          Category: {food.category ? `${food.category}` : ''}
         </ListGroupItem>
         <ListGroupItem>
-          Carbs: {food.carbsPerUnit} per {food.uom}
+          Calories: {food.caloriesPerUnit ? `${food.caloriesPerUnit}` : ''}
         </ListGroupItem>
         <ListGroupItem>
+          Protein:{' '}
+          {food.proteinPerUnit ? `${food.proteinPerUnit} per ${food.uom}` : ''}
+        </ListGroupItem>
+        <ListGroupItem>
+          Carbs:{' '}
+          {food.carbsPerUnit ? `${food.carbsPerUnit} per ${food.uom}` : ''}
+        </ListGroupItem>
+        <ListGroupItem>
+          {' '}
           Fat: {food.fatPerUnit ? `${food.fatPerUnit} per ${food.uom}` : ''}
         </ListGroupItem>
       </ListGroup>
