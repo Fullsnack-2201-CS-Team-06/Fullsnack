@@ -9,6 +9,7 @@ import ShoppingList from './components/ShoppingList';
 import Pantries from './components/Pantries';
 import Food from './components/Food';
 import Recipes from './components/Recipes'
+import PantrySingle from './components/PantrySingle';
 
 /**
  * COMPONENT
@@ -29,6 +30,7 @@ const Routes = () => {
           <Route path="/account" component={Account} />
           <Route path="/list" component={ShoppingList} />
           <Route path="/pantries" component={Pantries} />
+          <Route path="/singlePantry" component={PantrySingle} />
           <Route path="/foods" component={Food} />
           <Route path="/recipes" component={Recipes} />
           <Route path="/home" component={Home} />
