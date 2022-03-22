@@ -12,8 +12,8 @@ const ShoppingList = () => {
     dispatch(fetchAllShoppingLists(id))
   }, []);
 
-  const {name} = currentList || ''
-  console.log(name)
+  const { name } = currentList || ''
+  const { ingredients } = currentList || []
 
   return (
   <div>
@@ -26,6 +26,19 @@ const ShoppingList = () => {
     <th>Unit of Measure</th>
     <th>Cost/Item</th>
   </tr>
+  { ingredients ?
+  ingredients.map(item => {
+    return (
+      <tr key={item.id}>
+        <td>{item.name}</td>
+        <td>{item.shoppingListIngredient.sliQuantity}</td>
+        <td>{item.shoppingListIngredient.uom}</td>
+        <td>{item.shoppingListIngredient.cost}</td>
+      </tr>
+    )
+  }):
+  <tr>Add some items!</tr>
+  }
 </table>
   </div>
   );
