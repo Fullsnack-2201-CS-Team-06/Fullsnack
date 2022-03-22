@@ -3,10 +3,11 @@ module.exports = router;
 const Recipe = require('../db/models/Recipe');
 const Ingredient = require('../db/models/Ingredient');
 
-// GET /api/recipes
+// GET /api/recipes?userId=1
 router.get('/', async (req, res, next) => {
   try {
     const recipes = await Recipe.findAll({
+      where: { userId: req.query.userId },
       include: Ingredient,
     });
 

@@ -3,17 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllRecipes } from '../store/recipes';
 
 const Recipes = () => {
-  const { recipes } = useSelector(state => {
+  const { recipes, auth } = useSelector((state) => {
     return {
-      recipes: state.recipes
-    }
-  })
+      recipes: state.recipes,
+      auth: state.auth,
+    };
+  });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllRecipes())
-  }, [])
+    dispatch(fetchAllRecipes(auth.id));
+  }, []);
 
   return (
     <div>

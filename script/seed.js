@@ -199,7 +199,7 @@ async function seed() {
     // --- ABOVE: Ingredients added by Evan 3/22/22 ---
   ]);
 
-   // --- BELOW: Recipes added by Evan 3/22/22 ---
+  // --- BELOW: Recipes added by Evan 3/22/22 ---
   // Recipes
   const [roastMutton, scotchEggs, jelliedEels, pieAndMash] = await Promise.all([
     Recipe.create({
@@ -305,6 +305,13 @@ async function seed() {
   await pieAndMash.addIngredient(groundBeef, { through: { recipeQty: 1 } });
   await pieAndMash.addIngredient(fishStock, { through: { recipeQty: 16 } });
   // --- ABOVE: Ingredients added to recipes by Evan 3/22/22 ---
+
+  // --- BELOW: Recipes added to Users by Evan 3/22/22 ---
+  await admin.addRecipe(jelliedEels);
+  await admin.addRecipe(pieAndMash);
+  await admin.addRecipe(scotchEggs);
+  await admin.addRecipe(roastMutton);
+  // --- ABOVE: Recipes added to Users by Evan 3/22/22 ---
 
   await pantry.setUser(admin);
   await pantry2.setUser(admin);

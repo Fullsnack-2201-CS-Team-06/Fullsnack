@@ -15,10 +15,10 @@ const showAllRecipes = (allRecipes) => {
 
 // Thunk creators
 
-export const fetchAllRecipes = () => {
+export const fetchAllRecipes = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get('/api/recipes');
+      const { data } = await axios.get(`/api/recipes?userId=${id}`);
       dispatch(showAllRecipes(data));
     } catch (error) {
       console.error('Error in fetchAllRecipes thunk!!\n\n', error);
