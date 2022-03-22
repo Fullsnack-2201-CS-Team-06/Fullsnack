@@ -1,39 +1,39 @@
-// import axios from 'axios'
+import axios from 'axios'
 
-// // ACTION TYPE
+// ACTION TYPE
 
-// const SHOW_ONE = "SHOW_ONE"
+const SHOW_ONE = "SHOW_ONE"
 
-// // ACTION CREATORS
+// ACTION CREATORS
 
-// export const showOne = (singlePantry) => ({
-//     type: SHOW_ALL,
-//     singlePantry
-// })
+export const showOne = (singlePantry) => ({
+    type: SHOW_ALL,
+    singlePantry
+})
 
-// // THUNKS
+// THUNKS
 
-// export const fetchOnePantry = (id) => {
-//     return async (dispatch) => {
-//       try {
-//         const { data } = await axios.get(`/api/pantries?${id}`);
-//         dispatch(showOne(data));
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     };
-//   };
+export const fetchOnePantry = (id) => {
+    return async (dispatch) => {
+      try {
+        const { data } = await axios.get(`/api/pantries?${id}`);
+        dispatch(showOne(data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
 
 
-// const initialState = [];
+const initialState = [];
 
-// const pantryReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case SHOW_ONE:
-//     return action.singlePantry
-//     default:
-//       return state;
-//   }
-// };
+const pantryReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SHOW_ONE:
+    return action.singlePantry
+    default:
+      return state;
+  }
+};
 
-// export default pantryReducer;
+export default pantryReducer;

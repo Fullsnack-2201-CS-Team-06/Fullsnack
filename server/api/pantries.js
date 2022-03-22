@@ -20,7 +20,6 @@ router.get('/', async (req, res, next) => {
 });
 
 //GET /api/pantries/:pantryId
-//We might not need this. Darn.
 router.get('/:pantryId', async(req, res, next) => {
   try {
     const singlePantry = await Pantry.findByPk(req.params.pantryId, 

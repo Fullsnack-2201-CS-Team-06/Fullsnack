@@ -18,7 +18,7 @@ const Pantries = () => {
       <h3>My Pantry</h3>
       {pantries.length > 0 ? (
         pantries.map((pantry) => {
-         return <li key={pantry.id}><Link to="/singlePantry">{pantry.name}</Link></li>
+         return <li key={pantry.id}><Link to={`/pantries/${pantry.id}`}>{pantry.name}</Link></li>
         ;
         })
       ) : (
