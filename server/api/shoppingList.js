@@ -3,11 +3,11 @@ module.exports = router;
 const Ingredient = require('../db/models/Ingredient');
 const ShoppingList = require('../db/models/ShoppingList');
 
-//GET /api/shoppingList?userId=1
-router.get('/', async (req, res, next) => {
+//GET /api/shoppingList/all?userId=1 status: closed
+router.get('/all', async (req, res, next) => {
   try {
     const shoppingLists = await ShoppingList.findAll({
-      where: { userId: req.query.userId },
+      where: { userId: req.query.userId, status: 'closed' },
       include: Ingredient,
     });
     if (!shoppingLists) {
@@ -30,10 +30,13 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-//GET /api/shoppingList/:id
+//GET /api/shoppingList/:id status: open
 router.get('/', async (req, res, next) => {
   try {
-    const shoppingList = await ShoppingList.findByPk(req.params.id)
+    const shoppingList = await ShoppingList.findOne({
+      where: { userId: req.query.userId, status: 'open' },
+      include: Ingredient,
+    });
     if (!shoppingList) {
       next({ status: 404, message: 'No shopping lists found for this userId' });
     }

@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchAllShoppingLists } from '../store/ShoppingList';
+import { fetchCurrentShoppingList, fetchAllShoppingLists } from '../store/ShoppingList';
 
 const ShoppingList = () => {
   const { id } = useSelector((state) => state.auth);
-  const { shoppingList } = useSelector((state) => state);
+  const { currentList } = useSelector((state) => state.shoppingList);
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchAllShoppingLists(id));
+    dispatch(fetchCurrentShoppingList(id));
+    dispatch(fetchAllShoppingLists(id))
   }, []);
 
-  console.log(shoppingList)
+  const {name} = currentList || ''
+  console.log(name)
 
   return (
   <div>
-
+   <p>{name}</p>
+<table>
+  <colgroup span="4"></colgroup>
+  <tr>
+    <th>List Items</th>
+    <th>Quantity</th>
+    <th>Unit of Measure</th>
+    <th>Cost/Item</th>
+  </tr>
+</table>
   </div>
   );
 };
