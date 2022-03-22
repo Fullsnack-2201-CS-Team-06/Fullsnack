@@ -33,10 +33,7 @@ router.post('/', async (req, res, next) => {
 //GET /api/shoppingList/:id
 router.get('/', async (req, res, next) => {
   try {
-    const shoppingList = await ShoppingList.findAll({
-      where: { userId: req.query.userId },
-      include: Ingredient,
-    });
+    const shoppingList = await ShoppingList.findByPk(req.params.id)
     if (!shoppingList) {
       next({ status: 404, message: 'No shopping lists found for this userId' });
     }
