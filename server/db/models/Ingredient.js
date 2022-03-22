@@ -15,11 +15,6 @@ const Ingredient = db.define('ingredient', {
     defaultValue: 'each',
   },
 
-  cost: {
-    type: Sequelize.DECIMAL,
-    defaultValue: 0.0,
-  },
-
   category: {
     type: Sequelize.ENUM(
       'produce',

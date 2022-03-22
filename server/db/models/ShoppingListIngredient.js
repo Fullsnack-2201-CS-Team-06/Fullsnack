@@ -6,6 +6,13 @@ const ShoppingListIngredient = db.define('shoppingListIngredient', {
     type: Sequelize.INTEGER,
   },
 
+  cost: {
+    type: Sequelize.DECIMAL,
+    validate: {
+      min: 0.0,
+    },
+  },
+
   uom: {
     type: Sequelize.STRING,
     defaultValue: 'each',
