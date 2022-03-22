@@ -29,11 +29,10 @@ async function seed() {
     User.create({ username: 'murphy', password: '123' }),
   ]);
 
-  const [thursday, margaritaTime, boozeRun, needProduce] = await Promise.all([
-    ShoppingList.create({ name: 'thursday' }),
+  const [margaritaTime, boozeRun, needProduce] = await Promise.all([
     ShoppingList.create({ name: 'margaritaTime' }),
-    ShoppingList.create({ name: 'boozeRun' , status: 'closed', totalCost: 72 }),
-    ShoppingList.create({ name: 'needProduce' }),
+    ShoppingList.create({ name: 'boozeRun', status: 'closed', totalCost: 72, checkoutDate: Date.now() }),
+    ShoppingList.create({ name: 'needProduce', status: 'closed', totalCost: 12, checkoutDate: Date.now()}),
   ])
 
   const admin = await User.findOne({ where: { username: 'admin' } });
@@ -50,7 +49,6 @@ async function seed() {
     name: 'adminPantry3',
   });
 
-  thursday.setUser(admin)
   margaritaTime.setUser(admin)
   boozeRun.setUser(admin)
   needProduce.setUser(admin)
@@ -122,14 +120,15 @@ async function seed() {
       }),
     ]
   );
+
 //ShoppingList
-  await boozeRun.addIngredient(wine, { through: { shoppingListQty: 2 } })
-  await boozeRun.addIngredient(bourbon, { through: { shoppingListQty: 1 } })
+  await boozeRun.addIngredient(wine, { through: { sliQuantity: 2, cost: 11, uom: 'floz' } })
+  await boozeRun.addIngredient(bourbon, { through: { sliQuantity: 1, cost: 50, uom: 'floz' } })
 
-  await margaritaTime.addIngredient(carrot, { through: { shoppingListQty: 6 } })
-  await margaritaTime.addIngredient(mochi, { through: { shoppingListQty: 2 } })
+  await margaritaTime.addIngredient(carrot, { through: { sliQuantity: 6, cost: 2, uom: 'lb' } })
+  await margaritaTime.addIngredient(mochi, { through: { sliQuantity: 2, cost: 10, uom: 'unit' } })
 
-  await needProduce.addIngredient(carrot, { through: { shoppingListQty: 10 } })
+  await needProduce.addIngredient(carrot, { through: { sliQuantity: 10, cost: 2, uom: 'lb' } })
 
   //Pantry
   await pantry.addIngredient(carrot, {
