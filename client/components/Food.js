@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFoods } from '../store/foods';
 import SingleFood from './SingleFood';
@@ -10,18 +10,27 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Food = () => {
   const { id } = useSelector((state) => state.auth);
-  const { foods } = useSelector((state) => state);
+  let { foods } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const [searchCriteria, setSearchCriteria] = useState('');
 
   useEffect(() => {
     dispatch(getFoods(id));
   }, []);
 
+  const editSearch = (e) => {
+    setSearchCriteria(e.target.value);
+  };
+
+  if (searchCriteria !== '') {
+    foods = foods.filter((food) => food.name.includes(searchCriteria));
+  }
+
   return (
     <div>
       <div className={styles.search}>
         <label htmlFor="search">Search Foods</label>
-        <input name="search" type="text" />
+        <input name="search" type="text" onChange={(e) => editSearch(e)} />
       </div>
       <div className={styles.foodcards}>
         {foods.map((food) => (

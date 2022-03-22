@@ -53,7 +53,7 @@ router.get('/', async (req, res, next) => {
       );
     }
 
-    //Eliminate duplicates of ingredients existing in multiple pantries.
+    //Eliminate duplicates of ingredients existing in multiple places on the user's entities.
     const foundFoods = [];
     ingredients = ingredients.filter((food) => {
       const isFound = foundFoods.includes(food.id);
