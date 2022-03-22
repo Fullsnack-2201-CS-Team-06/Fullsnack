@@ -199,6 +199,7 @@ async function seed() {
     // --- ABOVE: Ingredients added by Evan 3/22/22 ---
   ]);
 
+   // --- BELOW: Recipes added by Evan 3/22/22 ---
   // Recipes
   const [roastMutton, scotchEggs, jelliedEels, pieAndMash] = await Promise.all([
     Recipe.create({
@@ -257,6 +258,7 @@ async function seed() {
       cuisineType: 'British',
     }),
   ]);
+  // --- ABOVE: Recipes added by Evan 3/22/22 ---
 
   await pantry.addIngredient(carrot, {
     through: { pantryQty: 3, uom: 'lb', cost: 4.5 },
