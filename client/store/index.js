@@ -7,7 +7,7 @@ import auth from './auth'
 import pantriesReducer from './pantries'
 
 const reducer = combineReducers({ auth: auth,
-//  pantry: pantryReducer,
+  // pantry: pantryReducer,
   pantries: pantriesReducer})
 
 const middleware = composeWithDevTools(
