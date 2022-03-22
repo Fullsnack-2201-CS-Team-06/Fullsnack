@@ -43,118 +43,163 @@ async function seed() {
     name: 'adminPantry3',
   });
 
-  const [carrot, tofu, wine, mochi, cereal, pasta, bourbon] = await Promise.all(
-    [
-      Ingredient.create({
-        name: 'carrot',
-        uom: 'lb',
-<<<<<<< Updated upstream
-=======
-        cost: 4.5,
->>>>>>> Stashed changes
-        type: 'produce',
-        caloriesPerUnit: 200,
-        proteinPerUnit: 0,
-        carbsPerUnit: 21,
-        fatsPerUnit: 200,
-      }),
-      Ingredient.create({
-        name: 'tofu',
-        uom: 'oz',
-<<<<<<< Updated upstream
-=======
-        cost: 2.25,
->>>>>>> Stashed changes
-        type: 'meat',
-        caloriesPerUnit: 50,
-        proteinPerUnit: 50,
-        carbsPerUnit: 0,
-        fatsPerUnit: 3000,
-      }),
-      Ingredient.create({
-        name: 'wine',
-        uom: 'fl-oz.',
-<<<<<<< Updated upstream
-=======
-        cost: 14.5,
->>>>>>> Stashed changes
-        type: 'beverage',
-        caloriesPerUnit: 3000,
-        proteinPerUnit: 4000,
-        carbsPerUnit: 22,
-        fatsPerUnit: 0,
-      }),
-      Ingredient.create({
-        name: 'mochi',
-        uom: 'oz',
-<<<<<<< Updated upstream
-=======
-        cost: 12.5,
->>>>>>> Stashed changes
-        type: 'produce',
-        caloriesPerUnit: 500,
-        proteinPerUnit: 20,
-        carbsPerUnit: 0,
-        fatsPerUnit: 900,
-      }),
-      Ingredient.create({
-        name: 'cereal',
-        uom: 'oz',
-<<<<<<< Updated upstream
-=======
-        cost: 5.0,
->>>>>>> Stashed changes
-        type: 'dry goods',
-        caloriesPerUnit: 10000,
-        proteinPerUnit: 90000,
-        carbsPerUnit: 0,
-        fatsPerUnit: 900,
-      }),
-      Ingredient.create({
-        name: 'pasta',
-        uom: 'oz',
-<<<<<<< Updated upstream
-=======
-        cost: 200.0,
->>>>>>> Stashed changes
-        type: 'dry goods',
-        caloriesPerUnit: 1,
-        proteinPerUnit: 20,
-        carbsPerUnit: 0,
-        fatsPerUnit: 900,
-      }),
-      Ingredient.create({
-        name: 'bourbon',
-        uom: 'oz',
-<<<<<<< Updated upstream
-=======
-        cost: 3000.0,
->>>>>>> Stashed changes
-        type: 'beverages',
-        caloriesPerUnit: 40,
-        proteinPerUnit: 0,
-        carbsPerUnit: 0,
-        fatsPerUnit: 0,
-      }),
-    ]
-  );
+  const [
+    carrot,
+    tofu,
+    wine,
+    mochi,
+    cereal,
+    pasta,
+    bourbon,
+    groundBeef,
+    fishStock,
+    eggs,
+    breakfastSausage,
+    legOfMutton,
+    rosemary,
+    eels,
+    maltVinegar,
+  ] = await Promise.all([
+    Ingredient.create({
+      name: 'carrot',
+      uom: 'lb',
+      type: 'produce',
+      caloriesPerUnit: 200,
+      proteinPerUnit: 0,
+      carbsPerUnit: 21,
+      fatsPerUnit: 200,
+    }),
+    Ingredient.create({
+      name: 'tofu',
+      uom: 'oz',
+      type: 'meat',
+      caloriesPerUnit: 50,
+      proteinPerUnit: 50,
+      carbsPerUnit: 0,
+      fatsPerUnit: 3000,
+    }),
+    Ingredient.create({
+      name: 'wine',
+      uom: 'fl-oz.',
+      type: 'beverage',
+      caloriesPerUnit: 3000,
+      proteinPerUnit: 4000,
+      carbsPerUnit: 22,
+      fatsPerUnit: 0,
+    }),
+    Ingredient.create({
+      name: 'mochi',
+      uom: 'oz',
+      type: 'produce',
+      caloriesPerUnit: 500,
+      proteinPerUnit: 20,
+      carbsPerUnit: 0,
+      fatsPerUnit: 900,
+    }),
+    Ingredient.create({
+      name: 'cereal',
+      uom: 'oz',
+      type: 'dry goods',
+      caloriesPerUnit: 10000,
+      proteinPerUnit: 90000,
+      carbsPerUnit: 0,
+      fatsPerUnit: 900,
+    }),
+    Ingredient.create({
+      name: 'pasta',
+      uom: 'oz',
+      type: 'dry goods',
+      caloriesPerUnit: 1,
+      proteinPerUnit: 20,
+      carbsPerUnit: 0,
+      fatsPerUnit: 900,
+    }),
+    Ingredient.create({
+      name: 'bourbon',
+      uom: 'oz',
+      type: 'beverages',
+      caloriesPerUnit: 40,
+      proteinPerUnit: 0,
+      carbsPerUnit: 0,
+      fatsPerUnit: 0,
+    }),
+    // --- BELOW: Ingredients added by Evan 3/22/22 ---
+    Ingredient.create({
+      name: 'ground beef',
+      uom: 'oz',
+      type: 'meat',
+      caloriesPerUnit: 40,
+      proteinPerUnit: 50,
+      carbsPerUnit: 0,
+      fatsPerUnit: 20,
+    }),
+    Ingredient.create({
+      name: 'fish stock',
+      uom: 'floz',
+      type: 'meat',
+      caloriesPerUnit: 10,
+      proteinPerUnit: 10,
+      carbsPerUnit: 0,
+      fatsPerUnit: 5,
+    }),
+    Ingredient.create({
+      name: 'eggs',
+      uom: 'ea',
+      type: 'produce',
+      caloriesPerUnit: 50,
+      proteinPerUnit: 20,
+      carbsPerUnit: 5,
+      fatsPerUnit: 10,
+    }),
+    Ingredient.create({
+      name: 'breakfast sausage',
+      uom: 'oz',
+      type: 'meat',
+      caloriesPerUnit: 50,
+      proteinPerUnit: 50,
+      carbsPerUnit: 0,
+      fatsPerUnit: 20,
+    }),
+    Ingredient.create({
+      name: 'leg of mutton',
+      uom: 'lb',
+      type: 'meat',
+      caloriesPerUnit: 1000,
+      proteinPerUnit: 600,
+      carbsPerUnit: 0,
+      fatsPerUnit: 500,
+    }),
+    Ingredient.create({
+      name: 'rosemary',
+      uom: 'oz',
+      type: 'miscellaneous',
+      caloriesPerUnit: 0,
+      proteinPerUnit: 0,
+      carbsPerUnit: 0,
+      fatsPerUnit: 0,
+    }),
+    Ingredient.create({
+      name: 'eels',
+      uom: 'lb',
+      type: 'meat',
+      caloriesPerUnit: 600,
+      proteinPerUnit: 250,
+      carbsPerUnit: 0,
+      fatsPerUnit: 150,
+    }),
+    Ingredient.create({
+      name: 'malt vinegar',
+      uom: 'floz',
+      type: 'miscellaneous',
+      caloriesPerUnit: 0,
+      proteinPerUnit: 0,
+      carbsPerUnit: 0,
+      fatsPerUnit: 0,
+    }),
+    // --- ABOVE: Ingredients added by Evan 3/22/22 ---
+  ]);
 
-<<<<<<< Updated upstream
-  await pantry.addIngredient(carrot, {
-    through: { pantryQty: 3, uom: 'lb', cost: 4.5 },
-  });
-  await pantry.addIngredient(tofu, {
-    through: { pantryQty: 7, uom: 'oz', cost: 2.25 },
-  });
-  await pantry.addIngredient(wine, {
-    through: { pantryQty: 15, uom: 'fl-oz.', cost: 14.5 },
-  });
-  await pantry.addIngredient(mochi, {
-    through: { pantryQty: 6, uom: 'oz', cost: 12.5 },
-  });
-=======
   // Recipes
-
   const [roastMutton, scotchEggs, jelliedEels, pieAndMash] = await Promise.all([
     Recipe.create({
       name: 'Roast Mutton',
@@ -173,7 +218,7 @@ async function seed() {
     Recipe.create({
       name: 'Scotch Eggs',
       description:
-        'Attach a deep-fry thermometer to side of a large heavy pot. Pour in oil to a depth of 2” and heat over medium heat to 375°. Fry eggs, turning occasionally and maintaining oil temperature of 350°, until sausage is cooked through and breading is golden brown and crisp, 5–6 minutes. Use a slotted spoon to transfer eggs to paper towels to drain. Season lightly with salt and pepper. Serve warm with mustard.',
+        'Attach a deep-fry thermometer to side of a large heavy pot. Pour in oil to a depth of 2” and heat over medium heat to 375°. Fry eggs, turning occasionally and maintaining oil temperature of 350°, until sausage is cooked through and breading is golden brown and crisp, 5-6 minutes. Use a slotted spoon to transfer eggs to paper towels to drain. Season lightly with salt and pepper. Serve warm with mustard.',
       rating: 3,
       caloriesPerRecipe: 1500,
       proteinPerRecipe: 2000,
@@ -213,11 +258,18 @@ async function seed() {
     }),
   ]);
 
-  await pantry.addIngredient(carrot, { through: { pantryQty: 3 } });
-  await pantry.addIngredient(tofu, { through: { pantryQty: 7 } });
-  await pantry.addIngredient(wine, { through: { pantryQty: 15 } });
-  await pantry.addIngredient(mochi, { through: { pantryQty: 6 } });
->>>>>>> Stashed changes
+  await pantry.addIngredient(carrot, {
+    through: { pantryQty: 3, uom: 'lb', cost: 4.5 },
+  });
+  await pantry.addIngredient(tofu, {
+    through: { pantryQty: 7, uom: 'oz', cost: 2.25 },
+  });
+  await pantry.addIngredient(wine, {
+    through: { pantryQty: 15, uom: 'fl-oz.', cost: 14.5 },
+  });
+  await pantry.addIngredient(mochi, {
+    through: { pantryQty: 6, uom: 'oz', cost: 12.5 },
+  });
 
   await pantry2.addIngredient(cereal, {
     through: { pantryQty: 3, uom: 'oz', cost: 5.0 },
@@ -238,6 +290,17 @@ async function seed() {
   await pantry3.addIngredient(bourbon, {
     through: { pantryQty: 1, uom: 'oz', cost: 3000.0 },
   });
+
+  // --- BELOW: Ingredients added to recipes by Evan 3/22/22 ---
+  await roastMutton.setRecipeIngredient(legOfMutton);
+  await roastMutton.setRecipeIngredient(rosemary);
+  await scotchEggs.setRecipeIngredient(eggs);
+  await scotchEggs.setRecipeIngredient(breakfastSausage);
+  await jelliedEels.setRecipeIngredient(eels);
+  await jelliedEels.setRecipeIngredient(maltVinegar);
+  await pieAndMash.setRecipeIngredient(groundBeef);
+  await pieAndMash.setRecipeIngredient(fishStock);
+  // --- ABOVE: Ingredients added to recipes by Evan 3/22/22 ---
 
   await pantry.setUser(admin);
   await pantry2.setUser(admin);
