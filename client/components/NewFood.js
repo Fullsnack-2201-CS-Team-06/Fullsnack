@@ -9,6 +9,7 @@ import {
 import React, { useState } from 'react';
 import { addFood, updateFood } from '../store/foods';
 import { useSelector, useDispatch } from 'react-redux';
+import styles from './NewFood.module.css';
 
 const foodCategories = [
   'produce',
@@ -19,6 +20,8 @@ const foodCategories = [
   'beverages',
   'miscellaneous',
 ];
+
+const unitsOfMeasurement = ['lb', 'oz', 'each', 'fl oz', 'gm', 'mg'];
 
 const NewFood = () => {
   const dispatch = useDispatch();
@@ -31,6 +34,8 @@ const NewFood = () => {
     proteinPerUnit: 0,
     carbsPerUnit: 0,
     fatsPerUnit: 0,
+    image:
+      'https://media.istockphoto.com/vectors/add-photo-icon-vector-id1136809322',
   });
 
   //FN: Handle update of the fields in the inputs.
@@ -61,6 +66,8 @@ const NewFood = () => {
         proteinPerUnit: 0,
         carbsPerUnit: 0,
         fatsPerUnit: 0,
+        image:
+          'https://media.istockphoto.com/vectors/add-photo-icon-vector-id1136809322',
       });
     }
   };
@@ -77,14 +84,7 @@ const NewFood = () => {
   return (
     <Card>
       <OverlayTrigger trigger="click" placement="right" overlay={popover}>
-        <Card.Img
-          variant="top"
-          src={
-            newFood.image
-              ? newFood.image
-              : 'https://media.istockphoto.com/vectors/add-photo-icon-vector-id1136809322'
-          }
-        />
+        <Card.Img variant="top" src={newFood.image} />
       </OverlayTrigger>
       <Card.Body>
         <ListGroup>
@@ -116,16 +116,28 @@ const NewFood = () => {
             Calories:{' '}
             <input
               type="number"
+              className={styles.newFoodInput}
               name="caloriesPerUnit"
               value={newFood.caloriesPerUnit}
               min="0"
               onChange={handleUpdate}
             />
+            {'    '}
+            <label htmlFor="uom">Unit: </label>
+            {'  '}
+            <select name="uom" value={newFood.uom} onChange={handleUpdate}>
+              {unitsOfMeasurement.map((uom, i) => (
+                <option key={i} value={uom}>
+                  {uom}
+                </option>
+              ))}
+            </select>
           </ListGroupItem>
           <ListGroupItem>
             Protein:{' '}
             <input
               type="number"
+              className={styles.newFoodInput}
               name="proteinPerUnit"
               value={newFood.proteinPerUnit}
               min="0"
@@ -136,6 +148,7 @@ const NewFood = () => {
             Carbs:{' '}
             <input
               type="number"
+              className={styles.newFoodInput}
               name="carbsPerUnit"
               value={newFood.carbsPerUnit}
               min="0"
@@ -146,6 +159,7 @@ const NewFood = () => {
             Fat:{' '}
             <input
               type="number"
+              className={styles.newFoodInput}
               name="fatsPerUnit"
               value={newFood.fatsPerUnit}
               min="0"
