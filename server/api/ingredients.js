@@ -36,19 +36,19 @@ router.get('/', async (req, res, next) => {
 
     if (shoppingLists.length > 0) {
       //Get all the ingredients associated with the user's shopping lists.
-      ingredients.concat(
+      ingredients = ingredients.concat(
         shoppingLists.reduce((prev, list) => {
           return prev.concat(list.ingredients);
-        })
+        }, [])
       );
     }
 
     if (recipes.length > 0) {
       //Get all the ingredients associated with the user's recipes.
-      ingredients.concat(
+      ingredients = ingredients.concat(
         recipes.reduce((prev, recipe) => {
           return prev.concat(recipe.ingredients);
-        })
+        }, [])
       );
     }
 
