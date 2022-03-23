@@ -1,24 +1,62 @@
-// import axios from 'axios'
+import axios from 'axios'
 
+// ACTION TYPE
 
-// // ACTION TYPE
+const SHOW_ONE = "SHOW_ONE"
+const ADD_PANTRY_ITEM = "ADD_PANTRY_ITEM"
+const EDIT_PANTRY = "EDIT_PANTRY"
 
-// const SHOW_ALL = "SHOW_ALL"
+// ACTION CREATORS
 
-// // ACTION CREATORS
+export const showOne = (singlePantry) => ({
+    type: SHOW_ONE,
+    singlePantry
+})
 
+export const editPantry = (currentPantry) => ({
+  type: EDIT_PANTRY,
+  editPantry
+})
 
 // THUNKS
 
+export const fetchOnePantry = (id) => {
+    return async (dispatch) => {
+      try {
+        const { data } = await axios.get(`/api/pantries/${id}`);
+        dispatch(showOne(data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
 
-// const initialState = [];
+  export const editPantryThunk = (itemId, userId, quantity) => {
+    return async(dispatch) => {
+      try {
+        console.log("EDIT PANTRY THUNK ==== FIRED")
+        const { data } = await axios.put(`/api/pantries?userId=${userId}`, {
+          itemId, quantity
+        })
+        dispatch(editPantry(data))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
-// const pantryReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case 
-//     default:
-//       return state;
-//   }
-// };
 
-// export default pantryReducer;
+const initialState = [];
+
+const pantryReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SHOW_ONE:
+    return action.singlePantry
+    case EDIT_PANTRY:
+      return action.editPantry
+    default:
+      return state;
+  }
+};
+
+export default pantryReducer;
