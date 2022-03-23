@@ -22,12 +22,21 @@ const Recipes = () => {
       <div className="recipesHeader">
         <h1>My Recipes</h1>
       </div>
+      <div className="addRecipeBtnContainer">
+        <Link to="/recipes/add">
+          <button>Add Recipe</button>
+        </Link>
+      </div>
       <div className="recipeCardContainer">
         {recipes.map((recipe) => {
           return (
             <div className="recipeCard" key={recipe.id}>
               <h3>{recipe.name}</h3>
-              <img className="recipeImg" src={recipe.image} style={{ height: '200px' }} />
+              <img
+                className="recipeImg"
+                src={recipe.image}
+                style={{ height: '200px' }}
+              />
               <br />
               <br />
               <Link to={`/recipes/${recipe.id}`}>

@@ -30,6 +30,12 @@ form div {
   flex-direction: column;
 }
 
+.addRecipeBtnContainer {
+  display: flex;
+  justify-content: center;
+  margin: 15px;
+}
+
 .recipesHeader {
   display: flex;
   justify-content: center;
