@@ -6,9 +6,10 @@ const Pantry = require('../db/models/Pantry');
 //GET /api/pantries?userId=1
 router.get('/', async (req, res, next) => {
   try {
+    console.log("Did we get to our ALL")
     const pantries = await Pantry.findAll({
       where: { userId: req.query.userId },
-      include: Ingredient,
+       include: Ingredient 
     });
     if (!pantries) {
       next({ status: 404, message: 'No pantries found for this userId' });
@@ -24,7 +25,6 @@ router.get('/:pantryId', async (req, res, next) => {
   try {
     const singlePantry = await Pantry.findByPk(
       req.params.pantryId,
-      // { where: { userId: req.query.userId } },
       { include: Ingredient }
     );
     if (!singlePantry) {
