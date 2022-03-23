@@ -3,12 +3,18 @@ import axios from 'axios'
 // ACTION TYPE
 
 const SHOW_ONE = "SHOW_ONE"
+const EDIT_PANTRY = "EDIT_PANTRY"
 
 // ACTION CREATORS
 
 export const showOne = (singlePantry) => ({
     type: SHOW_ONE,
     singlePantry
+})
+
+export const editPantry = (currentPantry) => ({
+  type: EDIT_PANTRY,
+  editPantry
 })
 
 // THUNKS
@@ -24,6 +30,20 @@ export const fetchOnePantry = (id) => {
     };
   };
 
+  export const editPantryThunk = (itemId, userId, quantity) => {
+    return async(dispatch) => {
+      try {
+        console.log("EDIT PANTRY THUNK ==== FIRED")
+        const { data } = await axios.put(`/api/pantries?userId=${userId}`, {
+          itemId, quantity
+        })
+        dispatch(editPantry(data))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
 
 const initialState = [];
 
@@ -31,6 +51,8 @@ const pantryReducer = (state = initialState, action) => {
   switch (action.type) {
     case SHOW_ONE:
     return action.singlePantry
+    case EDIT_PANTRY:
+      return action.editPantry
     default:
       return state;
   }

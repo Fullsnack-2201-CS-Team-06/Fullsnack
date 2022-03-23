@@ -47,6 +47,28 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+// PUT /api/pantries?userId=1
+router.put('/', async(req, res, next) => {
+  try {
+    console.log("EDIT THUNK REACHED TRY CATCH")
+    const pantry = await Pantry.findOne({
+      where: { userId: req.query.userId },
+      include: Ingredient,
+    })
+    const { itemId, quantity } = req.body
+    const ingredientToUpdate = await Ingredient.findByPk(itemId);
+    if (quantity === 0) Pantry.removeIngredient(ingredientToUpdate)
+    else {
+      Pantry.addIngredient(ingredientToUpdate, { through: { pantryQty: quantity}})
+    }
+    const result = await Pantry.update();
+    res.send(result);
+  } catch (error) {
+    next(error)
+  }
+})
+
+
 // PUT /api/pantries/:id
 router.put('/:id', async (req, res, next) => {
   try {

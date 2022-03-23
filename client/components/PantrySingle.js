@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchOnePantry } from '../store/pantry';
+import { fetchOnePantry, editPantryThunk } from '../store/pantry';
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -14,17 +14,15 @@ const PantrySingle = ({ match }) => {
 
   console.log("here's my pantry", pantry)
 
-
   useEffect(() => {
     dispatch(fetchOnePantry(match.params.id));
+  
   }, []);
 
-  /**
-   *  Note to self, I have to grab item quantity from
-   *  pantry ingredients.
-   *
-   *
-   */
+  async function handleChange(itemId, userId, quantity){
+    console.log("Handle change fired")
+    dispatch(editPantryThunk(itemId, userId, quantity))
+  }
 
   return (
     <div className='PantrySingle'>
@@ -43,15 +41,16 @@ const PantrySingle = ({ match }) => {
           <tbody>
             {ingredients ? (
               ingredients.map((item) => {
+                const quantity = item.pantryIngredient.pantryQty
                 return (
                   <tr key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.category}</td>
-                    <td>{item.pantryIngredient.pantryQty}</td>
+                    <td>{quantity}</td>
                     <td>{item.pantryIngredient.cost}</td>
                     <td>{item.uom}</td>
                     <td>
-                      <Button>x</Button>
+                      <Button onClick={() => handleChange(item.id, id, 0)}>x</Button>
                     </td>
                   </tr>
                 );
