@@ -7,10 +7,12 @@ import { fetchOnePantry } from '../store/pantry';
 const PantrySingle = ({ match }) => {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.auth);
-  const { pantry } = useSelector((state) => state);
+  const pantry = useSelector((state) => state.pantry);
+  const { ingredients } = pantry || []
 
-  console.log("What's on my state", pantry.ingredients);
-  // console.log("What's in my map", data)
+  // console.log("What's on my state", pantry.ingredients);
+  console.log("What's my pantry look like", pantry)
+  console.log("What's my ingredients look like", ingredients)
 
   useEffect(() => {
     dispatch(fetchOnePantry(match.params.id));
@@ -38,17 +40,17 @@ const PantrySingle = ({ match }) => {
             </tr>
           </thead>
           <tbody>
-            {pantry > 0 ? (
-              pantry.ingredients.map((ingredient) => { return
-                <tr>
-                  <td>{ingredient.name}</td>
-                  <td>{Placeholder}</td>
-                  <td>{ingredient.cost}</td>
-                  <td>{ingredient.uom}</td>
+            {ingredients ? (
+              ingredients.map((item) => { 
+                return <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>2</td>
+                  <td>{item.cost}</td>
+                  <td>{item.uom}</td>
                 </tr>;
               })
             ) : (
-              <td>Nothing to see here.</td>
+              <tr><td>Nothing to see here.</td></tr>
             )}
           </tbody>
         </Table>
