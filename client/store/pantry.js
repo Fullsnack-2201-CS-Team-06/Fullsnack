@@ -3,6 +3,7 @@ import axios from 'axios'
 // ACTION TYPE
 
 const SHOW_ONE = "SHOW_ONE"
+const ADD_PANTRY_ITEM = "ADD_PANTRY_ITEM"
 const EDIT_PANTRY = "EDIT_PANTRY"
 
 // ACTION CREATORS

@@ -2,9 +2,12 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOnePantry, editPantryThunk } from '../store/pantry';
 
+// import Accordion from 'react-bootstrap/Accordion'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+// import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
+
 
 const PantrySingle = ({ match }) => {
   const dispatch = useDispatch();
@@ -16,7 +19,6 @@ const PantrySingle = ({ match }) => {
 
   useEffect(() => {
     dispatch(fetchOnePantry(match.params.id));
-  
   }, []);
 
   async function handleChange(itemId, userId, quantity){
@@ -27,6 +29,7 @@ const PantrySingle = ({ match }) => {
   return (
     <div className='PantrySingle'>
       <Container>
+        <Button className="addItem">Add Item</Button>
         <Table striped>
           <thead>
             <tr>
@@ -46,7 +49,8 @@ const PantrySingle = ({ match }) => {
                   <tr key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.category}</td>
-                    <td>{quantity}</td>
+                    <td><Button onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
+                    <Button onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td> 
                     <td>{item.pantryIngredient.cost}</td>
                     <td>{item.uom}</td>
                     <td>
