@@ -23,10 +23,12 @@ const SingleRecipe = () => {
   return (
     <div>
       <h1>{singleRecipe.name}</h1>
+      <h3>{singleRecipe.cuisineType}</h3>
       <h5>{singleRecipe.rating} of 5 stars</h5>
       <img src={singleRecipe.image} style={{ height: '400px' }} />
       <br />
       <br />
+      <h5>Ingredients</h5>
       <ul>
         {ingredients.map((ingredient) => {
           return (
