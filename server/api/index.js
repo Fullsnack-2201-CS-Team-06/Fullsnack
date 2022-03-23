@@ -3,6 +3,7 @@ module.exports = router;
 
 router.use('/users', require('./users'));
 router.use('/pantries', require('./pantries'));
+router.use('/ingredients', require('./ingredients'));
 router.use('/shoppinglist', require('./shoppingList'))
 router.use('/recipes', require('./recipes'));
 
