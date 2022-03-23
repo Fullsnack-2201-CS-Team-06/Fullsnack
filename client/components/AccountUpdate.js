@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { update } from '../store/auth';
+import styles from './AccountUpdate.module.css';
 
 const cuisines = [
   'American',
@@ -47,7 +48,7 @@ const AccountUpdate = () => {
   };
 
   return (
-    <form>
+    <form className={styles.container}>
       <div>
         <label htmlFor="username">Username: </label>
         <input

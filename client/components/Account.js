@@ -2,23 +2,24 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import AccountDisplay from './AccountDisplay';
 import AccountUpdate from './AccountUpdate';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import styles from './Account.module.css';
 
 const Account = () => {
   const [showForm, setFormStatus] = useState(false);
   const { auth } = useSelector((state) => state);
 
+  //Switch between the normal view (AccountDisplay) and the form view (AccountUpdate) when users want to update their details.
   const toggleStatus = () => {
     setFormStatus(!showForm);
   };
 
+  //If the user's details update, toggle the components in view.
   const didMount = useRef(false);
-  const prevAuth = useRef(auth);
   useEffect(() => {
     if (didMount.current) {
-      console.log('toggleStatus();');
       toggleStatus();
     } else {
-      console.log('didMount.current = true;');
       didMount.current = true;
     }
   }, [auth]);
@@ -31,7 +32,7 @@ const Account = () => {
       </button>
     </div>
   ) : (
-    <div>
+    <div className={styles.container}>
       <AccountDisplay />
       <button type="button" onClick={toggleStatus}>
         Update
