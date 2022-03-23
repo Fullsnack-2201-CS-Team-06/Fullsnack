@@ -2,6 +2,7 @@ const router = require('express').Router();
 module.exports = router;
 const Recipe = require('../db/models/Recipe');
 const Ingredient = require('../db/models/Ingredient');
+const User = require('../db/models/User');
 
 // GET /api/recipes?userId=1
 router.get('/', async (req, res, next) => {
@@ -44,31 +45,21 @@ router.get('/:id', async (req, res, next) => {
 // POST /api/recipes
 router.post('/', async (req, res, next) => {
   try {
-    const {
-      name,
-      description,
-      rating,
-      caloriesPerRecipe,
-      proteinPerRecipe,
-      carbsPerRecipe,
-      fatPerRecipe,
-      image,
-      cuisineType,
-      frequency,
-    } = req.body;
+    const { name, description, rating, image, cuisineType, userId } = req.body;
+
+    console.log('userId: ', userId);
 
     const newRecipe = await Recipe.create({
       name,
       description,
       rating,
-      caloriesPerRecipe,
-      proteinPerRecipe,
-      carbsPerRecipe,
-      fatPerRecipe,
       image,
       cuisineType,
-      frequency,
     });
+
+    const user = await User.findByPk(userId);
+
+    await newRecipe.setUser(user);
 
     res.send(newRecipe);
   } catch (error) {

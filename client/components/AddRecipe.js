@@ -10,9 +10,9 @@ const AddRecipe = () => {
   const [cuisineType, setCuisineType] = useState('');
   const [image, setImage] = useState('');
 
-  const { auth } = useSelector((state) => {
+  const { userId } = useSelector((state) => {
     return {
-      auth: state.auth,
+      userId: state.auth.id,
     };
   });
 
@@ -28,7 +28,7 @@ const AddRecipe = () => {
         rating,
         cuisineType,
         image,
-        recipeId: auth.id,
+        userId,
       })
     );
     history.push('/recipes');
@@ -37,7 +37,7 @@ const AddRecipe = () => {
   return (
     <div>
       <h1>Add Recipe</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="name">Recipe Name</label>
         <input
           name="name"
@@ -108,6 +108,7 @@ const AddRecipe = () => {
         <br />
         <br />
         <button type="submit">Save</button>
+        <button onClick={() => history.push('/recipes')}>Cancel</button>
       </form>
     </div>
   );
