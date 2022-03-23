@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { addNewRecipe } from '../store/recipes';
 
 const AddRecipe = () => {
   const [name, setName] = useState('');
@@ -6,6 +9,30 @@ const AddRecipe = () => {
   const [rating, setRating] = useState('');
   const [cuisineType, setCuisineType] = useState('');
   const [image, setImage] = useState('');
+
+  const { auth } = useSelector((state) => {
+    return {
+      auth: state.auth,
+    };
+  });
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      addNewRecipe({
+        name,
+        description,
+        rating,
+        cuisineType,
+        image,
+        recipeId: auth.id,
+      })
+    );
+    history.push('/recipes');
+  };
 
   return (
     <div>
