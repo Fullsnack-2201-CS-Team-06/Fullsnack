@@ -1,36 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchAllShoppingLists } from '../store/ShoppingList';
 
 const ShoppingList = () => {
   const { id } = useSelector((state) => state.auth);
-  const { shoppingList } = useSelector((state) => state);
+  const { shoppingList } = useSelector((state) => state)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchAllShoppingLists(id));
   }, []);
 
-  console.log(shoppingList)
+  const { shoppingHistory } = shoppingList || []
 
   return (
   <div>
    <p>Your Shopping Lists!</p>
 <table>
   <colgroup span="4"></colgroup>
+  <tbody>
   <tr>
     <th>List Name</th>
     <th>Date Completed</th>
     <th>Total Cost</th>
   </tr>
-  { shoppingList.map(list => {
+  { shoppingHistory ?
+  shoppingHistory.map(list => {
     return (
     <tr key={list.id}>
-      <td>{list.name}</td>
+      <td><Link to={'/list/'}>{list.name}</Link></td>
       <td>{list.checkoutDate}</td>
       <td>{list.totalCost}</td>
     </tr>)
-  })}
+  }) :
+  <tr></tr>
+  }
+  </tbody>
 </table>
   </div>
   );

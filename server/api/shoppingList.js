@@ -46,7 +46,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// PUT /api/shoppingList/:id
+// PUT /api/shoppingList/
 router.put('/:id', async (req, res, next) => {
   try {
     const shoppingList = await ShoppingList.findByPk(req.params.id);

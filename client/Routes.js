@@ -6,6 +6,7 @@ import Home from './components/Home';
 import { me } from './store';
 import Account from './components/Account';
 import ShoppingList from './components/ShoppingList';
+import ShoppingListHistory from './components/ShoppingListHistory'
 import Pantries from './components/Pantries';
 import Food from './components/Food';
 import Recipes from './components/Recipes'
@@ -27,7 +28,8 @@ const Routes = () => {
       {isLoggedIn ? (
         <Switch>
           <Route path="/account" component={Account} />
-          <Route path="/list" component={ShoppingList} />
+          <Route exact path="/list" component={ShoppingList} />
+          <Route exact path="/list/history" component={ShoppingListHistory} />
           <Route path="/pantries" component={Pantries} />
           <Route path="/foods" component={Food} />
           <Route path="/recipes" component={Recipes} />
