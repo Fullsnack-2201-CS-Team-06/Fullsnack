@@ -1,6 +1,16 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 
+const foodCategories = [
+  'produce',
+  'meat',
+  'dairy',
+  'dry goods',
+  'bakery',
+  'beverages',
+  'miscellaneous',
+];
+
 const Ingredient = db.define('ingredient', {
   name: {
     type: Sequelize.STRING,
@@ -16,15 +26,7 @@ const Ingredient = db.define('ingredient', {
   },
 
   category: {
-    type: Sequelize.ENUM(
-      'produce',
-      'meat',
-      'dairy',
-      'dry goods',
-      'bakery',
-      'beverages',
-      'miscellaneous'
-    ),
+    type: Sequelize.ENUM(...foodCategories),
     defaultValue: 'miscellaneous',
   },
 
