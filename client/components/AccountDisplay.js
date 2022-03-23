@@ -19,7 +19,7 @@ const AccountDisplay = () => {
             <td>{email}</td>
           </tr>
           <tr>
-            <td>Cusine: </td>
+            <td>Cuisine: </td>
             <td>{cuisinePref}</td>
           </tr>
           <tr>
