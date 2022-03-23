@@ -25,6 +25,8 @@ const unitsOfMeasurement = ['lb', 'oz', 'each', 'fl oz', 'gm', 'mg'];
 
 const NewFood = () => {
   const dispatch = useDispatch();
+  const stockPhotoUrl =
+    'https://media.istockphoto.com/vectors/add-photo-icon-vector-id1136809322';
 
   const [newFood, setNewFood] = useState({
     name: '',
@@ -34,8 +36,7 @@ const NewFood = () => {
     proteinPerUnit: 0,
     carbsPerUnit: 0,
     fatsPerUnit: 0,
-    image:
-      'https://media.istockphoto.com/vectors/add-photo-icon-vector-id1136809322',
+    image: stockPhotoUrl,
   });
 
   //FN: Handle update of the fields in the inputs.
@@ -45,7 +46,14 @@ const NewFood = () => {
 
   let { foods } = useSelector((state) => state);
   const handleSubmit = () => {
+    //Formatting: Convert all names to lowercase.
     newFood.name = newFood.name.toLowerCase();
+
+    //If the user did not add a new image, we don't want the NewFood stock image passed to the new ingredient. Instead, assign it the default image for ingredients.
+    if (newFood.image === stockPhotoUrl) {
+      newFood.image =
+        'https://media.istockphoto.com/photos/fried-pork-and-vegetables-on-white-background-picture-id1190330112?k=20&m=1190330112&s=612x612&w=0&h=_TrmthJupdqYmMU-NC-es85TEvaBJsynDS383hqiAvM=';
+    }
 
     //Only update the foods if there is a valid name.
     if (newFood.name.length > 0) {
@@ -66,8 +74,7 @@ const NewFood = () => {
         proteinPerUnit: 0,
         carbsPerUnit: 0,
         fatsPerUnit: 0,
-        image:
-          'https://media.istockphoto.com/vectors/add-photo-icon-vector-id1136809322',
+        image: stockPhotoUrl,
       });
     }
   };
@@ -95,6 +102,7 @@ const NewFood = () => {
               name="name"
               value={newFood.name}
               onChange={handleUpdate}
+              required
             />
           </ListGroupItem>
           <ListGroupItem>
