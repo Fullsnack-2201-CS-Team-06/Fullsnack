@@ -1,12 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import styles from './AccountDisplay.module.css';
 
 const AccountDisplay = () => {
   const { username, email, cuisinePref, diet, health } = useSelector(
     (state) => state.auth
   );
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Hello {username}!</h1>
       <table>
         <tbody>
