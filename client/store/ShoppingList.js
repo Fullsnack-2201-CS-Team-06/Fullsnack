@@ -3,6 +3,7 @@ import axios from 'axios';
 // ACTION TYPE
 
 const SHOPPING_HISTORY = 'SHOPPING_HISTORY';
+const ADD_TO_SHOPPING_LIST = 'ADD_TO_SHOPPING_LIST'
 const CURRENT_SHOPPING_LIST = 'CURRENT_SHOPPING_LIST'
 const EDIT_LIST = 'EDIT_LIST'
 
@@ -16,9 +17,15 @@ export const showAllShoppingLists = (shoppingHistory) => ({
 export const showCurrentList = (currentList) => ({
   type: CURRENT_SHOPPING_LIST, currentList
 })
-export const editList = (currentList) => ({
+export const editList = (itemId, quantity) => ({
   type: EDIT_LIST,
-  currentList
+  itemId,
+  quantity
+})
+
+export const AddToList = (item) => ({
+  type: ADD_TO_SHOPPING_LIST,
+  item
 })
 
 // THUNKS
@@ -34,6 +41,17 @@ export const fetchAllShoppingLists = (id) => {
   };
 };
 
+export const AddItemToShoppingList = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`/api/shoppinglist`)
+      dispatch(AddToList(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 export const fetchCurrentShoppingList = (id) => {
   return async (dispatch) => {
     try {
@@ -45,10 +63,10 @@ export const fetchCurrentShoppingList = (id) => {
   };
 };
 
-export const editListThunk = (item, id) => {
+export const editListThunk = (itemId, userId, quantity) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/shoppinglist?userId=${id}`, item)
+      const { data } = await axios.put(`/api/shoppinglist?userId=${userId}`, { itemId, quantity })
       dispatch(editList(data))
     } catch (error) {
       console.log(error)
@@ -65,7 +83,14 @@ const shoppingListReducer = (state = initialState, action) => {
     case SHOPPING_HISTORY:
       return  { ...state, shoppingHistory: action.shoppingHistory }
     case EDIT_LIST:
-      return { ...state, currentList: action.currentList }
+      console.log('action: ', action)
+      // let newList = state.currentList
+      // if (action.quantity === 0) {
+      //   delete newList[action.productId]
+      //   return newList
+      // }
+      // newList[action.]
+      return { ...state }
     default:
       return state;
   }

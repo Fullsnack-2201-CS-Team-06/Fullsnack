@@ -5,13 +5,17 @@ import { fetchCurrentShoppingList, fetchAllShoppingLists, editListThunk } from '
 
 const ShoppingList = () => {
   const { id } = useSelector((state) => state.auth);
-  const { currentList } = useSelector((state) => state.shoppingList);
+  const { currentList } = useSelector((state) => state.shoppingList)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchCurrentShoppingList(id));
     dispatch(fetchAllShoppingLists(id))
   }, []);
+
+  async function handleChange(itemId, userId, quantity) {
+    dispatch(editListThunk(itemId, userId, quantity))
+  }
 
   const { name } = currentList || ''
   const { ingredients } = currentList || []
@@ -35,10 +39,14 @@ const ShoppingList = () => {
     return (
       <tr key={item.id}>
         <td>{item.name}</td>
-        <td>{item.shoppingListIngredient.sliQuantity}</td>
+        <td>
+        <button onClick={() => handleChange(item.id, id, -1)}>-</button>
+          {item.shoppingListIngredient.sliQuantity}
+          <button onClick={() => handleChange(item.id, id, 1)}>+</button>
+          </td>
         <td>{item.shoppingListIngredient.uom}</td>
         <td>{item.shoppingListIngredient.cost}</td>
-        <td><button onClick={() => editListThunk(item, id)}>X</button></td>
+        <td><button onClick={() => handleChange(item.id, id, 0)}>X</button></td>
       </tr>
     )
   }):
