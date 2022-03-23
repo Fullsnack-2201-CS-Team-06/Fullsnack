@@ -36,13 +36,14 @@ const ShoppingList = () => {
   </tr>
   { ingredients ?
   ingredients.map(item => {
+    const quantity = item.shoppingListIngredient.sliQuantity
     return (
       <tr key={item.id}>
         <td>{item.name}</td>
         <td>
-        <button onClick={() => handleChange(item.id, id, -1)}>-</button>
+        <button onClick={() => handleChange(item.id, id, quantity - 1)}>-</button>
           {item.shoppingListIngredient.sliQuantity}
-          <button onClick={() => handleChange(item.id, id, 1)}>+</button>
+          <button onClick={() => handleChange(item.id, id, quantity + 1)}>+</button>
           </td>
         <td>{item.shoppingListIngredient.uom}</td>
         <td>{item.shoppingListIngredient.cost}</td>
