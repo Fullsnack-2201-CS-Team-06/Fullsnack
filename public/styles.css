@@ -1,5 +1,5 @@
 body {
-  font-family:Arial, Helvetica, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -22,4 +22,33 @@ form div {
 
 .logo {
   font-family: 'Russo One', sans-serif;
+}
+
+.allRecipesContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.recipesHeader {
+  display: flex;
+  justify-content: center;
+}
+
+.recipeCardContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.recipeCard {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.recipeImg {
+  border: 1px solid black;
+  border-radius: 5px;
 }

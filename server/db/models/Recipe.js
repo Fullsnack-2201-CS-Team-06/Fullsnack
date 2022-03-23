@@ -9,9 +9,11 @@ const Recipe = db.define('recipe', {
       notEmpty: true,
     },
   },
+
   description: {
     type: Sequelize.TEXT,
   },
+
   rating: {
     type: Sequelize.INTEGER,
     validate: {
@@ -19,21 +21,27 @@ const Recipe = db.define('recipe', {
       max: 5,
     },
   },
+
   caloriesPerRecipe: {
     type: Sequelize.INTEGER,
   },
+
   proteinPerRecipe: {
     type: Sequelize.DECIMAL,
   },
+
   carbsPerRecipe: {
     type: Sequelize.DECIMAL,
   },
+
   fatPerRecipe: {
     type: Sequelize.DECIMAL,
   },
+
   image: {
     type: Sequelize.STRING,
   },
+
   cuisineType: {
     type: Sequelize.ENUM(
       'American',
@@ -57,6 +65,7 @@ const Recipe = db.define('recipe', {
       'None'
     ),
   },
+  
   frequency: {
     type: Sequelize.INTEGER,
     defaultValue: 0,
