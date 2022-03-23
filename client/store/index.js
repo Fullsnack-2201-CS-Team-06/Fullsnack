@@ -4,13 +4,16 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import auth from './auth';
 // import pantryReducer from './pantry'
+
 import pantriesReducer from './pantries';
 import recipesReducer from './recipes';
 import singleRecipeReducer from './singleRecipe';
+import shoppingListReducer from './ShoppingList'
 
 const reducer = combineReducers({
   auth: auth,
   //  pantry: pantryReducer,
+  shoppingList: shoppingListReducer,
   pantries: pantriesReducer,
   recipes: recipesReducer,
   singleRecipe: singleRecipeReducer,

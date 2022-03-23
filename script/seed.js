@@ -28,6 +28,12 @@ async function seed() {
     User.create({ username: 'cody', password: '123' }),
     User.create({ username: 'murphy', password: '123' }),
   ]);
+  //Creating Shopping Lists
+  const [margaritaTime, boozeRun, needProduce] = await Promise.all([
+    ShoppingList.create({ name: 'margaritaTime' }),
+    ShoppingList.create({ name: 'boozeRun', status: 'closed', totalCost: 72, checkoutDate: Date.now() }),
+    ShoppingList.create({ name: 'needProduce', status: 'closed', totalCost: 12, checkoutDate: Date.now()}),
+  ])
 
   const admin = await User.findOne({ where: { username: 'admin' } });
 
@@ -42,6 +48,11 @@ async function seed() {
   const pantry3 = await Pantry.create({
     name: 'adminPantry3',
   });
+
+  //Setting shopping lists to admin user
+  margaritaTime.setUser(admin)
+  boozeRun.setUser(admin)
+  needProduce.setUser(admin)
 
   const [
     carrot,
@@ -260,6 +271,16 @@ async function seed() {
   ]);
   // --- ABOVE: Recipes added by Evan 3/22/22 ---
 
+//ShoppingList
+  await boozeRun.addIngredient(wine, { through: { sliQuantity: 2, cost: 11, uom: 'floz' } })
+  await boozeRun.addIngredient(bourbon, { through: { sliQuantity: 1, cost: 50, uom: 'floz' } })
+
+  await margaritaTime.addIngredient(carrot, { through: { sliQuantity: 6, cost: 2, uom: 'lb' } })
+  await margaritaTime.addIngredient(mochi, { through: { sliQuantity: 2, cost: 10, uom: 'unit' } })
+
+  await needProduce.addIngredient(carrot, { through: { sliQuantity: 10, cost: 2, uom: 'lb' } })
+
+  //Pantry
   await pantry.addIngredient(carrot, {
     through: { pantryQty: 3, uom: 'lb', cost: 4.5 },
   });
@@ -317,6 +338,7 @@ async function seed() {
   await pantry2.setUser(admin);
   await pantry3.setUser(admin);
 
+  console.log(ShoppingList.prototype)
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
   return {
