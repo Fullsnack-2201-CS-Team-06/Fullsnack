@@ -1,8 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import AccountDisplay from './AccountDisplay';
 
 const Account = () => {
-  console.log('here');
-  return <div></div>;
+  return <AccountDisplay />;
 };
 
 export default Account;
