@@ -9,6 +9,7 @@ import ShoppingList from './components/ShoppingList';
 import ShoppingListHistory from './components/ShoppingListHistory'
 import Pantries from './components/Pantries';
 import Food from './components/Food';
+import PantrySingle from './components/PantrySingle';
 import Recipes from './components/Recipes';
 import SingleRecipe from './components/SingleRecipe';
 import AddRecipe from './components/AddRecipe';
@@ -32,7 +33,8 @@ const Routes = () => {
           <Route path="/account" component={Account} />
           <Route exact path="/list" component={ShoppingList} />
           <Route exact path="/list/history" component={ShoppingListHistory} />
-          <Route path="/pantries" component={Pantries} />
+          <Route exact path="/pantries" component={Pantries} />
+          <Route path="/pantries/:id" component={PantrySingle} />
           <Route path="/foods" component={Food} />
           <Route exact path="/recipes" component={Recipes} />
           <Route path="/recipes/add" component={AddRecipe} />
