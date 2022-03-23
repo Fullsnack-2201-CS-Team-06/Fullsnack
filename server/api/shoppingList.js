@@ -2,7 +2,6 @@ const router = require('express').Router();
 module.exports = router;
 const Ingredient = require('../db/models/Ingredient');
 const ShoppingList = require('../db/models/ShoppingList');
-const ShoppingListIngredient = require('../db/models/ShoppingListIngredient');
 
 //GET /api/shoppingList/all?userId=1 status: closed
 router.get('/all', async (req, res, next) => {
@@ -47,6 +46,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+//PUT /api/shoppingList?userId=1
 router.put('/', async (req, res, next) => {
   try {
     const shoppingList = await ShoppingList.findOne({
@@ -54,43 +54,19 @@ router.put('/', async (req, res, next) => {
       include: Ingredient,
     })
     const { itemId, quantity } = req.body
-    //quantity could be +1, -1, or === 0
+
+    console.log('quantity backend', quantity)
+
     const ingredientToUpdate = await Ingredient.findByPk(itemId)
     if (quantity === 0) shoppingList.removeIngredient(ingredientToUpdate)
     else {
       shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: quantity }})
-
     }
-
-    res.sendStatus(201)
+    res.send(shoppingList)
   } catch (error) {
     next(error)
   }
 })
-
-// const [
-//   productOrderToBeUpdated,
-//   wasCreated
-// ] = await Order_Details.findOrCreate({
-//   where: {
-//     productId,
-//     orderId: userOrder.id
-//   }
-// })
-
-
-// if (quantity === 0) await productOrderToBeUpdated.destroy()
-// if (wasCreated) return res.sendStatus(201)
-// else {
-// let newAmount = parseInt(productOrderToBeUpdated.quantity) + quantity
-// productOrderToBeUpdated.quantity = newAmount
-// productOrderToBeUpdated.price = 10 * newAmount
-
-// await productOrderToBeUpdated.save()
-// res.sendStatus(201)
-
-
-
 
 // PUT /api/shoppingList/
 router.put('/:id', async (req, res, next) => {

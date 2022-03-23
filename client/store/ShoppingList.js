@@ -9,7 +9,7 @@ const EDIT_LIST = 'EDIT_LIST'
 
 // ACTION CREATORS
 
-export const showAllShoppingLists = (shoppingHistory) => ({
+export const showShoppingListHistory = (shoppingHistory) => ({
   type: SHOPPING_HISTORY,
   shoppingHistory,
 });
@@ -17,10 +17,9 @@ export const showAllShoppingLists = (shoppingHistory) => ({
 export const showCurrentList = (currentList) => ({
   type: CURRENT_SHOPPING_LIST, currentList
 })
-export const editList = (itemId, quantity) => ({
+export const editList = (currentList) => ({
   type: EDIT_LIST,
-  itemId,
-  quantity
+  currentList
 })
 
 export const AddToList = (item) => ({
@@ -30,11 +29,11 @@ export const AddToList = (item) => ({
 
 // THUNKS
 
-export const fetchAllShoppingLists = (id) => {
+export const fetchShoppingListHistory = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/api/shoppinglist/all?userId=${id}`);
-      dispatch(showAllShoppingLists(data));
+      dispatch(showShoppingListHistory(data));
     } catch (error) {
       console.log(error);
     }
@@ -65,8 +64,10 @@ export const fetchCurrentShoppingList = (id) => {
 
 export const editListThunk = (itemId, userId, quantity) => {
   return async (dispatch) => {
+    console.log('quantity: ', quantity)
     try {
       const { data } = await axios.put(`/api/shoppinglist?userId=${userId}`, { itemId, quantity })
+      console.log('data', data)
       dispatch(editList(data))
     } catch (error) {
       console.log(error)
@@ -83,14 +84,7 @@ const shoppingListReducer = (state = initialState, action) => {
     case SHOPPING_HISTORY:
       return  { ...state, shoppingHistory: action.shoppingHistory }
     case EDIT_LIST:
-      console.log('action: ', action)
-      // let newList = state.currentList
-      // if (action.quantity === 0) {
-      //   delete newList[action.productId]
-      //   return newList
-      // }
-      // newList[action.]
-      return { ...state }
+    return { ...state, currentList: action.currentList }
     default:
       return state;
   }

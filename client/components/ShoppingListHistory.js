@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchAllShoppingLists } from '../store/ShoppingList';
+import { fetchShoppingListHistory } from '../store/ShoppingList';
 
 const ShoppingList = () => {
   const { id } = useSelector((state) => state.auth);
@@ -9,7 +9,7 @@ const ShoppingList = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchAllShoppingLists(id));
+    dispatch(fetchShoppingListHistory(id));
   }, []);
 
   const { shoppingHistory } = shoppingList || []

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchCurrentShoppingList, fetchAllShoppingLists, editListThunk } from '../store/ShoppingList';
+import { fetchCurrentShoppingList, fetchShoppingListHistory, editListThunk } from '../store/ShoppingList';
 
 const ShoppingList = () => {
   const { id } = useSelector((state) => state.auth);
@@ -10,15 +10,15 @@ const ShoppingList = () => {
 
   useEffect(() => {
     dispatch(fetchCurrentShoppingList(id));
-    dispatch(fetchAllShoppingLists(id))
+    dispatch(fetchShoppingListHistory(id))
   }, []);
+
+  const { name } = currentList || ''
+  const { ingredients } = currentList || []
 
   async function handleChange(itemId, userId, quantity) {
     dispatch(editListThunk(itemId, userId, quantity))
   }
-
-  const { name } = currentList || ''
-  const { ingredients } = currentList || []
 
   return (
   <div>
