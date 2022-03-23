@@ -1,4 +1,11 @@
-import { Card, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import {
+  Card,
+  ListGroup,
+  ListGroupItem,
+  Button,
+  Popover,
+  OverlayTrigger,
+} from 'react-bootstrap';
 import React, { useState } from 'react';
 import { addFood, updateFood } from '../store/foods';
 import { useSelector, useDispatch } from 'react-redux';
@@ -58,12 +65,27 @@ const NewFood = () => {
     }
   };
 
+  const popover = (
+    <Popover>
+      <Popover.Header>Add an Image URL</Popover.Header>
+      <Popover.Body>
+        <input type="text" name="image" onChange={handleUpdate} />
+      </Popover.Body>
+    </Popover>
+  );
+
   return (
     <Card>
-      <Card.Img
-        variant="top"
-        src="https://media.istockphoto.com/vectors/add-photo-icon-vector-id1136809322"
-      />
+      <OverlayTrigger trigger="click" placement="right" overlay={popover}>
+        <Card.Img
+          variant="top"
+          src={
+            newFood.image
+              ? newFood.image
+              : 'https://media.istockphoto.com/vectors/add-photo-icon-vector-id1136809322'
+          }
+        />
+      </OverlayTrigger>
       <Card.Body>
         <ListGroup>
           <ListGroupItem>
