@@ -23,7 +23,9 @@ const Recipes = () => {
         <h1>My Recipes</h1>
       </div>
       <div className="addRecipeBtnContainer">
-        <button>Add Recipe</button>
+        <Link to="/recipes/add">
+          <button>Add Recipe</button>
+        </Link>
       </div>
       <div className="recipeCardContainer">
         {recipes.map((recipe) => {

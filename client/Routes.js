@@ -10,6 +10,7 @@ import Pantries from './components/Pantries';
 import Food from './components/Food';
 import Recipes from './components/Recipes';
 import SingleRecipe from './components/SingleRecipe';
+import AddRecipe from './components/AddRecipe';
 
 /**
  * COMPONENT
@@ -32,6 +33,7 @@ const Routes = () => {
           <Route path="/pantries" component={Pantries} />
           <Route path="/foods" component={Food} />
           <Route exact path="/recipes" component={Recipes} />
+          <Route path="/recipes/add" component={AddRecipe} />
           <Route path="/recipes/:id" component={SingleRecipe} />
           <Route path="/home" component={Home} />
           <Redirect to="/home" />
