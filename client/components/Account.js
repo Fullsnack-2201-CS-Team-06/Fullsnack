@@ -25,7 +25,7 @@ const Account = () => {
   }, [auth]);
 
   return showForm ? (
-    <div>
+    <div className={styles.container}>
       <AccountUpdate />
       <button type="button" onClick={toggleStatus}>
         Cancel
