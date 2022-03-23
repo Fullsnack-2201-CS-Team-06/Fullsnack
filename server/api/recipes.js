@@ -24,7 +24,12 @@ router.get('/', async (req, res, next) => {
 // GET /api/recipes/:id
 router.get('/:id', async (req, res, next) => {
   try {
-    const recipe = await Recipe.findByPk(req.params.id);
+    const recipe = await Recipe.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: Ingredient,
+    });
 
     if (!recipe) {
       next({ status: 404, message: `Recipe no. ${req.params.id} not found.` });

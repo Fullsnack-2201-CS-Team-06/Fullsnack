@@ -6,12 +6,14 @@ import auth from './auth';
 // import pantryReducer from './pantry'
 import pantriesReducer from './pantries';
 import recipesReducer from './recipes';
+import singleRecipeReducer from './singleRecipe';
 
 const reducer = combineReducers({
   auth: auth,
   //  pantry: pantryReducer,
   pantries: pantriesReducer,
   recipes: recipesReducer,
+  singleRecipe: singleRecipeReducer,
 });
 
 const middleware = composeWithDevTools(
