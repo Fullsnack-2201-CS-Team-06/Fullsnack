@@ -10,8 +10,10 @@ const RecRecipes = () => {
 
   //Get all the recommended recipes not associated with the current user.
   useEffect(() => {
-    dispatch(showRecRecipes(id));
+    dispatch(showRecRecipes());
   }, []);
+
+  console.log('recRecipes: ', recRecipes);
 
   return <div>HI</div>;
 };

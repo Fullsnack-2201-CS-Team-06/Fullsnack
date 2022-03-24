@@ -14,10 +14,10 @@ const _showRecRecipes = (recRecipes) => {
 // THUNKS
 
 //NOTE: This just gets all the recipes not assigned to the user. When we link up the api, we will need to pass user preferences data to retrieve the right results.
-export const showRecRecipes = (userId) => {
+export const showRecRecipes = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`api/recipes/recs?userId=${userId}`);
+      const { data } = await axios.get('api/recipes/recs');
       dispatch(_showRecRecipes(data));
     } catch (error) {
       console.error('Failed to retrieve the recipe recommendations', error);
