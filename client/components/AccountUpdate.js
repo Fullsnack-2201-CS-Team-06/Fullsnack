@@ -4,6 +4,7 @@ import { update } from '../store/auth';
 import styles from './AccountUpdate.module.css';
 import AccountPWUpdate from './AccountPWUpdate';
 
+//Note: Correct typo in 'Japanese' in the model definition
 const cuisines = [
   'American',
   'Asian',
@@ -26,6 +27,15 @@ const cuisines = [
   'No Preference',
 ];
 
+const diets = [
+  'Balanced',
+  'High-Fiber',
+  'High-Protein',
+  'Low-Carb',
+  'Low-Fat',
+  'Low-Sodium',
+];
+
 const AccountUpdate = () => {
   const { username, email, cuisinePref, diet, health } = useSelector(
     (state) => state.auth
@@ -43,6 +53,10 @@ const AccountUpdate = () => {
 
   const dispatch = useDispatch();
   const handleSubmit = () => {
+    //Avoid email validation hook. If the email is blank, set to null to avoid input on model creation.
+    if (newAccount.email.length === 0) {
+      newAccount.email = null;
+    }
     dispatch(update(newAccount));
   };
 
@@ -92,12 +106,20 @@ const AccountUpdate = () => {
       </div>
       <div>
         <label htmlFor="diet">Diet: </label>
-        <input
+        <select name="diet" value={newAccount.diet} onChange={handleChange}>
+          <option value="">Choose A Diet Option</option>
+          {diets.map((diet, i) => (
+            <option key={i} value={diet}>
+              {diet}
+            </option>
+          ))}
+        </select>
+        {/* <input
           type="text"
           name="diet"
           value={newAccount.diet}
           onChange={handleChange}
-        />
+        /> */}
       </div>
       <div>
         <label htmlFor="health">Health: </label>
