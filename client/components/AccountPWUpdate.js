@@ -42,6 +42,13 @@ const AccountPWUpdate = () => {
           onChange={handleChange}
         />
       </div>
+      <p>
+        Password Match:{' '}
+        {newPassword.password1 === newPassword.password2 &&
+        newPassword.password1.length > 0
+          ? 'YES'
+          : 'NO'}
+      </p>
       <button type="button" onClick={handleSubmit}>
         Submit Changes
       </button>

@@ -32,11 +32,11 @@ const AccountUpdate = () => {
   );
 
   const [newAccount, setNewAccount] = useState({
-    username,
-    email,
-    cuisinePref,
-    diet,
-    health,
+    username: username || '',
+    email: email || '',
+    cuisinePref: cuisinePref || '',
+    diet: diet || '',
+    health: health || '',
   });
 
   const [showPassword, setPassword] = useState(false);
