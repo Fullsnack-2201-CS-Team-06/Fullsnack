@@ -56,11 +56,15 @@ router.put('/', async(req, res, next) => {
     })
     const { itemId, quantity } = req.body
     const ingredientToUpdate = await Ingredient.findByPk(itemId);
-    if (quantity === 0) pantry.removeIngredient(ingredientToUpdate)
+    if (quantity === 0) await pantry.removeIngredient(ingredientToUpdate)
     else {
-      pantry.addIngredient(ingredientToUpdate, { through: { pantryQty: quantity}})
+      await pantry.addIngredient(ingredientToUpdate, { through: { pantryQty: quantity}})
     }
-    res.send(await Pantry.findByPk(itemId, {include: Ingredient})).status(201);
+    const refreshPantry = await Pantry.findOne({
+      where: { userId: req.query.userId },
+      include: Ingredient,
+    })
+    res.send(refreshPantry)
   } catch (error) {
     next(error)
   }

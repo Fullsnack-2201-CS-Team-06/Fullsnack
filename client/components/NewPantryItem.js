@@ -34,23 +34,23 @@ const newPantryItem = () => {
             <ul>
             <li><label htmlFor="name">Item Name</label>
             <input name="name" value={name} type="text" 
-            onChange={(e => setName(e.target.value))}></input></li>
+            onChange={(e) => setName(e.target.value)}></input></li>
 
             <li><label htmlFor="category">Category</label>
             <input name="category" value={category} type="text"
-            onChange={(e => setCategory(e.target.value))}></input></li>
+            onChange={(e) => setCategory(e.target.value)}></input></li>
 
             <li><label htmlFor="quantity">Quantity</label>
             <input name="quantity" value={quantity} type="text"
-            onChange={(e => setQuantity(e.target.value))}></input></li>
+            onChange={(e) => setQuantity(e.target.value)}></input></li>
 
             <li><label htmlFor="cost">Cost</label>
             <input name="cost" value={cost} type="text"
-            onChange={(e => setCost(e.target.value))}></input></li>
+            onChange={(e) => setCost(e.target.value)}></input></li>
 
             <li><label htmlFor="measurer">Measurer</label>
             <input name="measure" value={measure} type="text"
-            onChange={(e => setMeasure(e.target.value))}></input></li>
+            onChange={(e) => setMeasure(e.target.value)}></input></li>
 
             </ul>
             <br />
