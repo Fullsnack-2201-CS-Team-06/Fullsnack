@@ -55,7 +55,6 @@ router.post('/add', async (req, res, next) => {
     const newPantryItem = await Ingredient.findOrCreate({
       where: { name: name },
       defaults: {
-        name: name,
         uom: quantity,
         category: category
       }
