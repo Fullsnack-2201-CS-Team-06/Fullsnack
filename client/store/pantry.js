@@ -68,7 +68,7 @@ const pantryReducer = (state = initialState, action) => {
     case SHOW_ONE:
       return action.singlePantry;
     case ADD_PANTRY_ITEM:
-      return {...state, singlePantry: action.updatePantry}
+      return action.updatePantry;
     case EDIT_PANTRY:
       return action.editPantry;
     default:
