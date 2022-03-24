@@ -10,7 +10,6 @@ const ShoppingListHistorySingle = ({match}) => {
   const { singleHistory } = shoppingList
   const history = useHistory()
 
-  console.log('singleHistory', singleHistory)
 
   useEffect(() => {
     dispatch(setSingleHistoryView(match.params.listId))

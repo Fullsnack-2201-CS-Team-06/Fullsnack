@@ -88,7 +88,6 @@ const shoppingListReducer = (state = initialState, action) => {
     case SHOPPING_HISTORY:
       return  { ...state, shoppingHistory: action.shoppingHistory }
     case SINGLE_HISTORY_VIEW:
-      console.log('actionnnn', action)
       return { ...state, singleHistory: action.singleHistory}
     case EDIT_LIST:
       return { ...state, currentList: action.currentList }
