@@ -31,9 +31,19 @@ async function seed() {
   //Creating Shopping Lists
   const [margaritaTime, boozeRun, needProduce] = await Promise.all([
     ShoppingList.create({ name: 'margaritaTime' }),
-    ShoppingList.create({ name: 'boozeRun', status: 'closed', totalCost: 72, checkoutDate: Date.now() }),
-    ShoppingList.create({ name: 'needProduce', status: 'closed', totalCost: 12, checkoutDate: Date.now()}),
-  ])
+    ShoppingList.create({
+      name: 'boozeRun',
+      status: 'closed',
+      totalCost: 72,
+      checkoutDate: Date.now(),
+    }),
+    ShoppingList.create({
+      name: 'needProduce',
+      status: 'closed',
+      totalCost: 12,
+      checkoutDate: Date.now(),
+    }),
+  ]);
 
   const admin = await User.findOne({ where: { username: 'admin' } });
 
@@ -50,9 +60,9 @@ async function seed() {
   });
 
   //Setting shopping lists to admin user
-  margaritaTime.setUser(admin)
-  boozeRun.setUser(admin)
-  needProduce.setUser(admin)
+  margaritaTime.setUser(admin);
+  boozeRun.setUser(admin);
+  needProduce.setUser(admin);
 
   const [
     carrot,
@@ -70,6 +80,13 @@ async function seed() {
     rosemary,
     eels,
     maltVinegar,
+    oliveOil,
+    garlic,
+    tomatoSauce,
+    chicken,
+    milk,
+    flour,
+    pork,
   ] = await Promise.all([
     Ingredient.create({
       name: 'carrot',
@@ -208,6 +225,51 @@ async function seed() {
       fatsPerUnit: 0,
     }),
     // --- ABOVE: Ingredients added by Evan 3/22/22 ---
+    // --- BELOW: Ingredients added by David 3/24/22 ---
+    Ingredient.create({
+      name: 'olive oil',
+      uom: 'cup',
+      type: 'miscellaneous',
+      caloriesPerUnit: 1920,
+      proteinPerUnit: 0,
+      carbsPerUnit: 0,
+      fatsPerUnit: 224,
+    }),
+    Ingredient.create({
+      name: 'garlic',
+      uom: 'each',
+      type: 'produce',
+      caloriesPerUnit: 5,
+      proteinPerUnit: 0.2,
+      carbsPerUnit: 1,
+      fatsPerUnit: 0,
+    }),
+    Ingredient.create({
+      name: 'tomato sauce',
+      uom: 'oz',
+      type: 'dry goods',
+    }),
+    Ingredient.create({
+      name: 'chicken',
+      uom: 'lb',
+      type: 'meat',
+    }),
+    Ingredient.create({
+      name: 'milk',
+      uom: 'fl oz',
+      type: 'dairy',
+    }),
+    Ingredient.create({
+      name: 'flour',
+      uom: 'cup',
+      type: 'bakery',
+    }),
+    Ingredient.create({
+      name: 'pork',
+      uom: 'lb',
+      type: 'meat',
+    }),
+    // --- ABOVE: Ingredients added by David 3/24/22 ---
   ]);
 
   // --- BELOW: Recipes added by Evan 3/22/22 ---
@@ -271,14 +333,67 @@ async function seed() {
   ]);
   // --- ABOVE: Recipes added by Evan 3/22/22 ---
 
-//ShoppingList
-  await boozeRun.addIngredient(wine, { through: { sliQuantity: 2, cost: 11, uom: 'floz' } })
-  await boozeRun.addIngredient(bourbon, { through: { sliQuantity: 1, cost: 50, uom: 'floz' } })
+  // --- BELOW: Recommended recipes added by David 3/24/22 ---
+  const [penneArrabiata, naan, maboTofu] = await Promise.all([
+    Recipe.create({
+      name: 'penne arrabiata',
+      description:
+        'Read more: https://www.allrecipes.com/recipe/77758/brooklyn-girls-penne-arrabiata/#nutrition',
+      rating: 4,
+      caloriesPerRecipe: 588,
+      proteinPerRecipe: 33.6,
+      carbsPerRecipe: 75.3,
+      fatPerRecipe: 16.5,
+      image:
+        'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F364692.jpg',
+      cuisineType: 'Italian',
+    }),
+    Recipe.create({
+      name: 'naan',
+      description: 'Read more: https://www.allrecipes.com/recipe/14565/naan/',
+      rating: 5,
+      caloriesPerRecipe: 52,
+      proteinPerRecipe: 0.8,
+      carbsPerRecipe: 4.1,
+      fatPerRecipe: 3.7,
+      image:
+        'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F-0001%2F11%2F30%2F1016308.jpg',
+      cuisineType: 'Indian',
+    }),
+    Recipe.create({
+      name: 'mabo tofu',
+      description:
+        'Read more: https://www.allrecipes.com/recipe/164254/chinese-mabo-tofu/',
+      rating: 5,
+      caloriesPerRecipe: 268,
+      proteinPerRecipe: 22.3,
+      carbsPerRecipe: 8.3,
+      fatPerRecipe: 17.4,
+      image:
+        'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F371930.jpg',
+      cuisineType: 'Chinese',
+    }),
+  ]);
+  // --- ABOVE: Recommended recipes added by David 3/24/22 ---
 
-  await margaritaTime.addIngredient(carrot, { through: { sliQuantity: 6, cost: 2, uom: 'lb' } })
-  await margaritaTime.addIngredient(mochi, { through: { sliQuantity: 2, cost: 10, uom: 'unit' } })
+  //ShoppingList
+  await boozeRun.addIngredient(wine, {
+    through: { sliQuantity: 2, cost: 11, uom: 'floz' },
+  });
+  await boozeRun.addIngredient(bourbon, {
+    through: { sliQuantity: 1, cost: 50, uom: 'floz' },
+  });
 
-  await needProduce.addIngredient(carrot, { through: { sliQuantity: 10, cost: 2, uom: 'lb' } })
+  await margaritaTime.addIngredient(carrot, {
+    through: { sliQuantity: 6, cost: 2, uom: 'lb' },
+  });
+  await margaritaTime.addIngredient(mochi, {
+    through: { sliQuantity: 2, cost: 10, uom: 'unit' },
+  });
+
+  await needProduce.addIngredient(carrot, {
+    through: { sliQuantity: 10, cost: 2, uom: 'lb' },
+  });
 
   //Pantry
   await pantry.addIngredient(carrot, {
@@ -326,6 +441,20 @@ async function seed() {
   await pieAndMash.addIngredient(groundBeef, { through: { recipeQty: 1 } });
   await pieAndMash.addIngredient(fishStock, { through: { recipeQty: 16 } });
   // --- ABOVE: Ingredients added to recipes by Evan 3/22/22 ---
+  // --- BELOW: Ingredients added to recipes by David 3/24/22 ---
+  await penneArrabiata.addIngredient(oliveOil, { through: { recipeQty: 0.5 } });
+  await penneArrabiata.addIngredient(garlic, { through: { recipeQty: 6 } });
+  await penneArrabiata.addIngredient(tomatoSauce, {
+    through: { recipeQty: 0.5 },
+  });
+  await penneArrabiata.addIngredient(chicken, { through: { recipeQty: 1 } });
+  await naan.addIngredient(milk, { through: { recipeQty: 1.5 } });
+  await naan.addIngredient(eggs, { through: { recipeQty: 1 } });
+  await naan.addIngredient(flour, { through: { recipeQty: 4.5 } });
+  await maboTofu.addIngredient(pork, { through: { recipeQty: 0.5 } });
+  await maboTofu.addIngredient(garlic, { through: { recipeQty: 2 } });
+  await maboTofu.addIngredient(tofu, { through: { recipeQty: 16 } });
+  // --- ABOVE: Ingredients added to recipes by David 3/24/22 ---
 
   // --- BELOW: Recipes added to Users by Evan 3/22/22 ---
   await admin.addRecipe(jelliedEels);
@@ -338,7 +467,7 @@ async function seed() {
   await pantry2.setUser(admin);
   await pantry3.setUser(admin);
 
-  console.log(User.prototype)
+
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
   return {
