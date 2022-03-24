@@ -13,9 +13,9 @@ export const showOne = (singlePantry) => ({
   singlePantry,
 });
 
-export const addPantryItem = (addPantryItem) => ({
+export const updatePantry = (updatePantry) => ({
   type: ADD_PANTRY_ITEM,
-  addPantryItem,
+  updatePantry,
 });
 
 export const editPantry = (editPantry) => ({
@@ -40,7 +40,7 @@ export const addPantryItemThunk = (itemUpdate) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`/api/pantries/add`, itemUpdate);
-      dispatch(addPantryItem(data));
+      dispatch(updatePantry(data));
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +68,7 @@ const pantryReducer = (state = initialState, action) => {
     case SHOW_ONE:
       return action.singlePantry;
     case ADD_PANTRY_ITEM:
-      return action.addPantryItem;
+      return {...state, singlePantry: action.updatePantry}
     case EDIT_PANTRY:
       return action.editPantry;
     default:

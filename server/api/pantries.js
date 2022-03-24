@@ -59,10 +59,11 @@ router.post('/add', async (req, res, next) => {
     })
 
     const currentPantry = await Pantry.findByPk(id)    
-
     await currentPantry.addIngredients(newItem, { through: { pantryQty: quantity }})
+    const updatedPantry = await Pantry.findByPk(id,
+      {include: Ingredient})    
 
-    res.send(newItem)
+    res.send(updatedPantry)
   } catch (error) {
     next(error)
   }
