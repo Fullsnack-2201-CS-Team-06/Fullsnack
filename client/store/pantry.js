@@ -70,6 +70,7 @@ const pantryReducer = (state = initialState, action) => {
     case SHOW_ONE: 
     return action.singlePantry
     case ADD_PANTRY_ITEM:
+      console.log("ADD PANTRY ITEM RAN")
       return action.addPantryItem
     case EDIT_PANTRY:
       return action.editPantry
