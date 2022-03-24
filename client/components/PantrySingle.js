@@ -16,6 +16,7 @@ const PantrySingle = ({ match }) => {
   const { ingredients } = pantry || [];
 
   console.log("here's my pantry", pantry)
+  console.log("here's ingredients", ingredients)
 
   useEffect(() => {
     dispatch(fetchOnePantry(match.params.id));

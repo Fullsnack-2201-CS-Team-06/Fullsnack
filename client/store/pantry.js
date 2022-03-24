@@ -13,7 +13,12 @@ export const showOne = (singlePantry) => ({
     singlePantry
 })
 
-export const editPantry = (currentPantry) => ({
+export const addPantryItem = (addPantryItem) => ({
+  type: ADD_PANTRY_ITEM,
+  addPantryItem
+})
+
+export const editPantry = (editPantry) => ({
   type: EDIT_PANTRY,
   editPantry
 })
@@ -46,12 +51,13 @@ export const fetchOnePantry = (id) => {
   }
 
 
-const initialState = [];
+const initialState = {};
 
 const pantryReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SHOW_ONE:
+    case SHOW_ONE: {
     return action.singlePantry
+  }
     case EDIT_PANTRY:
       return action.editPantry
     default:
