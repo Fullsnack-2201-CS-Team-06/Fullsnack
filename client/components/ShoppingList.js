@@ -11,6 +11,7 @@ const ShoppingList = () => {
   const { currentList } = shoppingList
   const [selectedPantry, setSelectedPantry] = useState(pantries[0]);
   const history = useHistory()
+  const [newPantry, setNewPantry] = useState('')
 
   useEffect(() => {
     dispatch(fetchCurrentShoppingList(id));
@@ -83,7 +84,14 @@ const ShoppingList = () => {
             {pantry.name}
           </option>
         ))}
+        <option value={-1}>Create New Pantry</option>
       </select>
+      {selectedPantry < 0 ?
+      <form>
+        <label htmlFor='name' >Pantry Name: </label>
+        {/* <input type='text' name='name' value={newPantry.name} onSubmit={() => dispatch()} /> */}
+      </form> :
+      <form></form>}
       <button name='button' onClick={() => handleSubmit()}>Send list to Pantry</button>
       <p>Total # of unique items: {length}</p>
       <p>Estimated Total Cost: ${totalCost}</p>
