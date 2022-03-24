@@ -49,13 +49,11 @@ router.post('/', async (req, res, next) => {
 router.post('/add', async (req, res, next) => {
   try {
     const { id, name, category, quantity, cost, measure } = req.body;
+    console.log("WHAT IS MY CATEGORY", category)
 
     const [newItem, wasCreated] = (newPantryItem =
       await Ingredient.findOrCreate({
         where: { name: name },
-        // defaults:{
-        //   name: name,
-        // }
       }));
 
     const currentPantry = await Pantry.findByPk(id);
