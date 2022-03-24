@@ -47,6 +47,31 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+// POST /api/pantries
+router.post('/', async (req, res, next) => {
+  try {
+    console.log("HIT TRY CATCH.")
+    const { id, name, category, quantity, cost, measure } = req.body
+    const newPantryItem = await Ingredient.findOrCreate({
+      where: { name: name },
+      defaults: {
+        name: name,
+        uom: quantity,
+        category: category
+      }
+    })
+
+    const currentPantry = Pantry.findByPk(id)
+
+    await currentPantry.addIngredient(newPantryItem)
+
+    console.log("NEW PANTRY ITEM", newPantryItem)
+    res.send()
+  } catch (error) {
+    
+  }
+});
+
 // PUT /api/pantries?userId=1
 router.put('/', async(req, res, next) => {
   try {
@@ -69,7 +94,6 @@ router.put('/', async(req, res, next) => {
     next(error)
   }
 })
-
 
 // PUT /api/pantries/:id
 router.put('/:id', async (req, res, next) => {

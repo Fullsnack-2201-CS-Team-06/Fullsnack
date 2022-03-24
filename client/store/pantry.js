@@ -39,7 +39,7 @@ export const fetchOnePantry = (id) => {
   export const addPantryThunk = (addPantryItem) => {
     return async(dispatch) => {
       try {
-        const { data } = await axios.post(`/`)
+        const { data } = await axios.post(`/api/pantries`, addPantryItem)
         dispatch(addPantryItem(data))
       } catch (error) {
         console.log(error)
