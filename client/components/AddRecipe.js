@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addNewRecipe } from '../store/recipes';
+import { getFoods } from '../store/foods';
 
 const AddRecipe = () => {
   const [name, setName] = useState('');
@@ -9,15 +10,48 @@ const AddRecipe = () => {
   const [rating, setRating] = useState('');
   const [cuisineType, setCuisineType] = useState('');
   const [image, setImage] = useState('');
+  const [inputFields, setInputFields] = useState([
+    {
+      name: '',
+      uom: '',
+      recipeQty: '',
+    },
+  ]);
 
-  const { userId } = useSelector((state) => {
+  const { userId, foods } = useSelector((state) => {
     return {
       userId: state.auth.id,
+      foods: state.foods,
     };
   });
 
+  useEffect(() => {
+    dispatch(getFoods(userId));
+  }, []);
+
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const addIngredient = () => {
+    let newIngredient = {
+      name: '',
+      UOM: '',
+      recipeQty: '',
+    };
+    setInputFields([...inputFields, newIngredient]);
+  };
+
+  const removeIngredient = (index) => {
+    let data = [...inputFields];
+    data.splice(index, 1);
+    setInputFields(data);
+  };
+
+  const handleChange = (index, e) => {
+    let data = [...inputFields];
+    data[index][e.target.name] = e.target.value;
+    setInputFields(data);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,6 +63,7 @@ const AddRecipe = () => {
         cuisineType,
         image,
         userId,
+        inputFields,
       })
     );
     history.push('/recipes');
@@ -107,9 +142,57 @@ const AddRecipe = () => {
 
         <br />
         <br />
-        <button type="submit">Save</button>
-        <button onClick={() => history.push('/recipes')}>Cancel</button>
+
+        <div>
+          <h4>Ingredients</h4>
+          {inputFields.map((input, index) => {
+            return (
+              <div key={index}>
+                <label htmlFor="name">Name</label>
+                <input
+                  name="name"
+                  list="allFoods"
+                  value={input.name}
+                  onChange={(e) => handleChange(index, e)}
+                  autoComplete="on"
+                />
+
+                <datalist id="allFoods">
+                  {foods.map((food) => (
+                    <option key={food.id}>{food.name}</option>
+                  ))}
+                </datalist>
+
+                <label htmlFor="uom">UOM</label>
+                <input
+                  type="text"
+                  name="uom"
+                  value={input.uom}
+                  onChange={(e) => handleChange(index, e)}
+                />
+
+                <label htmlFor="recipeQty">Qty</label>
+                <input
+                  type="number"
+                  name="recipeQty"
+                  value={input.recipeQty}
+                  onChange={(e) => handleChange(index, e)}
+                />
+
+                <button onClick={removeIngredient}>Remove</button>
+              </div>
+            );
+          })}
+          <br />
+          <button type="button" onClick={addIngredient}>
+            Add Ingredient
+          </button>
+        </div>
       </form>
+      <br />
+      <br />
+      <button type="submit">Save</button>
+      <button onClick={() => history.push('/recipes')}>Cancel</button>
     </div>
   );
 };
