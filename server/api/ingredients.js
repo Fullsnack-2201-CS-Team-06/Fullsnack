@@ -68,6 +68,31 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+//GET api/ingredients/pantries?userId=INT
+// Get all the foods in all the pantries. Use this data to sort recipes that we can already make with the foods we have. This creates duplicates, which are dealt with in sorting on the front-end.
+router.get('/pantries', async (req, res, next) => {
+  try {
+    let ingredients = [];
+
+    //Get all the pantries of the user and their associated ingredients.
+    const pantries = await Pantry.findAll({
+      where: { userId: req.query.userId },
+      include: Ingredient,
+    });
+
+    if (pantries.length > 0) {
+      //Get all the ingredients associated with all the user's pantries.
+      ingredients = pantries.reduce((prev, pantry) => {
+        return prev.concat(pantry.ingredients);
+      }, []);
+    }
+
+    res.send(ingredients);
+  } catch (error) {
+    next(error);
+  }
+});
+
 //POST api/ingredients?userId=INT
 router.post('/', async (req, res, next) => {
   try {

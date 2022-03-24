@@ -6,10 +6,9 @@ const Pantry = require('../db/models/Pantry');
 //GET /api/pantries?userId=1
 router.get('/', async (req, res, next) => {
   try {
-    console.log("Did we get to our ALL")
     const pantries = await Pantry.findAll({
       where: { userId: req.query.userId },
-       include: Ingredient 
+      include: Ingredient,
     });
     if (!pantries) {
       next({ status: 404, message: 'No pantries found for this userId' });
@@ -23,10 +22,9 @@ router.get('/', async (req, res, next) => {
 //GET /api/pantries/:pantryId
 router.get('/:pantryId', async (req, res, next) => {
   try {
-    const singlePantry = await Pantry.findByPk(
-      req.params.pantryId,
-      { include: Ingredient }
-    );
+    const singlePantry = await Pantry.findByPk(req.params.pantryId, {
+      include: Ingredient,
+    });
     if (!singlePantry) {
       next({ status: 404, message: 'No pantries found for this userId' });
     }
@@ -47,25 +45,53 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+// POST /api/pantries/add
+router.post('/add', async (req, res, next) => {
+  try {
+    const { id, name, category, quantity, cost, measure } = req.body;
+    console.log("WHAT IS MY CATEGORY", category)
+
+    const [newItem, wasCreated] = (newPantryItem =
+      await Ingredient.findOrCreate({
+        where: { name: name },
+      }));
+
+    const currentPantry = await Pantry.findByPk(id);
+    await currentPantry.addIngredients(newItem, {
+      through: { pantryQty: quantity },
+    });
+    const updatedPantry = await Pantry.findByPk(id, { include: Ingredient });
+
+    res.send(updatedPantry);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // PUT /api/pantries?userId=1
-router.put('/', async(req, res, next) => {
+router.put('/', async (req, res, next) => {
   try {
     const pantry = await Pantry.findOne({
       where: { userId: req.query.userId },
       include: Ingredient,
-    })
-    const { itemId, quantity } = req.body
+    });
+    const { itemId, quantity } = req.body;
     const ingredientToUpdate = await Ingredient.findByPk(itemId);
-    if (quantity === 0) pantry.removeIngredient(ingredientToUpdate)
+    if (quantity === 0) await pantry.removeIngredient(ingredientToUpdate);
     else {
-      pantry.addIngredient(ingredientToUpdate, { through: { pantryQty: quantity}})
+      await pantry.addIngredient(ingredientToUpdate, {
+        through: { pantryQty: quantity },
+      });
     }
-    res.send(pantry).status(201);
+    const refreshPantry = await Pantry.findOne({
+      where: { userId: req.query.userId },
+      include: Ingredient,
+    });
+    res.send(refreshPantry);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
-
+});
 
 // PUT /api/pantries/:id
 router.put('/:id', async (req, res, next) => {

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOnePantry, editPantryThunk } from '../store/pantry';
 
@@ -15,21 +16,20 @@ const PantrySingle = ({ match }) => {
   const  pantry  = useSelector((state) => state.pantry);
   const { ingredients } = pantry || [];
 
-  console.log("here's my pantry", pantry)
-
   useEffect(() => {
     dispatch(fetchOnePantry(match.params.id));
   }, []);
 
   async function handleChange(itemId, userId, quantity){
-    console.log("Handle change fired")
     dispatch(editPantryThunk(itemId, userId, quantity))
   }
 
   return (
     <div className='PantrySingle'>
+      <Link to='/pantries/add'>
+    <button>Add Item</button>
+    </Link>
       <Container>
-        <Button className="addItem">Add Item</Button>
         <Table striped>
           <thead>
             <tr>
