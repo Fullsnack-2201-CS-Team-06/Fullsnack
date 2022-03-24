@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { addPantryItem } from '../store/pantry'
+import { addPantryItemThunk } from '../store/pantry'
 
 const newPantryItem = () => {
     const [name, setName] = useState('');
@@ -12,6 +12,7 @@ const newPantryItem = () => {
     
     const { userId } = useSelector((state) => state.auth)
     const { id } = useSelector((state) => state.pantry)
+    console.log("here's our ID", id)
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -20,7 +21,7 @@ const newPantryItem = () => {
         console.log("Handle Submit fired")
         e.preventDefault();
         dispatch(
-            addPantryItem({
+            addPantryItemThunk({
                 id,
                 name,
                 category,
@@ -28,7 +29,8 @@ const newPantryItem = () => {
                 cost,
                 measure
             })
-        )
+        );
+        history.push(`/pantries/${id}`)
     }
 
     return(<div>

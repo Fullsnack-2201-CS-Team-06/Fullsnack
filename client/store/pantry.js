@@ -36,7 +36,7 @@ export const fetchOnePantry = (id) => {
     };
   };
 
-  export const addPantryThunk = (addPantryItem) => {
+  export const addPantryItemThunk = (addPantryItem) => {
     return async(dispatch) => {
       try {
         console.log("ADD PANTRY THUNK FIRED.")
