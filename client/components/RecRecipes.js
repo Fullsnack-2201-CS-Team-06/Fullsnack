@@ -6,13 +6,14 @@ import { showRecRecipes } from '../store/recRecipes';
 const RecRecipes = () => {
   const { id } = useSelector((state) => state.auth);
   const { recRecipes } = useSelector((state) => state);
-
   const dispatch = useDispatch();
+
+  //Get all the recommended recipes not associated with the current user.
   useEffect(() => {
     dispatch(showRecRecipes(id));
   }, []);
 
-  return;
+  return <div>HI</div>;
 };
 
 export default RecRecipes;
