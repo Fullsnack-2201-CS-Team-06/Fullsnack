@@ -59,6 +59,13 @@ const RecRecipes = () => {
 
   recRecipes = sortByAvailablility(recRecipes);
 
+  //TEST
+  fetch(
+    'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&diet=low-carb&cuisineType=Chinese'
+  )
+    .then((response) => response.json())
+    .then((data) => console.log('API RESPONSE: ', data));
+
   return (
     <div className={styles.container}>
       <h1>Recommended Recipes</h1>
