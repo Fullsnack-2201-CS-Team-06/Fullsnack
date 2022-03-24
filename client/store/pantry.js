@@ -39,7 +39,6 @@ export const fetchOnePantry = (id) => {
   export const editPantryThunk = (itemId, userId, quantity) => {
     return async(dispatch) => {
       try {
-        console.log("EDIT PANTRY THUNK ==== FIRED")
         const { data } = await axios.put(`/api/pantries?userId=${userId}`, {
           itemId, quantity
         })

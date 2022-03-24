@@ -60,7 +60,7 @@ router.put('/', async(req, res, next) => {
     else {
       pantry.addIngredient(ingredientToUpdate, { through: { pantryQty: quantity}})
     }
-    res.send(pantry).status(201);
+    res.send(await Pantry.findByPk(itemId, {include: Ingredient})).status(201);
   } catch (error) {
     next(error)
   }
