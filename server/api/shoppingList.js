@@ -54,15 +54,16 @@ router.put('/', async (req, res, next) => {
       include: Ingredient,
     })
     const { itemId, quantity } = req.body
-
-    console.log('quantity backend', quantity)
-
     const ingredientToUpdate = await Ingredient.findByPk(itemId)
     if (quantity === 0) shoppingList.removeIngredient(ingredientToUpdate)
     else {
-      shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: quantity }})
+      await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: quantity }})
     }
-    res.send(shoppingList)
+    const refreshList = await ShoppingList.findOne({
+      where: { userId: req.query.userId, status: 'open' },
+      include: Ingredient,
+    })
+    res.send(refreshList)
   } catch (error) {
     next(error)
   }

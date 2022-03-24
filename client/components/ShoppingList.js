@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchCurrentShoppingList, fetchShoppingListHistory, editListThunk } from '../store/ShoppingList';
@@ -15,6 +15,11 @@ const ShoppingList = () => {
 
   const { name } = currentList || ''
   const { ingredients } = currentList || []
+  const { totalCost } = currentList || 0
+  let length = 0
+  if (ingredients) {
+    length = ingredients.length
+  }
 
   async function handleChange(itemId, userId, quantity) {
     dispatch(editListThunk(itemId, userId, quantity))
@@ -55,6 +60,10 @@ const ShoppingList = () => {
   }
   </tbody>
 </table>
+    <div>
+      <p>Total # of unique items: {length}</p>
+      <p>Estimated Total Cost: ${totalCost}</p>
+    </div>
   </div>
   );
 };

@@ -64,10 +64,8 @@ export const fetchCurrentShoppingList = (id) => {
 
 export const editListThunk = (itemId, userId, quantity) => {
   return async (dispatch) => {
-    console.log('quantity: ', quantity)
     try {
       const { data } = await axios.put(`/api/shoppinglist?userId=${userId}`, { itemId, quantity })
-      console.log('data', data)
       dispatch(editList(data))
     } catch (error) {
       console.log(error)
