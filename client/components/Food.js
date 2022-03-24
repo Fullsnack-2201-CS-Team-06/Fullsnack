@@ -38,8 +38,8 @@ const Food = () => {
       </div>
       <div className={styles.foodcards}>
         <NewFood />
-        {foods.map((food) => (
-          <SingleFood key={food.id} food={food} />
+        {foods.map((food, i) => (
+          <SingleFood key={i} food={food} />
         ))}
       </div>
     </div>

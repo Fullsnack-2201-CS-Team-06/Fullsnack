@@ -3,6 +3,7 @@ module.exports = router;
 const Recipe = require('../db/models/Recipe');
 const Ingredient = require('../db/models/Ingredient');
 const User = require('../db/models/User');
+const { Op } = require('@sequelize/core');
 
 // GET /api/recipes?userId=1
 router.get('/', async (req, res, next) => {
@@ -17,6 +18,23 @@ router.get('/', async (req, res, next) => {
     }
 
     res.send(recipes);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /api/recipes/recs
+router.get('/recs', async (req, res, next) => {
+  try {
+    // At this stage, we're just getting all the recipes not assigned to any user. With the api, this route will be entirely replaced.
+    const recRecipes = await Recipe.findAll({
+      where: { userId: { [Op.is]: null } },
+      include: Ingredient,
+    });
+    if (!recRecipes) {
+      next({ status: 404, message: 'No recommended recipes found.' });
+    }
+    res.send(recRecipes);
   } catch (error) {
     next(error);
   }
