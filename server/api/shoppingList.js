@@ -20,17 +20,6 @@ router.get('/all', async (req, res, next) => {
   }
 });
 
-// POST /api/shoppingList
-// router.post('/', async (req, res, next) => {
-//   try {
-//     const { name } = req.body;
-//     const newShoppingList = await ShoppingList.create(name);
-//     res.send(newShoppingList);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
 //GET /api/shoppingList?userId=1 status: open
 router.get('/', async (req, res, next) => {
   try {
@@ -38,6 +27,19 @@ router.get('/', async (req, res, next) => {
       where: { userId: req.query.userId, status: 'open' },
       include: Ingredient,
     });
+    if (!shoppingList) {
+      next({ status: 404, message: 'No shopping lists found for this userId' });
+    }
+    res.send(shoppingList);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//GET /api/shoppingList/:listId status: open
+router.get('/:listId', async (req, res, next) => {
+  try {
+    const shoppingList = await ShoppingList.findByPk(req.params.listId, {include: Ingredient })
     if (!shoppingList) {
       next({ status: 404, message: 'No shopping lists found for this userId' });
     }

@@ -22,18 +22,22 @@ const ShoppingList = () => {
   const { ingredients } = currentList || []
   const { totalCost } = currentList || 0
   let length = 0
-  if (ingredients) {
-    length = ingredients.length
-  }
+  if (ingredients) length = ingredients.length
 
   async function handleChange(itemId, userId, quantity) {
     dispatch(editListThunk(itemId, userId, quantity))
   }
 
   async function handleSubmit() {
-    console.log('helooooooooo')
-    dispatch(sendToPantry(id, currentList))
-    history.push(`/pantries/${selectedPantry}`)
+    if (typeof selectedPantry === 'number' && ingredients.length) {
+      dispatch(sendToPantry(id, currentList))
+      history.push(`/pantries/${selectedPantry}`)
+    } else if (typeof selectedPantry === 'number') {
+      window.alert('There are no items to add to your pantry!')
+    } else {
+      dispatch(sendToPantry(id, currentList))
+      history.push(`/pantries/${pantries[0].id}`)
+    }
   }
 
   return (
