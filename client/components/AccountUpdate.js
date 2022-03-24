@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { update } from '../store/auth';
 import styles from './AccountUpdate.module.css';
+import AccountPWUpdate from './AccountPWUpdate';
 
 const cuisines = [
   'American',
@@ -38,6 +39,8 @@ const AccountUpdate = () => {
     health,
   });
 
+  const [showPassword, setPassword] = useState(false);
+
   const dispatch = useDispatch();
   const handleSubmit = () => {
     dispatch(update(newAccount));
@@ -47,7 +50,13 @@ const AccountUpdate = () => {
     setNewAccount({ ...newAccount, [e.target.name]: e.target.value });
   };
 
-  return (
+  const togglePassword = () => {
+    setPassword(true);
+  };
+
+  return showPassword ? (
+    <AccountPWUpdate />
+  ) : (
     <form className={styles.container}>
       <div>
         <label htmlFor="username">Username: </label>
@@ -99,8 +108,11 @@ const AccountUpdate = () => {
           onChange={handleChange}
         />
       </div>
+      <button type="button" onClick={togglePassword}>
+        Change Password
+      </button>
       <button type="button" onClick={handleSubmit}>
-        Submit
+        Submit Changes
       </button>
     </form>
   );
