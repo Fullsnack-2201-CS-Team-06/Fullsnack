@@ -32,11 +32,11 @@ const ShoppingList = () => {
     if (typeof selectedPantry === 'number' && ingredients.length) {
       dispatch(sendToPantry(id, currentList))
       history.push(`/pantries/${selectedPantry}`)
-    } else if (typeof selectedPantry === 'number') {
-      window.alert('There are no items to add to your pantry!')
-    } else {
+    } else if (ingredients.length) {
       dispatch(sendToPantry(id, currentList))
       history.push(`/pantries/${pantries[0].id}`)
+    } else {
+      window.alert('There are no items to add to your pantry!')
     }
   }
 
