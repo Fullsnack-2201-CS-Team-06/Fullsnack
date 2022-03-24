@@ -6,7 +6,6 @@ const Pantry = require('../db/models/Pantry');
 //GET /api/pantries?userId=1
 router.get('/', async (req, res, next) => {
   try {
-    console.log("Did we get to our ALL")
     const pantries = await Pantry.findAll({
       where: { userId: req.query.userId },
        include: Ingredient 
@@ -47,7 +46,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-// POST /api/pantries
+// POST /api/pantries/add
 router.post('/add', async (req, res, next) => {
   try {
     const { id, name, category, quantity, cost, measure } = req.body
@@ -59,16 +58,13 @@ router.post('/add', async (req, res, next) => {
       // }
     })
 
-    // console.log("NEW PANTRY ITEM", newItem)
-
-    const currentPantry = await Pantry.findByPk(id)
-    // console.log("CURRENT PANTRY", currentPantry)
+    const currentPantry = await Pantry.findByPk(id)    
 
     await currentPantry.addIngredients(newItem, { through: { pantryQty: quantity }})
 
-    res.send(newPantryItem)
+    res.send(newItem)
   } catch (error) {
-    
+    next(error)
   }
 });
 

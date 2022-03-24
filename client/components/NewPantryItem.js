@@ -17,7 +17,6 @@ const newPantryItem = () => {
     const history = useHistory();
 
     const handleSubmit = (e) => {
-        console.log("Handle Submit fired")
         e.preventDefault();
         dispatch(
             addPantryItemThunk({
