@@ -50,23 +50,22 @@ router.post('/', async (req, res, next) => {
 // POST /api/pantries
 router.post('/add', async (req, res, next) => {
   try {
-    console.log("We hit our try catch")
     const { id, name, category, quantity, cost, measure } = req.body
-    const newPantryItem = await Ingredient.findOrCreate({
+
+    const [newItem, wasCreated] = newPantryItem = await Ingredient.findOrCreate({
       where: { name: name },
-      defaults:{
-        name: name,
-        uom: category
-      }
+      // defaults:{
+      //   name: name,
+      // }
     })
 
-    console.log("NEW PANTRY ITEM", newPantryItem)
+    // console.log("NEW PANTRY ITEM", newItem)
 
     const currentPantry = await Pantry.findByPk(id)
+    // console.log("CURRENT PANTRY", currentPantry)
 
-    await currentPantry.addIngredient(newPantryItem)
+    await currentPantry.addIngredients(newItem, { through: { pantryQty: quantity }})
 
-    console.log("NEW PANTRY ITEM", newPantryItem)
     res.send(newPantryItem)
   } catch (error) {
     
