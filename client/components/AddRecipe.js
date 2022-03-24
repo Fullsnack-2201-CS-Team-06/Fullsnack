@@ -51,6 +51,21 @@ const AddRecipe = () => {
     let data = [...inputFields];
     data[index][e.target.name] = e.target.value;
     setInputFields(data);
+
+    // If ingredient name === an existing food name, set UOM
+    if (e.target.name === 'name') {
+      // The following only runs if 'name' field changes
+      const foodNames = foods.map((food) => food.name);
+      if (foodNames.includes(e.target.value)) {
+        // The following only runs if 'name' field is included in food names
+        const existingFood = foods.filter(
+          (food) => food.name === e.target.value
+        );
+        const existingUOM = existingFood[0]['uom'];
+        data[index]['uom'] = existingUOM;
+        setInputFields(data);
+      }
+    }
   };
 
   const handleSubmit = (e) => {
@@ -76,21 +91,21 @@ const AddRecipe = () => {
         <label htmlFor="name">Recipe Name</label>
         <input
           name="name"
-          value={name}
+          value={name || ''}
           onChange={(e) => setName(e.target.value)}
         />
 
         <label htmlFor="description">Description</label>
         <textarea
           name="description"
-          value={description}
+          value={description || ''}
           onChange={(e) => setDescription(e.target.value)}
         />
 
         <label htmlFor="rating">Rating</label>
         <select
           name="rating"
-          value={rating}
+          value={rating || ''}
           onChange={(e) => setRating(e.target.value)}
         >
           <option value="" disabled selected>
@@ -106,7 +121,7 @@ const AddRecipe = () => {
         <label htmlFor="cuisineType">Cuisine Type</label>
         <select
           name="cuisineType"
-          value={cuisineType}
+          value={cuisineType || ''}
           onChange={(e) => setCuisineType(e.target.value)}
         >
           <option value="" disabled selected>
@@ -136,7 +151,7 @@ const AddRecipe = () => {
         <label htmlFor="image">Image URL</label>
         <input
           name="image"
-          value={image}
+          value={image || ''}
           onChange={(e) => setImage(e.target.value)}
         />
 
@@ -152,7 +167,7 @@ const AddRecipe = () => {
                 <input
                   name="name"
                   list="allFoods"
-                  value={input.name}
+                  value={input.name || ''}
                   onChange={(e) => handleChange(index, e)}
                   autoComplete="on"
                 />
@@ -167,7 +182,7 @@ const AddRecipe = () => {
                 <input
                   type="text"
                   name="uom"
-                  value={input.uom}
+                  value={input.uom || ''}
                   onChange={(e) => handleChange(index, e)}
                 />
 
@@ -175,11 +190,15 @@ const AddRecipe = () => {
                 <input
                   type="number"
                   name="recipeQty"
-                  value={input.recipeQty}
+                  value={input.recipeQty || ''}
                   onChange={(e) => handleChange(index, e)}
                 />
 
-                <button onClick={removeIngredient}>Remove</button>
+                {index ? (
+                  <button onClick={() => removeIngredient(index)}>
+                    Remove
+                  </button>
+                ) : null}
               </div>
             );
           })}
