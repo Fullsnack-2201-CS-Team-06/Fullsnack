@@ -29,6 +29,7 @@ router.get('/recs', async (req, res, next) => {
     // At this stage, we're just getting all the recipes not assigned to any user. With the api, this route will be entirely replaced.
     const recRecipes = await Recipe.findAll({
       where: { userId: { [Op.is]: null } },
+      include: Ingredient,
     });
     if (!recRecipes) {
       next({ status: 404, message: 'No recommended recipes found.' });

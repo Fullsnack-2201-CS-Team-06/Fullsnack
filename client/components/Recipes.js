@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllRecipes } from '../store/recipes';
 import { Link } from 'react-router-dom';
 import RecRecipes from './RecRecipes';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Recipes = () => {
   const { recipes, auth } = useSelector((state) => {

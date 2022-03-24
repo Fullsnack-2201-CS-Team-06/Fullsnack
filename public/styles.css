@@ -42,11 +42,12 @@ tfoot {
 .recipesPage {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 }
 
 .allRecipesContainer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
 }
 
@@ -65,6 +66,7 @@ tfoot {
   display: flex;
   justify-content: center;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .recipeCard {
