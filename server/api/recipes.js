@@ -22,6 +22,22 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// GET /api/recipes/recs?userId=INT
+router.get('/recs', async (req, res, next) => {
+  try {
+    // At this stage, we're just getting all the recipes not assigned to the user as recommendations. With the api, this route will be entirely replaced.
+    const recRecipes = await Recipe.findAll({
+      where: { userId: !req.query.userId, include: Ingredient },
+    });
+    if (!recRecipes) {
+      next({ status: 404, message: 'No recommended recipes found.' });
+    }
+    res.send(recRecipes);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // GET /api/recipes/:id
 router.get('/:id', async (req, res, next) => {
   try {
