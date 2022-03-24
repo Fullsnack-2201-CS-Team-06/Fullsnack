@@ -10,12 +10,14 @@ import singleRecipeReducer from './singleRecipe';
 import shoppingListReducer from './ShoppingList';
 import foodsReducer from './foods';
 import recRecipesReducer from './recRecipes';
+import pantriesFoodsReducer from './pantriesFoods.js';
 
 const reducer = combineReducers({
   auth: auth,
   pantry: pantryReducer,
   shoppingList: shoppingListReducer,
   pantries: pantriesReducer,
+  pantriesFoods: pantriesFoodsReducer,
   recipes: recipesReducer,
   singleRecipe: singleRecipeReducer,
   recRecipes: recRecipesReducer,

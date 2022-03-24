@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { showRecRecipes } from '../store/recRecipes';
+import { getOurFoods } from '../store/pantriesFoods';
 import styles from './RecRecipes.module.css';
 import { Card, Button, Accordion } from 'react-bootstrap';
 
@@ -8,13 +9,14 @@ import { Card, Button, Accordion } from 'react-bootstrap';
 
 const RecRecipes = () => {
   const { id } = useSelector((state) => state.auth);
-  const { recRecipes } = useSelector((state) => state);
+  let { recRecipes, pantriesFoods } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [currentView, setCurrentView] = useState(null);
 
   //Get all the recommended recipes not associated with the current user.
   useEffect(() => {
     dispatch(showRecRecipes());
+    dispatch(getOurFoods(id)); //Get the ingredients associated with the user to sort results.
   }, []);
 
   console.log('recRecipes: ', recRecipes);
@@ -26,6 +28,36 @@ const RecRecipes = () => {
       setCurrentView(null);
     }
   };
+
+  //Sort the recipes according to those that require the least number of new ingredients. Current issue: Sorting happens on the front-end since we need both the recipe and the food data in the pantries. To get the foods, I wrote a route api/ingredients/pantries?userId=INT which gets the ingredients in all the pantries, but it includes duplicates, since we want to consider the total quantity across all pantries. This data is set on the foods reducer in the store. The allFoods page also uses that reducer, but since there are duplicates, this causes errors on the first render, before that page executes a separate thunk that eliminates duplicates.
+  const sortByAvailablility = (recipes) => {
+    //The total amount we have for each food across our pantries, e.g., {carrot: 4}
+    const combinedTotals = {};
+    pantriesFoods.forEach((food) => {
+      if (combinedTotals[food.name]) {
+        combinedTotals[food.name] += food.pantryIngredient.pantryQty;
+      } else {
+        combinedTotals[food.name] = food.pantryIngredient.pantryQty;
+      }
+    });
+
+    recipes.forEach((recipe) => {
+      recipe['needsIngredients'] = recipe.ingredients.length;
+      recipe.ingredients.forEach((ingredient) => {
+        if (
+          ingredient.recipeIngredient.recipeQty <=
+          combinedTotals[ingredient.name]
+        ) {
+          recipe.needsIngredients -= 1;
+        }
+      });
+    });
+
+    recipes.sort((a, b) => a.needsIngredients - b.needsIngredients);
+    return recipes;
+  };
+
+  recRecipes = sortByAvailablility(recRecipes);
 
   return (
     <div className={styles.container}>
