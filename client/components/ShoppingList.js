@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { fetchCurrentShoppingList, fetchShoppingListHistory, editListThunk } from '../store/ShoppingList';
+import { Link, useHistory } from 'react-router-dom';
+import { fetchCurrentShoppingList, fetchShoppingListHistory, editListThunk, sendToPantry } from '../store/ShoppingList';
 import { fetchAllPantries } from '../store/pantries'
 
 const ShoppingList = () => {
@@ -10,6 +10,7 @@ const ShoppingList = () => {
   const dispatch = useDispatch()
   const { currentList } = shoppingList
   const [selectedPantry, setSelectedPantry] = useState(pantries[0]);
+  const history = useHistory()
 
   useEffect(() => {
     dispatch(fetchCurrentShoppingList(id));
@@ -27,6 +28,12 @@ const ShoppingList = () => {
 
   async function handleChange(itemId, userId, quantity) {
     dispatch(editListThunk(itemId, userId, quantity))
+  }
+
+  async function handleSubmit() {
+    console.log('helooooooooo')
+    dispatch(sendToPantry(id, currentList))
+    history.push(`/pantries/${selectedPantry}`)
   }
 
   return (
@@ -65,15 +72,15 @@ const ShoppingList = () => {
   </tbody>
 </table>
     <div>
-    <select name="pantries" >
+    <select name="pantries" onChange={(e) => setSelectedPantry(e.target.value)} >
         <option value="View All Pantries">Select Pantry</option>
         {pantries.map((pantry) => (
-          <option key={pantry.id} value={pantry.name}>
+          <option key={pantry.id} value={pantry.id}>
             {pantry.name}
           </option>
         ))}
       </select>
-      <button name='button'>Send list to Pantry</button>
+      <button name='button' onClick={() => handleSubmit()}>Send list to Pantry</button>
       <p>Total # of unique items: {length}</p>
       <p>Estimated Total Cost: ${totalCost}</p>
     </div>
