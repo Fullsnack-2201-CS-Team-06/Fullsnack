@@ -14,6 +14,7 @@ import PantrySingle from './components/PantrySingle';
 import Recipes from './components/Recipes';
 import SingleRecipe from './components/SingleRecipe';
 import AddRecipe from './components/AddRecipe';
+import NewPantryItem from './components/NewPantryItem';
 
 /**
  * COMPONENT
@@ -36,6 +37,7 @@ const Routes = () => {
           <Route exact path="/list/history" component={ShoppingListHistoryAll} />
           <Route exact path="/list/:listId" component={ShoppingListHistorySingle} />
           <Route exact path="/pantries" component={Pantries} />
+          <Route path="/pantries/add" component={NewPantryItem} />
           <Route path="/pantries/:id" component={PantrySingle} />
           <Route path="/foods" component={Food} />
           <Route exact path="/recipes" component={Recipes} />
