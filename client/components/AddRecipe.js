@@ -10,7 +10,7 @@ const AddRecipe = () => {
   const [rating, setRating] = useState('');
   const [cuisineType, setCuisineType] = useState('');
   const [image, setImage] = useState('');
-  const [inputFields, setInputFields] = useState([
+  const [ingredients, setIngredients] = useState([
     {
       name: '',
       uom: '',
@@ -38,19 +38,19 @@ const AddRecipe = () => {
       UOM: '',
       recipeQty: '',
     };
-    setInputFields([...inputFields, newIngredient]);
+    setIngredients([...ingredients, newIngredient]);
   };
 
   const removeIngredient = (index) => {
-    let data = [...inputFields];
+    let data = [...ingredients];
     data.splice(index, 1);
-    setInputFields(data);
+    setIngredients(data);
   };
 
   const handleChange = (index, e) => {
-    let data = [...inputFields];
+    let data = [...ingredients];
     data[index][e.target.name] = e.target.value;
-    setInputFields(data);
+    setIngredients(data);
 
     // If ingredient name === an existing food name, set UOM
     if (e.target.name === 'name') {
@@ -63,7 +63,7 @@ const AddRecipe = () => {
         );
         const existingUOM = existingFood[0]['uom'];
         data[index]['uom'] = existingUOM;
-        setInputFields(data);
+        setIngredients(data);
       }
     }
   };
@@ -78,7 +78,7 @@ const AddRecipe = () => {
         cuisineType,
         image,
         userId,
-        inputFields,
+        ingredients,
       })
     );
     history.push('/recipes');
@@ -160,7 +160,7 @@ const AddRecipe = () => {
 
         <div>
           <h4>Ingredients</h4>
-          {inputFields.map((input, index) => {
+          {ingredients.map((input, index) => {
             return (
               <div key={index}>
                 <label htmlFor="name">Name</label>
@@ -194,11 +194,7 @@ const AddRecipe = () => {
                   onChange={(e) => handleChange(index, e)}
                 />
 
-                {index ? (
-                  <button onClick={() => removeIngredient(index)}>
-                    Remove
-                  </button>
-                ) : null}
+                <button onClick={() => removeIngredient(index)}>Remove</button>
               </div>
             );
           })}
@@ -207,11 +203,11 @@ const AddRecipe = () => {
             Add Ingredient
           </button>
         </div>
+        <button type="submit">Save</button>
+        <button onClick={() => history.push('/recipes')}>Cancel</button>
       </form>
       <br />
       <br />
-      <button type="submit">Save</button>
-      <button onClick={() => history.push('/recipes')}>Cancel</button>
     </div>
   );
 };
