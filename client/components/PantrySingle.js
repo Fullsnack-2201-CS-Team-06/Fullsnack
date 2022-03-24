@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOnePantry, editPantryThunk } from '../store/pantry';
-import NewPantryItem from './NewPantryItem'
 
 // import Accordion from 'react-bootstrap/Accordion'
 import Button from 'react-bootstrap/Button';
@@ -26,9 +26,10 @@ const PantrySingle = ({ match }) => {
 
   return (
     <div className='PantrySingle'>
+      <Link to='/pantries/add'>
+    <button>Add Item</button>
+    </Link>
       <Container>
-        <NewPantryItem />
-        <Button className="addItem">Add Item</Button>
         <Table striped>
           <thead>
             <tr>

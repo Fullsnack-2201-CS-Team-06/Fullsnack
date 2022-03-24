@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addPantryItemThunk } from '../store/pantry'
 
-const newPantryItem = () => {
+const NewPantryItem = () => {
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
     const [quantity, setQuantity] = useState('');
     const [cost, setCost] = useState('')
     const [measure, setMeasure] = useState('')
-    
+
     const { userId } = useSelector((state) => state.auth)
     const { id } = useSelector((state) => state.pantry)
 
@@ -89,4 +89,4 @@ const newPantryItem = () => {
 
 }
 
-export default newPantryItem;
+export default NewPantryItem;
