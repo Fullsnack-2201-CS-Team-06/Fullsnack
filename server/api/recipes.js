@@ -45,9 +45,15 @@ router.get('/:id', async (req, res, next) => {
 // POST /api/recipes
 router.post('/', async (req, res, next) => {
   try {
-    const { name, description, rating, image, cuisineType, userId } = req.body;
-
-    console.log('userId: ', userId);
+    const {
+      name,
+      description,
+      rating,
+      image,
+      cuisineType,
+      userId,
+      ingredients,
+    } = req.body;
 
     const newRecipe = await Recipe.create({
       name,
@@ -57,9 +63,31 @@ router.post('/', async (req, res, next) => {
       cuisineType,
     });
 
+    // Find user creating recipe
     const user = await User.findByPk(userId);
 
+    // Associate recipe with user
     await newRecipe.setUser(user);
+
+    // Associate recipe ingredients & qtys with recipe
+    ingredients.map(async (ingredient) => {
+      const ingredientToAdd = await Ingredient.findOne({
+        where: {
+          name: ingredient.name,
+        },
+      });
+
+      if (!ingredientToAdd) {
+        next({
+          status: 404,
+          message: `Ingredient ${ingredient.name} not found.`,
+        });
+      }
+
+      await newRecipe.addIngredient(ingredientToAdd, {
+        through: { recipeQty: ingredient.recipeQty },
+      });
+    });
 
     res.send(newRecipe);
   } catch (error) {
