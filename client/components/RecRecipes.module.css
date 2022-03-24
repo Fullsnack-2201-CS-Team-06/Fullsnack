@@ -19,6 +19,14 @@
   margin: 20px;
 }
 
+.expandedCard {
+  display: flex;
+  flex-direction: column;
+  height: 700px;
+  width: 400px;
+  margin: 20px;
+}
+
 Button {
   width: 250px;
   align-self: center;
