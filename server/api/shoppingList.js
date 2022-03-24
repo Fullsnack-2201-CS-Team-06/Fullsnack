@@ -55,7 +55,7 @@ router.put('/', async (req, res, next) => {
     })
     const { itemId, quantity } = req.body
     const ingredientToUpdate = await Ingredient.findByPk(itemId)
-    if (quantity === 0) shoppingList.removeIngredient(ingredientToUpdate)
+    if (quantity === 0) await shoppingList.removeIngredient(ingredientToUpdate)
     else {
       await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: quantity }})
     }
