@@ -6,7 +6,8 @@ import Home from './components/Home';
 import { me } from './store';
 import Account from './components/Account';
 import ShoppingList from './components/ShoppingList';
-import ShoppingListHistory from './components/ShoppingListHistory'
+import ShoppingListHistoryAll from './components/ShoppingListHistoryAll'
+import ShoppingListHistorySingle from './components/ShoppingListHistorySingle'
 import Pantries from './components/Pantries';
 import Food from './components/Food';
 import PantrySingle from './components/PantrySingle';
@@ -32,7 +33,8 @@ const Routes = () => {
         <Switch>
           <Route path="/account" component={Account} />
           <Route exact path="/list" component={ShoppingList} />
-          <Route exact path="/list/history" component={ShoppingListHistory} />
+          <Route exact path="/list/history" component={ShoppingListHistoryAll} />
+          <Route exact path="/list/:listId" component={ShoppingListHistorySingle} />
           <Route exact path="/pantries" component={Pantries} />
           <Route path="/pantries/:id" component={PantrySingle} />
           <Route path="/foods" component={Food} />

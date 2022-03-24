@@ -1,5 +1,6 @@
 const router = require('express').Router();
 module.exports = router;
+const User = require('../db/models/User');
 const Ingredient = require('../db/models/Ingredient');
 const ShoppingList = require('../db/models/ShoppingList');
 
@@ -14,17 +15,6 @@ router.get('/all', async (req, res, next) => {
       next({ status: 404, message: 'No shopping lists found for this userId' });
     }
     res.send(shoppingLists);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// POST /api/shoppingList
-router.post('/', async (req, res, next) => {
-  try {
-    const { name } = req.body;
-    const newShoppingList = await ShoppingList.create(name);
-    res.send(newShoppingList);
   } catch (error) {
     next(error);
   }
@@ -46,6 +36,19 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+//GET /api/shoppingList/:listId status: open
+router.get('/:listId', async (req, res, next) => {
+  try {
+    const shoppingList = await ShoppingList.findByPk(req.params.listId, {include: Ingredient })
+    if (!shoppingList) {
+      next({ status: 404, message: 'No shopping lists found for this userId' });
+    }
+    res.send(shoppingList);
+  } catch (error) {
+    next(error);
+  }
+});
+
 //PUT /api/shoppingList?userId=1
 router.put('/', async (req, res, next) => {
   try {
@@ -54,37 +57,41 @@ router.put('/', async (req, res, next) => {
       include: Ingredient,
     })
     const { itemId, quantity } = req.body
-
-    console.log('quantity backend', quantity)
-
     const ingredientToUpdate = await Ingredient.findByPk(itemId)
-    if (quantity === 0) shoppingList.removeIngredient(ingredientToUpdate)
+    if (quantity === 0) await shoppingList.removeIngredient(ingredientToUpdate)
     else {
-      shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: quantity }})
+      await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: quantity }})
     }
-    res.send(shoppingList)
+    const refreshList = await ShoppingList.findOne({
+      where: { userId: req.query.userId, status: 'open' },
+      include: Ingredient,
+    })
+    res.send(refreshList)
   } catch (error) {
     next(error)
   }
 })
 
-// PUT /api/shoppingList/
-router.put('/:id', async (req, res, next) => {
+// POST /api/shoppingList?userId=1
+router.post('/', async (req, res, next) => {
   try {
-    const shoppingList = await ShoppingList.findByPk(req.params.id);
+    const shoppingList = await ShoppingList.findOne({
+      where: { userId: req.query.userId, status: 'open' },
+      include: Ingredient,
+    })
     if (!shoppingList) {
       next({ status: 404, message: 'No shopping list found at this id' });
     }
-    const { name, totalCost, checkoutDate } = req.body;
-    if (name === undefined) {
-      next({ status: 404, message: "No 'name' on req.body." });
-    }
-    const result = await shoppingList.update({
-      name,
+    const { totalCost } = req.body;
+    await shoppingList.update({
       totalCost,
-      checkoutDate
+      status: 'closed',
+      checkoutDate: Date.now()
     });
-    res.send(result);
+    const newShoppingList = await ShoppingList.create({ name: 'new shopping list' });
+    const user = await User.findByPk(req.query.userId)
+    await newShoppingList.setUser(user)
+    res.sendStatus(201);
   } catch (error) {
     next(error);
   }

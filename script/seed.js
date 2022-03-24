@@ -467,7 +467,7 @@ async function seed() {
   await pantry2.setUser(admin);
   await pantry3.setUser(admin);
 
-  console.log(ShoppingList.prototype);
+
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
   return {
