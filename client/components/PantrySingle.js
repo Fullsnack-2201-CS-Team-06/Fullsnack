@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOnePantry, editPantryThunk } from '../store/pantry';
 
+
 // import Accordion from 'react-bootstrap/Accordion'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -27,7 +28,7 @@ const PantrySingle = ({ match }) => {
   return (
     <div className='PantrySingle'>
       <Link to='/pantries/add'>
-    <button>Add Item</button>
+    <Button>Add Item</Button>
     </Link>
       <Container>
         <Table striped>

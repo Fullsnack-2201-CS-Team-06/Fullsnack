@@ -3,6 +3,7 @@ import axios from 'axios';
 // ACTION TYPE
 
 const SHOW_ALL = 'SHOW_ALL';
+const CREATE_NEW_PANTRY = 'CREATE_NEW_PANTRY'
 
 // ACTION CREATORS
 
@@ -10,6 +11,11 @@ export const showAll = (allPantries) => ({
   type: SHOW_ALL,
   allPantries,
 });
+
+export const _createNewPantry = (newPantry) => {
+  type: CREATE_NEW_PANTRY,
+  newPantry
+}
 
 // THUNKS
 
