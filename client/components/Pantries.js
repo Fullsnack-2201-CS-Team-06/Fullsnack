@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { fetchAllPantries } from '../store/pantries';
 import Button from 'react-bootstrap/Button';
@@ -9,10 +10,18 @@ const Pantries = () => {
   const { pantries } = useSelector((state) => state);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(fetchAllPantries(id));
   }, []);
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  dispatch()
+
+}
+
 
   return (
     <div>
