@@ -12,7 +12,6 @@ const newPantryItem = () => {
     
     const { userId } = useSelector((state) => state.auth)
     const { id } = useSelector((state) => state.pantry)
-    console.log("here's our ID", id)
 
     const dispatch = useDispatch();
     const history = useHistory();
