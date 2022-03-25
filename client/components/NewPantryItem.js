@@ -4,12 +4,11 @@ import { useHistory } from 'react-router-dom';
 import { addPantryItemThunk } from '../store/pantry';
 
 const NewPantryItem = () => {
+  const { userId } = useSelector((state) => state.auth);
+  const { id } = useSelector((state) => state.pantry);
   const [inputFields, setInputFields] = useState([
     { name: '', category: '', quantity: '', cost: '', measure: '' },
   ]);
-
-  const { userId } = useSelector((state) => state.auth);
-  const { id } = useSelector((state) => state.pantry);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -45,6 +44,7 @@ const NewPantryItem = () => {
     console.log("Did HS fire")
     dispatch(
       addPantryItemThunk({
+        id,
         inputFields
       })
     );
@@ -55,7 +55,7 @@ const NewPantryItem = () => {
     <div>
       <h1>Add Pantry Item</h1>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         {inputFields.map((input, index) => {
           return (
             <div key={index}>
@@ -101,7 +101,7 @@ const NewPantryItem = () => {
               />
 
               <button type="button" onClick={() => addFields()}>Add More Ingredients</button>
-              <button type="submit" onSubmit={() => handleSubmit()}>Submit</button>
+              <button type="submit" onClick={handleSubmit}>Submit</button>
               <button type="button" onClick={() => removeFields(index)}>Remove</button>
             </div>
           );
