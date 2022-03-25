@@ -2,6 +2,7 @@ const router = require('express').Router();
 module.exports = router;
 const Ingredient = require('../db/models/Ingredient');
 const Pantry = require('../db/models/Pantry');
+const User = require('../db/models/User')
 
 //GET /api/pantries?userId=1
 router.get('/', async (req, res, next) => {
@@ -37,11 +38,15 @@ router.get('/:pantryId', async (req, res, next) => {
 // POST /api/pantries
 router.post('/', async (req, res, next) => {
   try {
-    const [nameObj] = req.body;
-    const { name } = nameObj;
+    console.log('backend', req.body);
+    const { name, id } = req.body;
+    const newName = name[0].name;
 
-    const newPantry = await Pantry.create({ name: name });
-    console.log('backend', newPantry);
+    const newPantry = await Pantry.create({ name: newName });
+    const currentUser = await User.findByPk(id);
+
+    await currentUser.addPantry(newPantry)
+
     res.send(newPantry);
   } catch (error) {
     next(error);
@@ -51,18 +56,18 @@ router.post('/', async (req, res, next) => {
 // POST /api/pantries/add
 router.post('/add', async (req, res, next) => {
   try {
-    const { id, inputFields} = req.body
-    const [ foodInfo ] = inputFields
-    const {  name, category, quantity, cost, measure } = foodInfo
+    const { id, inputFields } = req.body;
+    const [foodInfo] = inputFields;
+    const { name, category, quantity, cost, measure } = foodInfo;
 
-    const [newItem, wasCreated] = newPantryItem =
+    const [newItem, wasCreated] = (newPantryItem =
       await Ingredient.findOrCreate({
         where: { name: name },
         defaults: {
           uom: measure,
           category: category,
-        }
-      });
+        },
+      }));
 
     const currentPantry = await Pantry.findByPk(id);
     await currentPantry.addIngredients(newItem, {
