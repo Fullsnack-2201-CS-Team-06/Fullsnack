@@ -4,7 +4,11 @@ import axios from 'axios';
 
 const SHOW_ALL_RECIPES = 'SHOW_ALL_RECIPES';
 const ADD_NEW_RECIPE = 'ADD_NEW_RECIPE';
+
 const ADD_REC_TO_MY_RECIPES = 'ADD_REC_TO_MY_RECIPES';
+
+const UPDATE_RECIPE = 'UPDATE_RECIPE';
+
 
 // Action creators
 
@@ -22,10 +26,17 @@ const _addNewRecipe = (recipe) => {
   };
 };
 
+
 const _addRecRecipe = (recRecipe) => {
   return {
     type: ADD_REC_TO_MY_RECIPES,
     recRecipe,
+
+const _updateRecipe = (recipe) => {
+  return {
+    type: UPDATE_RECIPE,
+    recipe,
+
   };
 };
 
@@ -53,6 +64,7 @@ export const addNewRecipe = (recipe) => {
   };
 };
 
+
 export const addRecToMyRecipes = (recRecipeId, userId) => {
   return async (dispatch) => {
     try {
@@ -62,6 +74,15 @@ export const addRecToMyRecipes = (recRecipeId, userId) => {
       dispatch(_addRecRecipe(data));
     } catch (error) {
       console.error('Failed to add this new recipe recommendation', error);
+
+export const updateRecipe = (recipe) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`/api/recipes/${recipe.id}`, recipe);
+      dispatch(_updateRecipe(data));
+    } catch (error) {
+      console.error('Error in updateRecipe thunk!!\n\n', error);
+
     }
   };
 };
@@ -82,6 +103,11 @@ const recipesReducer = (state = initialState, action) => {
     }
     case ADD_NEW_RECIPE: {
       return [...state, action.recipe];
+    }
+    case UPDATE_RECIPE: {
+      return state.map((recipe) =>
+        recipe.id === action.recipe.id ? action.recipe : recipe
+      );
     }
     default: {
       return state;

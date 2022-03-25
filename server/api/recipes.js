@@ -211,30 +211,47 @@ router.put('/:id', async (req, res, next) => {
       next({ status: 404, message: `Recipe no. ${req.params.id} not found.` });
     }
 
-    const {
-      name,
-      description,
-      rating,
-      caloriesPerRecipe,
-      proteinPerRecipe,
-      carbsPerRecipe,
-      fatPerRecipe,
-      image,
-      cuisineType,
-      frequency,
-    } = req.body;
+    const { name, description, rating, image, cuisineType, ingredients } =
+      req.body;
 
     const updatedRecipe = await recipe.update({
       name,
       description,
       rating,
-      caloriesPerRecipe,
-      proteinPerRecipe,
-      carbsPerRecipe,
-      fatPerRecipe,
       image,
       cuisineType,
-      frequency,
+    });
+
+    const currentIngredients = await updatedRecipe.getIngredients();
+
+    const newIngredientNames = ingredients.map((ingredient) => ingredient.name);
+
+    // Update associated recipe ingredients & qtys
+    ingredients.map(async (ingredient) => {
+      // Add ingredients and/or update qtys
+      const ingredientToAdd = await Ingredient.findOne({
+        where: {
+          name: ingredient.name,
+        },
+      });
+
+      if (!ingredientToAdd) {
+        next({
+          status: 404,
+          message: `Ingredient ${ingredient.name} not found.`,
+        });
+      }
+
+      await updatedRecipe.addIngredient(ingredientToAdd, {
+        through: { recipeQty: ingredient.recipeQty },
+      });
+
+      // If current ingredient is not in new ingredients, remove association
+      currentIngredients.map((ingredient) => {
+        if (!newIngredientNames.includes(ingredient.dataValues.name)) {
+          updatedRecipe.removeIngredient(ingredientToAdd);
+        }
+      });
     });
 
     res.send(updatedRecipe);
