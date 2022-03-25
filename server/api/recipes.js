@@ -3,6 +3,7 @@ module.exports = router;
 const Recipe = require('../db/models/Recipe');
 const Ingredient = require('../db/models/Ingredient');
 const User = require('../db/models/User');
+const ShoppingList = require('../db/models/ShoppingList');
 const { Op } = require('@sequelize/core');
 
 // GET /api/recipes?userId=1
@@ -171,11 +172,29 @@ router.post('/recs', async (req, res, next) => {
 // PUT /api/recipes/recs/:id?userId=INT
 router.put('/recs/:id', async (req, res, next) => {
   try {
+    //Step 1: Assign the existing recipe to the user.
     const recRecipeId = req.params.id;
     const { userId } = req.query;
-    const recRecipe = await Recipe.findByPk(recRecipeId);
+    const recRecipe = await Recipe.findByPk(recRecipeId, {
+      include: Ingredient,
+    });
     const user = await User.findByPk(userId);
     await recRecipe.setUser(user);
+
+    //Step 2: Find the ingredients and assign them to the shopping list.
+    const shoppingList = await ShoppingList.findOne({
+      where: {
+        status: 'open',
+        userId: userId,
+      },
+    });
+
+    //Assign each ingredient to the user's open shopping list.
+    await Promise.all(
+      recRecipe.ingredients.map(async (ingredient) => {
+        await ingredient.addShoppingList(shoppingList);
+      })
+    );
     const updatedRecipe = await Recipe.findByPk(recRecipeId);
     res.send(updatedRecipe);
   } catch (error) {

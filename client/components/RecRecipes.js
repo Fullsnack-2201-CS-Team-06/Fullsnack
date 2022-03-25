@@ -28,12 +28,18 @@ const RecRecipes = () => {
   //Get all the recommended recipes not associated with the current user.
   useEffect(() => {
     async function getMoreRecs(reqs) {
+      //The base api url with which we request new recommendations.
       let apiRequest =
         'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner';
+      //Exclude the recipes that we already have.
       recipes.forEach((recipe) => (apiRequest += `&excluded=${recipe.name}`));
+      //Exclude the recipes already in our recommendations.
       recRecipes.forEach(
         (recRecipe) => (apiRequest += `&excluded=${recRecipe.name}`)
       );
+      if (cuisinePref !== '' || cuisinePref !== 'No Preference') {
+        apiRequest += `&cuisineType=${cuisinePref}`;
+      }
       const data = await fetch(apiRequest).then((response) => response.json());
       console.log('data: ', data);
 
@@ -85,7 +91,7 @@ const RecRecipes = () => {
   };
 
   //Sort the recipes according to those that require the least number of new ingredients. Current issue: Sorting happens on the  front-end since we need both the recipe and the food data in the pantries. To get the foods, I wrote a route api/ingredients/pantries?userId=INT which gets the ingredients in all the pantries, but it includes duplicates, since we want to consider the total quantity across all pantries. This data is set on the foods reducer in the store. The allFoods page also uses that reducer, but since there are duplicates, this causes errors on the first render, before that page executes a separate thunk that eliminates duplicates.
-  const sortByAvailablility = (recipes) => {
+  function sortByAvailablility(recipes) {
     //The total amount we have for each food across our pantries, e.g., {carrot: 4}
     const combinedTotals = {};
     pantriesFoods.forEach((food) => {
@@ -110,14 +116,14 @@ const RecRecipes = () => {
 
     recipes.sort((a, b) => a.needsIngredients - b.needsIngredients);
     return recipes;
-  };
+  }
 
-  const addToMyRecipes = (recipeId) => {
+  function addToMyRecipes(recipeId) {
     dispatch(addRecToMyRecipes(recipeId, id));
-    // dispatch(showRecRecipes());
     dispatch(removeRecRecipe(recipeId));
-  };
+  }
 
+  //Sort the rec recipes by those that need the least new ingredients.
   recRecipes = sortByAvailablility(recRecipes);
 
   return (
