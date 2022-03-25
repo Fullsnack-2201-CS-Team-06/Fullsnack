@@ -6,13 +6,14 @@ import Home from './components/Home';
 import { me } from './store';
 import Account from './components/Account';
 import ShoppingList from './components/ShoppingList';
-import ShoppingListHistoryAll from './components/ShoppingListHistoryAll'
-import ShoppingListHistorySingle from './components/ShoppingListHistorySingle'
+import ShoppingListHistoryAll from './components/ShoppingListHistoryAll';
+import ShoppingListHistorySingle from './components/ShoppingListHistorySingle';
 import Pantries from './components/Pantries';
 import Food from './components/Food';
 import PantrySingle from './components/PantrySingle';
 import Recipes from './components/Recipes';
 import SingleRecipe from './components/SingleRecipe';
+import EditRecipe from './components/EditRecipe';
 import AddRecipe from './components/AddRecipe';
 import NewPantryItem from './components/NewPantryItem';
 
@@ -34,15 +35,24 @@ const Routes = () => {
         <Switch>
           <Route path="/account" component={Account} />
           <Route exact path="/list" component={ShoppingList} />
-          <Route exact path="/list/history" component={ShoppingListHistoryAll} />
-          <Route exact path="/list/:listId" component={ShoppingListHistorySingle} />
+          <Route
+            exact
+            path="/list/history"
+            component={ShoppingListHistoryAll}
+          />
+          <Route
+            exact
+            path="/list/:listId"
+            component={ShoppingListHistorySingle}
+          />
           <Route exact path="/pantries" component={Pantries} />
           <Route path="/pantries/add" component={NewPantryItem} />
           <Route path="/pantries/:id" component={PantrySingle} />
           <Route path="/foods" component={Food} />
           <Route exact path="/recipes" component={Recipes} />
-          <Route path="/recipes/add" component={AddRecipe} />
-          <Route path="/recipes/:id" component={SingleRecipe} />
+          <Route exact path="/recipes/add" component={AddRecipe} />
+          <Route exact path="/recipes/:id" component={SingleRecipe} />
+          <Route exact path="/recipes/:id/edit" component={EditRecipe} />
           <Route path="/home" component={Home} />
           <Redirect to="/home" />
         </Switch>

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOnePantry, editPantryThunk } from '../store/pantry';
+import NewPantryItem from './NewPantryItem';
 
 
 // import Accordion from 'react-bootstrap/Accordion'
@@ -16,13 +17,14 @@ const PantrySingle = ({ match }) => {
   const { id } = useSelector((state) => state.auth);
   const  pantry  = useSelector((state) => state.pantry);
   const { ingredients } = pantry || [];
+  const currentPantry = pantry.id
 
   useEffect(() => {
     dispatch(fetchOnePantry(match.params.id));
   }, []);
 
   async function handleChange(itemId, userId, quantity){
-    dispatch(editPantryThunk(itemId, userId, quantity))
+    dispatch(editPantryThunk(itemId, userId, quantity, currentPantry))
   }
 
   return (
@@ -44,7 +46,7 @@ const PantrySingle = ({ match }) => {
           </thead>
           <tbody>
             {ingredients ? (
-              ingredients.map((item) => {
+              ingredients.sort((a,b) => a < b ? -1 : 1).map((item) => {
                 const quantity = item.pantryIngredient.pantryQty
                 return (
                   <tr key={item.id}>
@@ -66,6 +68,7 @@ const PantrySingle = ({ match }) => {
               </tr>
             )}
           </tbody>
+          <NewPantryItem />
         </Table>
       </Container>
     </div>

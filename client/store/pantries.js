@@ -17,6 +17,7 @@ export const _createNewPantry = (newPantry) => ({
   newPantry
 })
 
+
 // THUNKS
 
 export const fetchAllPantries = (id) => {
