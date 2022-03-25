@@ -1,80 +1,158 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { addPantryItemThunk } from '../store/pantry'
+import { addPantryItemThunk } from '../store/pantry';
 
 const NewPantryItem = () => {
-    const [name, setName] = useState('');
-    const [category, setCategory] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [cost, setCost] = useState('')
-    const [measure, setMeasure] = useState('')
+  const { userId } = useSelector((state) => state.auth);
+  const { id } = useSelector((state) => state.pantry);
+  const { foods } = useSelector((state) => state);
 
-    const { userId } = useSelector((state) => state.auth)
-    const { id } = useSelector((state) => state.pantry)
+  const [inputFields, setInputFields] = useState([
+    {
+      name: '',
+      category: '',
+      quantity: '',
+      cost: '',
+      measure: '',
+    },
+  ]);
 
-    const dispatch = useDispatch();
-    const history = useHistory();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(
-            addPantryItemThunk({
-                id,
-                name,
-                category,
-                quantity,
-                cost,
-                measure
-            })
+  const handleFormChange = (index, e) => {
+    let data = [...inputFields];
+    data[index][e.target.name] = e.target.value;
+    setInputFields(data);
+
+   
+    if (e.target.name === 'name') {
+      
+      const foodNames = foods.map((food) => food.name);
+      if (foodNames.includes(e.target.value)) {
+       
+        const existingFood = foods.filter(
+          (food) => food.name === e.target.value
         );
-        history.push(`/pantries/${id}`)
+        const existingUOM = existingFood[0]['uom'];
+        data[index]['uom'] = existingUOM;
+        setInputFields(data);
+      }
     }
+  };
 
-    return(<div>
-        <h1>Add Pantry Item</h1>
-        <form onSubmit={handleSubmit}>
-            <ul>
-            <li><label htmlFor="name">Item Name</label>
-            <input name="name" value={name} type="text" 
-            onChange={(e) => setName(e.target.value)}></input></li>
+  const addFields = () => {
+    let newField = {
+      name: '',
+      category: '',
+      quantity: '',
+      cost: '',
+      measure: '',
+    };
+    setInputFields([...inputFields, newField]);
+  };
 
-            <li><label htmlFor="category">Category</label>
-            <select
-          name="category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="" disabled selected>
-            Select Category
-          </option>
-          <option value="produce">Produce</option>
-          <option value="meat">Meat</option>
-          <option value="dairy">Dairy</option>
-          <option value="dry goods">Dry Goods</option>
-          <option value="bakery">Baked Goods</option>
-          <option value="beverages">Beverages</option>
-          <option value="miscellaneous">Miscellaneous</option>
-        </select></li>
+  const removeFields = (index) => {
+    let data = [...inputFields];
+    data.splice(index, 1);
+    setInputFields(data);
+  };
 
-            <li><label htmlFor="quantity">Quantity</label>
-            <input name="quantity" value={quantity} type="text"
-            onChange={(e) => setQuantity(e.target.value)}></input></li>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      addPantryItemThunk({
+        id,
+        inputFields,
+      })
+    );
+    history.push(`/pantries/${id}`);
+  };
 
-            <li><label htmlFor="cost">Cost</label>
-            <input name="cost" value={cost} type="text"
-            onChange={(e) => setCost(e.target.value)}></input></li>
+  return (
+    <div>
+      <h1>Add Pantry Item</h1>
 
-            <li><label htmlFor="measurer">Measurer</label>
-            <input name="measure" value={measure} type="text"
-            onChange={(e) => setMeasure(e.target.value)}></input></li>
+      <form onSubmit={handleSubmit}>
+        {inputFields.map((input, index) => {
+          return (
+            <div key={index}>
+              <label htmlFor='Item Name'>Item Name</label>
+              <input
+                name='name'
+                list='allFoods'
+                placeholder='Item Name'
+                value={input.name}
+                onChange={(e) => handleFormChange(index, e)}
+                autocomplete='on'
+              />
 
-            </ul>
-            <br />
-            <button type="submit">Submit</button>
-        </form>
-    </div>)
+              <datalist id='allFoods'>
+                {foods.map((food) => (
+                  <option key={food.id}>{food.name}</option>
+                ))}
+              </datalist>
 
-}
+              <select
+                name='category'
+                value={input.category}
+                onChange={(e) => handleFormChange(index, e)}
+              >
+                <label htmlFor='Category'>Category</label>
+                <option value='' disabled selected>
+                  Select Category
+                </option>
+                <option value='produce'>Produce</option>
+                <option value='meat'>Meat</option>
+                <option value='dairy'>Dairy</option>
+                <option value='dry goods'>Dry Goods</option>
+                <option value='bakery'>Baked Goods</option>
+                <option value='beverages'>Beverages</option>
+                <option value='miscellaneous'>Miscellaneous</option>
+              </select>
+
+              <label htmlFor='Quantity'>Quantity</label>
+              <input
+                type="number"
+                name='quantity'
+                placeholder='Quantity'
+                value={input.quantity}
+                onChange={(e) => handleFormChange(index, e)}
+              />
+
+              <label htmlFor='Cost'>Cost</label>
+              <input
+                type="number"
+                name='cost'
+                placeholder='Cost'
+                value={input.cost}
+                onChange={(e) => handleFormChange(index, e)}
+              />
+
+              <label htmlFor='Measure'>Measure</label>
+              <input
+                name='measure'
+                placeholder='Measure'
+                value={input.measure}
+                onChange={(e) => handleFormChange(index, e)}
+              />
+
+              <button type='button' onClick={() => addFields()}>
+                Add More Ingredients
+              </button>
+              <button type='submit' onClick={handleSubmit}>
+                Submit
+              </button>
+              <button type='button' onClick={() => removeFields(index)}>
+                Remove
+              </button>
+            </div>
+          );
+        })}
+      </form>
+    </div>
+  );
+};
 
 export default NewPantryItem;
