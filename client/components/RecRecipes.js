@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { showRecRecipes, addRecRecipe } from '../store/recRecipes';
 import { getOurFoods } from '../store/pantriesFoods';
+import { addNewRecipe } from '../store/recipes';
 import styles from './RecRecipes.module.css';
 import { Card, Button, Accordion } from 'react-bootstrap';
 
@@ -23,7 +24,7 @@ const RecRecipes = () => {
   useEffect(() => {
     async function getMoreRecs(reqs) {
       const data = await fetch(
-        'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner'
+        'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner&random=true'
       ).then((response) => response.json());
       console.log('data: ', data);
 
@@ -99,12 +100,12 @@ const RecRecipes = () => {
     return recipes;
   };
 
-  //TEST
-  // fetch(
-  //   'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&diet=low-carb&cuisineType=Chinese'
-  // )
-  //   .then((response) => response.json())
-  //   .then((data) => console.log('API RESPONSE: ', data));
+  const addToMyRecipes = (recipe) => {
+    // dispatch(addNewRecipe(recipe));
+    console.log(
+      'TBD. Need to work on the PUT api/recipes/:id to assign the recipe to the user.'
+    );
+  };
 
   recRecipes = sortByAvailablility(recRecipes);
 
@@ -124,7 +125,9 @@ const RecRecipes = () => {
             >
               <Card.Img variant="top" src={recipe.image} />
               <Card.Title>{recipe.name}</Card.Title>
-              <Button variant="primary">Add to My Recipes</Button>
+              <Button variant="primary" onClick={() => addToMyRecipes(recipe)}>
+                Add to My Recipes
+              </Button>
               <Accordion.Item eventKey={i}>
                 <Accordion.Header onClick={() => expandView(recipe.id)}>
                   Read More
