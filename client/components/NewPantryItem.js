@@ -35,10 +35,18 @@ const NewPantryItem = () => {
     }
 
     const handleFormChange = (index, e) => {
+        console.log("Handle Form Change Fired")
         let data = [...inputFields]
         data[index][e.target.name] = e.target.value
         setInputFields(data)
     }
+
+    const addIngredientFields = () => {
+        console.log("Add Ingredient Field Fired")
+        let newIngredientField =  { name: '', category: '', quantity: '', cost: '', measure: ''}
+        setInputFields([...inputFields, newIngredientField])
+    }
+
 
     return(<div>
         <h1>Add Pantry Item</h1>
@@ -85,32 +93,34 @@ const NewPantryItem = () => {
                 name='name'
                 placeholder='Item Name'
                 value={input.name}
-                onChange={(e) => handleFormChange(index, event)}
+                onChange={(e) => handleFormChange(index, e)}
               />
               <input
                 name='category'
                 placeholder='Category'
                 value={input.category}
-                onChange={(e) => handleFormChange(index, event)}
+                onChange={(e) => handleFormChange(index, e)}
               />
                <input
                 name='quantity'
                 placeholder='Quantity'
                 value={input.quantity}
-                onChange={(e) => handleFormChange(index, event)}
+                onChange={(e) => handleFormChange(index, e)}
               />
                <input
                 name='cost'
                 placeholder='Cost'
                 value={input.cost}
-                onChange={(e) => handleFormChange(index, event)}
+                onChange={(e) => handleFormChange(index, e)}
               />
                <input
                 name='measure'
                 placeholder='Measure'
                 value={input.measure}
-                onChange={(e) => handleFormChange(index, event)}
+                onChange={(e) => handleFormChange(index, e)}
               />
+
+              <button onClick={addIngredientFields}>Add More Ingredients</button>
             </div>
           )
         })}
