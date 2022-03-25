@@ -34,12 +34,10 @@ const NewPantryItem = () => {
     return(<div>
         <h1>Add Pantry Item</h1>
         <form onSubmit={handleSubmit}>
-            <ul>
-            <li><label htmlFor="name">Item Name</label>
+            <label htmlFor="name">Item Name</label>
             <input name="name" value={name} type="text" 
-            onChange={(e) => setName(e.target.value)}></input></li>
-
-            <li><label htmlFor="category">Category</label>
+            onChange={(e) => setName(e.target.value)}></input>
+            <label htmlFor="category">Category</label>
             <select
           name="category"
           value={category}
@@ -55,21 +53,16 @@ const NewPantryItem = () => {
           <option value="bakery">Baked Goods</option>
           <option value="beverages">Beverages</option>
           <option value="miscellaneous">Miscellaneous</option>
-        </select></li>
-
-            <li><label htmlFor="quantity">Quantity</label>
+        </select>
+            <label htmlFor="quantity">Quantity</label>
             <input name="quantity" value={quantity} type="text"
-            onChange={(e) => setQuantity(e.target.value)}></input></li>
-
-            <li><label htmlFor="cost">Cost</label>
+            onChange={(e) => setQuantity(e.target.value)}></input>
+            <label htmlFor="cost">Cost</label>
             <input name="cost" value={cost} type="text"
-            onChange={(e) => setCost(e.target.value)}></input></li>
-
-            <li><label htmlFor="measurer">Measurer</label>
+            onChange={(e) => setCost(e.target.value)}></input>
+            <label htmlFor="measurer">Measurer</label>
             <input name="measure" value={measure} type="text"
-            onChange={(e) => setMeasure(e.target.value)}></input></li>
-
-            </ul>
+            onChange={(e) => setMeasure(e.target.value)}></input>
             <br />
             <button type="submit">Submit</button>
         </form>
