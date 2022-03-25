@@ -43,29 +43,30 @@ const Recipe = db.define('recipe', {
   },
 
   cuisineType: {
-    type: Sequelize.ENUM(
-      'American',
-      'Asian',
-      'British',
-      'Caribbean',
-      'Central Europe',
-      'Chinese',
-      'Eastern Europe',
-      'French',
-      'Indian',
-      'Italian',
-      'Japanse',
-      'Kosher',
-      'Mediterranean',
-      'Mexican',
-      'Middle Eastern',
-      'Nordic',
-      'South American',
-      'South East Asian',
-      'None'
-    ),
+    type: Sequelize.STRING,
+    // type: Sequelize.ENUM(
+    //   'american',
+    //   'asian',
+    //   'british',
+    //   'caribbean',
+    //   'central europe',
+    //   'chinese',
+    //   'eastern europe',
+    //   'french',
+    //   'indian',
+    //   'italian',
+    //   'japanese',
+    //   'kosher',
+    //   'mediterranean',
+    //   'mexican',
+    //   'middle eastern',
+    //   'nordic',
+    //   'south american',
+    //   'south east asian',
+    //   'none'
+    // ),
   },
-  
+
   frequency: {
     type: Sequelize.INTEGER,
     defaultValue: 0,
