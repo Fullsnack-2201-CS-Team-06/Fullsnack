@@ -9,11 +9,22 @@ import styles from './Food.module.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const foodCategories = [
+  'produce',
+  'meat',
+  'dairy',
+  'dry goods',
+  'bakery',
+  'beverages',
+  'miscellaneous',
+];
+
 const Food = () => {
   const { id } = useSelector((state) => state.auth);
   let { foods } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [searchCriteria, setSearchCriteria] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('');
 
   //Get all foods associated with that user's pantries, recipes, and shopping lists.
   useEffect(() => {
@@ -21,20 +32,49 @@ const Food = () => {
   }, []);
 
   //FN: Set the search criteria upon typing in the search box.
-  const editSearch = (e) => {
+  function editSearch(e) {
     setSearchCriteria(e.target.value);
-  };
+  }
+
+  //FN: Change the category filter.
+  function editCategoryFilter(e) {
+    setCategoryFilter(e.target.value);
+  }
 
   //Filter foods according to the search criteria.
   if (searchCriteria !== '') {
     foods = foods.filter((food) => food.name.includes(searchCriteria));
   }
 
+  if (categoryFilter !== '') {
+    foods = foods.filter((food) => food.category === categoryFilter);
+  }
+
+  //Filter foods according to the category filter criteria.
+
   return (
     <div>
-      <div className={styles.search}>
-        <label htmlFor="search">Search Foods</label>
-        <input name="search" type="text" onChange={editSearch} />
+      <div className={styles.allfoodsbar}>
+        <div className={styles.search}>
+          <label htmlFor="search">Search Foods</label>
+          <input name="search" type="text" onChange={editSearch} />
+        </div>
+        <div className={styles.filterCategories}>
+          <label htmlFor="category-filter">Filter Categories: </label>
+          <select
+            name="category-filter"
+            value={categoryFilter}
+            onChange={editCategoryFilter}
+          >
+            {' '}
+            <option value="">Select a Filter</option>
+            {foodCategories.map((food, i) => (
+              <option key={i} value={food}>
+                {food}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className={styles.foodcards}>
         <NewFood />

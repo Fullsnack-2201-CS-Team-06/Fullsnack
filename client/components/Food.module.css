@@ -1,3 +1,10 @@
+.allfoodsbar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 .search {
   margin-left: 15px;
   display: flex;
@@ -6,6 +13,11 @@
 
 .search > input {
   width: 400px;
+}
+
+.filterCategories {
+  display: flex;
+  flex-direction: column;
 }
 
 .foodcards {
