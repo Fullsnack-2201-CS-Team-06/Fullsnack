@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { addNewRecipe } from '../store/recipes';
+import { useHistory, useParams } from 'react-router-dom';
+import { updateRecipe } from '../store/recipes';
+import { fetchSingleRecipe } from '../store/singleRecipe';
 import { getFoods } from '../store/foods';
 
-const AddRecipe = () => {
+const EditRecipe = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [rating, setRating] = useState('');
@@ -18,19 +19,44 @@ const AddRecipe = () => {
     },
   ]);
 
-  const { userId, foods } = useSelector((state) => {
+  const { userId, foods, singleRecipe } = useSelector((state) => {
     return {
       userId: state.auth.id,
       foods: state.foods,
+      singleRecipe: state.singleRecipe,
     };
   });
 
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   useEffect(() => {
+    dispatch(fetchSingleRecipe(id));
     dispatch(getFoods(userId));
   }, []);
 
-  const dispatch = useDispatch();
-  const history = useHistory();
+  useEffect(() => {
+    setName(singleRecipe.name);
+    setDescription(singleRecipe.description);
+    setRating(singleRecipe.rating);
+    setCuisineType(singleRecipe.cuisineType);
+    setImage(singleRecipe.image);
+
+    let singleRecipeIngredients = singleRecipe.ingredients || '';
+
+    if (singleRecipeIngredients) {
+      singleRecipeIngredients = singleRecipeIngredients.map((ingredient) => {
+        return {
+          name: ingredient.name,
+          uom: ingredient.uom,
+          recipeQty: ingredient.recipeIngredient.recipeQty,
+        };
+      });
+    }
+
+    setIngredients([...singleRecipeIngredients]);
+  }, [singleRecipe]);
 
   const addIngredient = () => {
     let newIngredient = {
@@ -71,7 +97,8 @@ const AddRecipe = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      addNewRecipe({
+      updateRecipe({
+        id,
         name,
         description,
         rating,
@@ -81,12 +108,12 @@ const AddRecipe = () => {
         ingredients,
       })
     );
-    history.push('/recipes');
+    history.push(`/recipes/${id}`);
   };
 
   return (
     <div>
-      <h1>Add Recipe</h1>
+      <h1>Edit Recipe</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Recipe Name</label>
         <input
@@ -206,7 +233,7 @@ const AddRecipe = () => {
           </button>
         </div>
         <button type="submit">Save</button>
-        <button onClick={() => history.push('/recipes')}>Cancel</button>
+        <button onClick={() => history.push(`/recipes/${id}`)}>Cancel</button>
       </form>
       <br />
       <br />
@@ -214,4 +241,4 @@ const AddRecipe = () => {
   );
 };
 
-export default AddRecipe;
+export default EditRecipe;

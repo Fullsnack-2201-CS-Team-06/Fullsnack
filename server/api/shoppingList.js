@@ -40,7 +40,9 @@ router.get('/', async (req, res, next) => {
 //GET /api/shoppingList/:listId status: open
 router.get('/:listId', async (req, res, next) => {
   try {
-    const shoppingList = await ShoppingList.findByPk(req.params.listId, {include: Ingredient })
+    const shoppingList = await ShoppingList.findByPk(req.params.listId, {
+      include: Ingredient,
+    });
     if (!shoppingList) {
       next({ status: 404, message: 'No shopping lists found for this userId' });
     }
@@ -78,12 +80,12 @@ router.put('/', async (req, res, next) => {
     const refreshList = await ShoppingList.findOne({
       where: { userId: req.query.userId, status: 'open' },
       include: Ingredient,
-    })
-    res.send(refreshList)
+    });
+    res.send(refreshList);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 // POST /api/shoppingList?userId=1
 router.post('/', async (req, res, next) => {
@@ -91,7 +93,7 @@ router.post('/', async (req, res, next) => {
     const shoppingList = await ShoppingList.findOne({
       where: { userId: req.query.userId, status: 'open' },
       include: Ingredient,
-    })
+    });
     if (!shoppingList) {
       next({ status: 404, message: 'No shopping list found at this id' });
     }
@@ -99,11 +101,13 @@ router.post('/', async (req, res, next) => {
     await shoppingList.update({
       totalCost,
       status: 'closed',
-      checkoutDate: Date.now()
+      checkoutDate: Date.now(),
     });
-    const newShoppingList = await ShoppingList.create({ name: 'new shopping list' });
-    const user = await User.findByPk(req.query.userId)
-    await newShoppingList.setUser(user)
+    const newShoppingList = await ShoppingList.create({
+      name: 'new shopping list',
+    });
+    const user = await User.findByPk(req.query.userId);
+    await newShoppingList.setUser(user);
     res.sendStatus(201);
   } catch (error) {
     next(error);
@@ -119,7 +123,10 @@ router.delete('/:id', async (req, res, next) => {
     }
     const result = await shoppingList.destroy();
     if (result !== 1) {
-      next({ status: 404, message: 'Failed to destroy the shopping list at this id' });
+      next({
+        status: 404,
+        message: 'Failed to destroy the shopping list at this id',
+      });
     }
     res.send(result);
   } catch (error) {

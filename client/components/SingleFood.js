@@ -8,6 +8,7 @@ import { editListThunk } from '../store/ShoppingList';
 const SingleFood = (props) => {
   const { id } = useSelector(state => state.auth)
   const { food } = props;
+  const { id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
