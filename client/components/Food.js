@@ -67,7 +67,7 @@ const Food = () => {
             onChange={editCategoryFilter}
           >
             {' '}
-            <option value="">Select a Filter</option>
+            <option value="">See All</option>
             {foodCategories.map((food, i) => (
               <option key={i} value={food}>
                 {food}
