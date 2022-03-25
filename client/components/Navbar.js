@@ -9,7 +9,9 @@ const Navbar = () => {
 
   return (
     <div>
-      <h1 className="logo">Fullsnack</h1>
+      <Link to="/home">
+        <h1 className="logo">Fullsnack</h1>
+      </Link>
       <nav>
         {isLoggedIn ? (
           <div>
