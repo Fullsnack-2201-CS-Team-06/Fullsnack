@@ -42,7 +42,7 @@ const PantrySingle = ({ match }) => {
           </thead>
           <tbody>
             {ingredients ? (
-              ingredients.map((item) => {
+              ingredients.sort((a,b) => a < b ? -1 : 1).map((item) => {
                 const quantity = item.pantryIngredient.pantryQty
                 return (
                   <tr key={item.id}>

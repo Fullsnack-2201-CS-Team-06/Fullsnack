@@ -77,7 +77,6 @@ router.post('/add', async (req, res, next) => {
 router.put('/', async (req, res, next) => {
   try {
     const { itemId, quantity, currentPantryId } = req.body;
-    console.log("Our pantry id.", currentPantryId)
     const pantry = await Pantry.findOne({
       where: { id: currentPantryId },
       include: Ingredient,

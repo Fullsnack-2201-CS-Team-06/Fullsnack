@@ -26,12 +26,12 @@ const NewPantryItem = () => {
     data[index][e.target.name] = e.target.value;
     setInputFields(data);
 
-    // If ingredient name === an existing food name, set UOM
+   
     if (e.target.name === 'name') {
-      // The following only runs if 'name' field changes
+      
       const foodNames = foods.map((food) => food.name);
       if (foodNames.includes(e.target.value)) {
-        // The following only runs if 'name' field is included in food names
+       
         const existingFood = foods.filter(
           (food) => food.name === e.target.value
         );
@@ -61,7 +61,6 @@ const NewPantryItem = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Did HS fire');
     dispatch(
       addPantryItemThunk({
         id,
@@ -112,7 +111,10 @@ const NewPantryItem = () => {
                 <option value='beverages'>Beverages</option>
                 <option value='miscellaneous'>Miscellaneous</option>
               </select>
+
+              <label htmlFor='Quantity'>Quantity</label>
               <input
+                type="number"
                 name='quantity'
                 placeholder='Quantity'
                 value={input.quantity}
@@ -121,6 +123,7 @@ const NewPantryItem = () => {
 
               <label htmlFor='Cost'>Cost</label>
               <input
+                type="number"
                 name='cost'
                 placeholder='Cost'
                 value={input.cost}
