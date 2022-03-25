@@ -30,12 +30,27 @@ export const fetchAllPantries = (id) => {
   };
 };
 
+export const createNewPantry = (name) => {
+  return async (dispatch) => {
+    try {
+      console.log("frontend", name)
+      const { data } = await axios.post("/api/pantries", name)
+      console.log("our data", data)
+      dispatch(_createNewPantry(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 const initialState = [];
 
 const pantriesReducer = (state = initialState, action) => {
   switch (action.type) {
     case SHOW_ALL:
       return action.allPantries;
+    case CREATE_NEW_PANTRY:
+      return [...state, action.newPantry]
     default:
       return state;
   }
