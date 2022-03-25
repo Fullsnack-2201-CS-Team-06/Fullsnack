@@ -12,7 +12,7 @@ const _showRecRecipes = (recRecipes) => {
   };
 };
 
-const _addRecRecipe = (recRecipe) => {
+const _createRecRecipe = (recRecipe) => {
   return {
     type: ADD_NEW_REC_RECIPE,
     recRecipe,
@@ -36,21 +36,21 @@ export const showRecRecipes = () => {
 export const addRecRecipe = (recRecipe) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('api/recipes/recs', recRecipe);
-      dispatch(_addRecRecipe(data));
+      const { data } = await axios.post(`api/recipes/recs`, recRecipe);
+      dispatch(_createRecRecipe(data));
     } catch (error) {
-      console.error('Failed to add this new recipe recommendation', error);
+      console.error('Failed to add this recipe to the recommendations', error);
     }
   };
 };
 
 const recRecipesReducer = (state = [], action) => {
   switch (action.type) {
-    case ADD_NEW_REC_RECIPE: {
-      return [...state, action.recRecipe];
-    }
     case SHOW_REC_RECIPES: {
       return action.recRecipes;
+    }
+    case ADD_NEW_REC_RECIPE: {
+      return [...state, action.recRecipe];
     }
     default: {
       return state;

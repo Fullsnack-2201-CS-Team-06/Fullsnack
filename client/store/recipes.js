@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const SHOW_ALL_RECIPES = 'SHOW_ALL_RECIPES';
 const ADD_NEW_RECIPE = 'ADD_NEW_RECIPE';
+const ADD_REC_TO_MY_RECIPES = 'ADD_REC_TO_MY_RECIPES';
 
 // Action creators
 
@@ -18,6 +19,13 @@ const _addNewRecipe = (recipe) => {
   return {
     type: ADD_NEW_RECIPE,
     recipe,
+  };
+};
+
+const _addRecRecipe = (recRecipe) => {
+  return {
+    type: ADD_REC_TO_MY_RECIPES,
+    recRecipe,
   };
 };
 
@@ -45,6 +53,19 @@ export const addNewRecipe = (recipe) => {
   };
 };
 
+export const addRecToMyRecipes = (recRecipeId, userId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(
+        `api/recipes/recs/${recRecipeId}?userId=${userId}`
+      );
+      dispatch(_addRecRecipe(data));
+    } catch (error) {
+      console.error('Failed to add this new recipe recommendation', error);
+    }
+  };
+};
+
 // Initial state
 
 const initialState = [];
@@ -53,6 +74,9 @@ const initialState = [];
 
 const recipesReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_REC_TO_MY_RECIPES: {
+      return [...state, action.recRecipe];
+    }
     case SHOW_ALL_RECIPES: {
       return action.allRecipes;
     }

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { showRecRecipes, addRecRecipe } from '../store/recRecipes';
 import { getOurFoods } from '../store/pantriesFoods';
-import { addNewRecipe } from '../store/recipes';
+import { addRecToMyRecipes } from '../store/recipes';
 import styles from './RecRecipes.module.css';
 import { Card, Button, Accordion } from 'react-bootstrap';
 
@@ -10,7 +10,7 @@ import { Card, Button, Accordion } from 'react-bootstrap';
 
 const RecRecipes = () => {
   const { id } = useSelector((state) => state.auth);
-  let { recRecipes, pantriesFoods } = useSelector((state) => state);
+  let { recRecipes, pantriesFoods, recipes } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [currentView, setCurrentView] = useState(null);
 
@@ -60,7 +60,7 @@ const RecRecipes = () => {
     } else {
       didMount.current = true;
     }
-  }, [pantriesFoods]);
+  }, [recipes]);
 
   console.log('recRecipes: ', recRecipes);
 
@@ -100,11 +100,8 @@ const RecRecipes = () => {
     return recipes;
   };
 
-  const addToMyRecipes = (recipe) => {
-    // dispatch(addNewRecipe(recipe));
-    console.log(
-      'TBD. Need to work on the PUT api/recipes/:id to assign the recipe to the user.'
-    );
+  const addToMyRecipes = (recipeId) => {
+    dispatch(addRecToMyRecipes(recipeId, id));
   };
 
   recRecipes = sortByAvailablility(recRecipes);
@@ -125,7 +122,10 @@ const RecRecipes = () => {
             >
               <Card.Img variant="top" src={recipe.image} />
               <Card.Title>{recipe.name}</Card.Title>
-              <Button variant="primary" onClick={() => addToMyRecipes(recipe)}>
+              <Button
+                variant="primary"
+                onClick={() => addToMyRecipes(recipe.id)}
+              >
                 Add to My Recipes
               </Button>
               <Accordion.Item eventKey={i}>

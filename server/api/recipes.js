@@ -155,6 +155,21 @@ router.post('/recs', async (req, res, next) => {
   }
 });
 
+// PUT /api/recipes/recs/:id?userId=INT
+router.put('/recs/:id', async (req, res, next) => {
+  try {
+    const recRecipeId = req.params.id;
+    const { userId } = req.query;
+    const recRecipe = await Recipe.findByPk(recRecipeId);
+    const user = await User.findByPk(userId);
+    await recRecipe.setUser(user);
+    const updatedRecipe = await Recipe.findByPk(recRecipeId);
+    res.send(updatedRecipe);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // PUT /api/recipes/:id
 router.put('/:id', async (req, res, next) => {
   try {
