@@ -5,7 +5,7 @@ import { editListThunk } from '../store/ShoppingList';
 const ShoppingListForm = ({props}) => {
   const dispatch = useDispatch()
   const { id } = useSelector((state) => state.auth);
-  const {cost} = props.shoppingListIngredient || 0
+  let {cost = 0} = props.shoppingListIngredient || 0
   const {sliQuantity} = props.shoppingListIngredient || 0
   const {uom} = props.shoppingListIngredient || 0
   const [newCost, setNewCost] = useState(cost)

@@ -13,15 +13,22 @@ const ShoppingList = () => {
   const [selectedPantry, setSelectedPantry] = useState(pantries[0]);
   const history = useHistory()
   const [newPantry, setNewPantry] = useState('')
+  const { name } = currentList || ''
+  const { ingredients } = currentList || []
+  let { totalCost } = currentList || 0
 
   useEffect(() => {
     dispatch(fetchCurrentShoppingList(id));
     dispatch(fetchAllPantries(id))
   }, []);
 
-  const { name } = currentList || ''
-  const { ingredients } = currentList || []
-  const { totalCost } = currentList || 0
+  if (ingredients) {
+  totalCost = ingredients.reduce((acc, curr) => {
+    return acc + Number(curr.shoppingListIngredient.sliQuantity) * Number(curr.shoppingListIngredient.cost)
+  }, 0)
+  }
+
+
   let length = 0
   if (ingredients) length = ingredients.length
 
@@ -79,7 +86,7 @@ const ShoppingList = () => {
       <form></form>}
       <button name='button' onClick={() => handleSubmit()}>Send list to Pantry</button>
       <p>Total # of unique items: {length}</p>
-      <p>Estimated Total Cost: ${totalCost}</p>
+      <p>Total Cost: ${totalCost}</p>
     </div>
   </div>
   );

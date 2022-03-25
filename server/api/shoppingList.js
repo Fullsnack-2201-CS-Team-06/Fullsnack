@@ -3,6 +3,7 @@ module.exports = router;
 const User = require('../db/models/User');
 const Ingredient = require('../db/models/Ingredient');
 const ShoppingList = require('../db/models/ShoppingList');
+const ShoppingListIngredient = require('../db/models/ShoppingListIngredient');
 
 //GET /api/shoppingList/all?userId=1 status: closed
 router.get('/all', async (req, res, next) => {
@@ -52,12 +53,24 @@ router.get('/:listId', async (req, res, next) => {
 //PUT /api/shoppingList?userId=1
 router.put('/', async (req, res, next) => {
   try {
+    //Find the user's current shopping list
     const shoppingList = await ShoppingList.findOne({
       where: { userId: req.query.userId, status: 'open' },
       include: Ingredient,
     })
+    //itemId = Ingredient.id, quantity = INT
     const { itemId, quantity, cost } = req.body
+    //Find the ingredient associated with the id we have
     const ingredientToUpdate = await Ingredient.findByPk(itemId)
+    if (!quantity) {
+      console.log('quantity: ', shoppingList)
+      const hasIngredient = await shoppingList.hasIngredient(ingredientToUpdate)
+      if (hasIngredient) {
+        await shoppingList.addIngredients(ingredientToUpdate, { through: { sliQuantity: 1 }})
+      } else {
+        await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: 1 }})
+      }
+    }
     if (quantity === 0) await shoppingList.removeIngredient(ingredientToUpdate)
     else {
       await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: quantity, cost: cost }})
