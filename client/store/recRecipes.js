@@ -2,12 +2,28 @@ import axios from 'axios';
 
 // ACTION TYPES
 const SHOW_REC_RECIPES = 'SHOW_REC_RECIPES';
+const ADD_NEW_REC_RECIPE = 'ADD_NEW_REC_RECIPE';
+const REMOVE_REC_RECIPE = 'REMOVE_REC_RECIPE';
 
 // ACTION CREATORS
 const _showRecRecipes = (recRecipes) => {
   return {
     type: SHOW_REC_RECIPES,
     recRecipes,
+  };
+};
+
+const _createRecRecipe = (recRecipe) => {
+  return {
+    type: ADD_NEW_REC_RECIPE,
+    recRecipe,
+  };
+};
+
+export const removeRecRecipe = (recRecipeId) => {
+  return {
+    type: REMOVE_REC_RECIPE,
+    recRecipeId,
   };
 };
 
@@ -25,10 +41,27 @@ export const showRecRecipes = () => {
   };
 };
 
+export const addRecRecipe = (recRecipe) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`api/recipes/recs`, recRecipe);
+      dispatch(_createRecRecipe(data));
+    } catch (error) {
+      console.error('Failed to add this recipe to the recommendations', error);
+    }
+  };
+};
+
 const recRecipesReducer = (state = [], action) => {
   switch (action.type) {
     case SHOW_REC_RECIPES: {
       return action.recRecipes;
+    }
+    case ADD_NEW_REC_RECIPE: {
+      return [...state, action.recRecipe];
+    }
+    case REMOVE_REC_RECIPE: {
+      return state.filter((recipe) => recipe.id !== action.recRecipeId);
     }
     default: {
       return state;

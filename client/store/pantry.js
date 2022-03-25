@@ -47,12 +47,13 @@ export const addPantryItemThunk = (itemUpdate) => {
   };
 };
 
-export const editPantryThunk = (itemId, userId, quantity) => {
+export const editPantryThunk = (itemId, userId, quantity, currentPantryId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`/api/pantries?userId=${userId}`, {
         itemId,
         quantity,
+        currentPantryId
       });
       dispatch(editPantry(data));
     } catch (error) {

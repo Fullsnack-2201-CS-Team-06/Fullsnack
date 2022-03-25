@@ -26,7 +26,8 @@ const Ingredient = db.define('ingredient', {
   },
 
   category: {
-    type: Sequelize.ENUM(...foodCategories),
+    type: Sequelize.STRING,
+    // type: Sequelize.ENUM(...foodCategories),
     defaultValue: 'miscellaneous',
   },
 

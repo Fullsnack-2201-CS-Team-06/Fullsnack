@@ -1,23 +1,84 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { showRecRecipes } from '../store/recRecipes';
+import {
+  showRecRecipes,
+  addRecRecipe,
+  removeRecRecipe,
+} from '../store/recRecipes';
 import { getOurFoods } from '../store/pantriesFoods';
+import { addRecToMyRecipes } from '../store/recipes';
 import styles from './RecRecipes.module.css';
 import { Card, Button, Accordion } from 'react-bootstrap';
 
 /* OBJECTIVE: Show a number of recipes as recommendations to the user. For now, search all the recipes that are not already associated with the user. Sort those such that the top results show recipes that require the least number of new ingredients. When we implement the API, we can obtain either the full list of rec recipes from there, or we could use the api to fill in a deficit of results once we filter the user's preferences.*/
 
 const RecRecipes = () => {
-  const { id } = useSelector((state) => state.auth);
-  let { recRecipes, pantriesFoods } = useSelector((state) => state);
+  const { id, cuisinePref, diet, health } = useSelector((state) => state.auth);
+  let { recRecipes, pantriesFoods, recipes } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [currentView, setCurrentView] = useState(null);
 
-  //Get all the recommended recipes not associated with the current user.
+  //First, get the recommended recipes and the user's pantry ingredients.
   useEffect(() => {
     dispatch(showRecRecipes());
     dispatch(getOurFoods(id)); //Get the ingredients associated with the user to sort results.
   }, []);
+
+  const didMount = useRef(false);
+  //Get all the recommended recipes not associated with the current user.
+  useEffect(() => {
+    async function getMoreRecs() {
+      //The base api url with which we request new recommendations.
+      let apiRequest =
+        'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner';
+      //Exclude the recipes that we already have.
+      recipes.forEach((recipe) => (apiRequest += `&excluded=${recipe.name}`));
+      //Exclude the recipes already in our recommendations.
+      recRecipes.forEach(
+        (recRecipe) => (apiRequest += `&excluded=${recRecipe.name}`)
+      );
+      if (cuisinePref !== '' && cuisinePref !== 'No Preference') {
+        apiRequest += `&cuisineType=${cuisinePref}`;
+      }
+      const data = await fetch(apiRequest).then((response) => response.json());
+      console.log('data: ', data);
+
+      //Add the ten received api rec recipes to our pool of rec recipes.
+      for (let i = 0; i < data.hits.length; i++) {
+        const recipe = data.hits[i].recipe;
+        dispatch(
+          addRecRecipe({
+            name: recipe.label,
+            image: recipe.image,
+            cuisineType: recipe.cuisineType[0],
+            caloriesPerRecipe: Math.floor(recipe.calories),
+            proteinPerRecipe: recipe.totalNutrients.PROCNT.quantity,
+            carbsPerRecipe: recipe.totalNutrients.CHOCDF.quantity,
+            fatPerRecipe: recipe.totalNutrients.FAT.quantity,
+            ingredients: recipe.ingredients.map((ingredient) => {
+              return {
+                name: ingredient.food,
+                uom: ingredient.measure,
+                category: ingredient.foodCategory,
+                image: ingredient.image,
+                quantity: ingredient.quantity,
+              };
+            }),
+          })
+        );
+      }
+    }
+
+    //Only execute the api call after the 2nd render. Otherwise, the recipes needed will be inaccurate.
+    if (didMount.current) {
+      //When the number of rec recipes falls below five, get ten from the api.
+      if (recRecipes.length < 5) {
+        getMoreRecs();
+      }
+    } else {
+      didMount.current = true;
+    }
+  }, [recipes]);
 
   console.log('recRecipes: ', recRecipes);
 
@@ -29,8 +90,8 @@ const RecRecipes = () => {
     }
   };
 
-  //Sort the recipes according to those that require the least number of new ingredients. Current issue: Sorting happens on the front-end since we need both the recipe and the food data in the pantries. To get the foods, I wrote a route api/ingredients/pantries?userId=INT which gets the ingredients in all the pantries, but it includes duplicates, since we want to consider the total quantity across all pantries. This data is set on the foods reducer in the store. The allFoods page also uses that reducer, but since there are duplicates, this causes errors on the first render, before that page executes a separate thunk that eliminates duplicates.
-  const sortByAvailablility = (recipes) => {
+  //Sort the recipes according to those that require the least number of new ingredients. Current issue: Sorting happens on the  front-end since we need both the recipe and the food data in the pantries. To get the foods, I wrote a route api/ingredients/pantries?userId=INT which gets the ingredients in all the pantries, but it includes duplicates, since we want to consider the total quantity across all pantries. This data is set on the foods reducer in the store. The allFoods page also uses that reducer, but since there are duplicates, this causes errors on the first render, before that page executes a separate thunk that eliminates duplicates.
+  function sortByAvailablility(recipes) {
     //The total amount we have for each food across our pantries, e.g., {carrot: 4}
     const combinedTotals = {};
     pantriesFoods.forEach((food) => {
@@ -55,8 +116,14 @@ const RecRecipes = () => {
 
     recipes.sort((a, b) => a.needsIngredients - b.needsIngredients);
     return recipes;
-  };
+  }
 
+  function addToMyRecipes(recipeId) {
+    dispatch(addRecToMyRecipes(recipeId, id));
+    dispatch(removeRecRecipe(recipeId));
+  }
+
+  //Sort the rec recipes by those that need the least new ingredients.
   recRecipes = sortByAvailablility(recRecipes);
 
   return (
@@ -75,7 +142,12 @@ const RecRecipes = () => {
             >
               <Card.Img variant="top" src={recipe.image} />
               <Card.Title>{recipe.name}</Card.Title>
-              <Button variant="primary">Add to My Recipes</Button>
+              <Button
+                variant="primary"
+                onClick={() => addToMyRecipes(recipe.id)}
+              >
+                Add to My Recipes
+              </Button>
               <Accordion.Item eventKey={i}>
                 <Accordion.Header onClick={() => expandView(recipe.id)}>
                   Read More
