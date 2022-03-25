@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { fetchCurrentShoppingList, fetchShoppingListHistory, editListThunk, sendToPantry } from '../store/ShoppingList';
+import { fetchCurrentShoppingList, sendToPantry } from '../store/ShoppingList';
 import { fetchAllPantries } from '../store/pantries'
+import ShoppingListForm from './ShoppingListForm'
 
 const ShoppingList = () => {
   const { id } = useSelector((state) => state.auth);
@@ -12,22 +13,24 @@ const ShoppingList = () => {
   const [selectedPantry, setSelectedPantry] = useState(pantries[0]);
   const history = useHistory()
   const [newPantry, setNewPantry] = useState('')
+  const { name } = currentList || ''
+  const { ingredients } = currentList || []
+  let { totalCost } = currentList || 0
 
   useEffect(() => {
     dispatch(fetchCurrentShoppingList(id));
-    dispatch(fetchShoppingListHistory(id))
     dispatch(fetchAllPantries(id))
   }, []);
 
-  const { name } = currentList || ''
-  const { ingredients } = currentList || []
-  const { totalCost } = currentList || 0
+  if (ingredients) {
+  totalCost = ingredients.reduce((acc, curr) => {
+    return acc + Number(curr.shoppingListIngredient.sliQuantity) * Number(curr.shoppingListIngredient.cost)
+  }, 0)
+  }
+
+
   let length = 0
   if (ingredients) length = ingredients.length
-
-  async function handleChange(itemId, userId, quantity) {
-    dispatch(editListThunk(itemId, userId, quantity))
-  }
 
   async function handleSubmit() {
     if (typeof selectedPantry === 'number' && ingredients.length) {
@@ -45,37 +48,26 @@ const ShoppingList = () => {
   <div>
    <p>{name}</p>
    <p><Link to={'/list/history'} >View History</Link></p>
-<table>
-  <colgroup span="4"></colgroup>
-  <tbody>
-  <tr>
-    <td>List Items</td>
-    <td>Quantity</td>
-    <td>Unit of Measure</td>
-    <td>Cost/Item</td>
-    <td>Remove item from list</td>
-  </tr>
-  { ingredients ?
-  ingredients.map(item => {
-    const quantity = item.shoppingListIngredient.sliQuantity
-    return (
-      <tr key={item.id}>
-        <td>{item.name}</td>
-        <td>
-        <button onClick={() => handleChange(item.id, id, quantity - 1)}>-</button>
-          {item.shoppingListIngredient.sliQuantity}
-          <button onClick={() => handleChange(item.id, id, quantity + 1)}>+</button>
-          </td>
-        <td>{item.shoppingListIngredient.uom}</td>
-        <td>{item.shoppingListIngredient.cost}</td>
-        <td><button onClick={() => handleChange(item.id, id, 0)}>X</button></td>
-      </tr>
-    )
-  }):
-  <tr></tr>
-  }
-  </tbody>
-</table>
+   <form method="GET" id="my_form"></form>
+    <table>
+      <thead>
+        <tr>
+          <th>List Items</th>
+          <th>Quantity</th>
+          <th>Unit of Measure</th>
+          <th>Cost/Item</th>
+          <th>Remove item from list</th>
+        </tr>
+      </thead>
+        { ingredients ?
+          ingredients.map(item => {
+          return (
+        <ShoppingListForm key={item.id}  props={item} />
+          )
+        }):
+        <tbody></tbody>
+        }
+    </table>
     <div>
     <select name="pantries" onChange={(e) => setSelectedPantry(e.target.value)} >
         <option value="View All Pantries">Select Pantry</option>
@@ -94,7 +86,7 @@ const ShoppingList = () => {
       <form></form>}
       <button name='button' onClick={() => handleSubmit()}>Send list to Pantry</button>
       <p>Total # of unique items: {length}</p>
-      <p>Estimated Total Cost: ${totalCost}</p>
+      <p>Total Cost: ${totalCost}</p>
     </div>
   </div>
   );

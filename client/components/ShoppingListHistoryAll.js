@@ -24,14 +24,19 @@ const ShoppingListHistoryAll = () => {
     <th>List Name</th>
     <th>Date Completed</th>
     <th>Total Cost</th>
+    <th>Total Items:</th>
   </tr>
   { shoppingHistory ?
   shoppingHistory.map(list => {
+    const totalItems = list.ingredients.reduce((acc, curr) => {
+      return acc + Number(curr.shoppingListIngredient.sliQuantity)
+    }, 0)
     return (
     <tr key={list.id}>
       <td><Link to={`/list/${list.id}`}>{list.name}</Link></td>
       <td>{list.checkoutDate}</td>
-      <td>{list.totalCost}</td>
+      <td>${list.totalCost}</td>
+      <td>{totalItems}</td>
     </tr>)
   }) :
   <tr></tr>

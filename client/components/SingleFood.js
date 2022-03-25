@@ -6,12 +6,13 @@ import { editListThunk } from '../store/ShoppingList';
 
 /* The card view of a single food ingredient on the All Foods page.*/
 const SingleFood = (props) => {
+  const { id } = useSelector(state => state.auth)
   const { food } = props;
   const { id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    // dispatch(editListThunk(food.id, id));
+    dispatch(editListThunk(food.id, id));
     console.log(
       'This add-to-shopping-list button will work once the page/allfoods branch is integrated onto main with the shopping list.'
     );
