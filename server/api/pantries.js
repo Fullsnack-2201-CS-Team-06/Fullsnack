@@ -50,7 +50,6 @@ router.post('/add', async (req, res, next) => {
   try {
     const { id, name, category, quantity, cost, measure } = req.body;
 
-    console.log("WHAT I WANT TO PASS", quantity, measure, cost, category)
     const [newItem, wasCreated] = (newPantryItem =
       await Ingredient.findOrCreate({
         where: { name: name },
@@ -72,14 +71,15 @@ router.post('/add', async (req, res, next) => {
   }
 });
 
-// PUT /api/pantries?userId=1
+// PUT /api/pantries/
 router.put('/', async (req, res, next) => {
   try {
+    const { itemId, quantity, currentPantryId } = req.body;
+    console.log("Our pantry id.", currentPantryId)
     const pantry = await Pantry.findOne({
-      where: { userId: req.query.userId },
+      where: { id: currentPantryId },
       include: Ingredient,
     });
-    const { itemId, quantity } = req.body;
     const ingredientToUpdate = await Ingredient.findByPk(itemId);
     if (quantity === 0) await pantry.removeIngredient(ingredientToUpdate);
     else {
@@ -88,7 +88,7 @@ router.put('/', async (req, res, next) => {
       });
     }
     const refreshPantry = await Pantry.findOne({
-      where: { userId: req.query.userId },
+      where: { id: currentPantryId },
       include: Ingredient,
     });
     res.send(refreshPantry);
