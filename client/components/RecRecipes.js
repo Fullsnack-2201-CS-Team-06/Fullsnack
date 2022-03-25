@@ -27,7 +27,7 @@ const RecRecipes = () => {
   const didMount = useRef(false);
   //Get all the recommended recipes not associated with the current user.
   useEffect(() => {
-    async function getMoreRecs(reqs) {
+    async function getMoreRecs() {
       //The base api url with which we request new recommendations.
       let apiRequest =
         'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner';
@@ -37,14 +37,14 @@ const RecRecipes = () => {
       recRecipes.forEach(
         (recRecipe) => (apiRequest += `&excluded=${recRecipe.name}`)
       );
-      if (cuisinePref !== '' || cuisinePref !== 'No Preference') {
+      if (cuisinePref !== '' && cuisinePref !== 'No Preference') {
         apiRequest += `&cuisineType=${cuisinePref}`;
       }
       const data = await fetch(apiRequest).then((response) => response.json());
       console.log('data: ', data);
 
-      //Create recipes for the needed number to meet the threshold. For example, if we already have 3 to recommend, get 7 from the api.
-      for (let i = 0; i < reqs; i++) {
+      //Add the ten received api rec recipes to our pool of rec recipes.
+      for (let i = 0; i < data.hits.length; i++) {
         const recipe = data.hits[i].recipe;
         dispatch(
           addRecRecipe({
@@ -71,9 +71,9 @@ const RecRecipes = () => {
 
     //Only execute the api call after the 2nd render. Otherwise, the recipes needed will be inaccurate.
     if (didMount.current) {
-      const recipesNeeded = 10 - recRecipes.length;
-      if (recipesNeeded > 0) {
-        getMoreRecs(recipesNeeded);
+      //When the number of rec recipes falls below five, get ten from the api.
+      if (recRecipes.length < 5) {
+        getMoreRecs();
       }
     } else {
       didMount.current = true;
