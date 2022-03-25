@@ -46,7 +46,9 @@ const Food = () => {
     foods = foods.filter((food) => food.name.includes(searchCriteria));
   }
 
-  if (categoryFilter !== '') {
+  if (categoryFilter === 'other') {
+    foods = foods.filter((food) => !foodCategories.includes(food.category));
+  } else if (categoryFilter !== '') {
     foods = foods.filter((food) => food.category === categoryFilter);
   }
 
@@ -73,6 +75,7 @@ const Food = () => {
                 {food}
               </option>
             ))}
+            <option value="other">other</option>
           </select>
         </div>
       </div>
