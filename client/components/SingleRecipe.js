@@ -49,6 +49,7 @@ const SingleRecipe = () => {
         <span>Protein: {singleRecipe.proteinPerRecipe} </span>
       </h6>
       <button onClick={() => history.push('/recipes')}>Back</button>
+      <button>Edit</button>
     </div>
   );
 };
