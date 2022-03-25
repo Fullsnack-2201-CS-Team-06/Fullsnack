@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { showRecRecipes, addRecRecipe } from '../store/recRecipes';
+import {
+  showRecRecipes,
+  addRecRecipe,
+  removeRecRecipe,
+} from '../store/recRecipes';
 import { getOurFoods } from '../store/pantriesFoods';
 import { addRecToMyRecipes } from '../store/recipes';
 import styles from './RecRecipes.module.css';
@@ -72,7 +76,7 @@ const RecRecipes = () => {
     }
   };
 
-  //Sort the recipes according to those that require the least number of new ingredients. Current issue: Sorting happens on the front-end since we need both the recipe and the food data in the pantries. To get the foods, I wrote a route api/ingredients/pantries?userId=INT which gets the ingredients in all the pantries, but it includes duplicates, since we want to consider the total quantity across all pantries. This data is set on the foods reducer in the store. The allFoods page also uses that reducer, but since there are duplicates, this causes errors on the first render, before that page executes a separate thunk that eliminates duplicates.
+  //Sort the recipes according to those that require the least number of new ingredients. Current issue: Sorting happens on the  front-end since we need both the recipe and the food data in the pantries. To get the foods, I wrote a route api/ingredients/pantries?userId=INT which gets the ingredients in all the pantries, but it includes duplicates, since we want to consider the total quantity across all pantries. This data is set on the foods reducer in the store. The allFoods page also uses that reducer, but since there are duplicates, this causes errors on the first render, before that page executes a separate thunk that eliminates duplicates.
   const sortByAvailablility = (recipes) => {
     //The total amount we have for each food across our pantries, e.g., {carrot: 4}
     const combinedTotals = {};
@@ -102,6 +106,8 @@ const RecRecipes = () => {
 
   const addToMyRecipes = (recipeId) => {
     dispatch(addRecToMyRecipes(recipeId, id));
+    // dispatch(showRecRecipes());
+    dispatch(removeRecRecipe(recipeId));
   };
 
   recRecipes = sortByAvailablility(recRecipes);

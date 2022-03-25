@@ -3,6 +3,7 @@ import axios from 'axios';
 // ACTION TYPES
 const SHOW_REC_RECIPES = 'SHOW_REC_RECIPES';
 const ADD_NEW_REC_RECIPE = 'ADD_NEW_REC_RECIPE';
+const REMOVE_REC_RECIPE = 'REMOVE_REC_RECIPE';
 
 // ACTION CREATORS
 const _showRecRecipes = (recRecipes) => {
@@ -16,6 +17,13 @@ const _createRecRecipe = (recRecipe) => {
   return {
     type: ADD_NEW_REC_RECIPE,
     recRecipe,
+  };
+};
+
+export const removeRecRecipe = (recRecipeId) => {
+  return {
+    type: REMOVE_REC_RECIPE,
+    recRecipeId,
   };
 };
 
@@ -51,6 +59,9 @@ const recRecipesReducer = (state = [], action) => {
     }
     case ADD_NEW_REC_RECIPE: {
       return [...state, action.recRecipe];
+    }
+    case REMOVE_REC_RECIPE: {
+      return state.filter((recipe) => recipe.id !== action.recRecipeId);
     }
     default: {
       return state;
