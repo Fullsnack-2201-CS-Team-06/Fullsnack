@@ -37,8 +37,11 @@ router.get('/:pantryId', async (req, res, next) => {
 // POST /api/pantries
 router.post('/', async (req, res, next) => {
   try {
-    const { name } = req.body;
-    const newPantry = await Pantry.create(name);
+    const [nameObj] = req.body;
+    const { name } = nameObj;
+
+    const newPantry = await Pantry.create({ name: name });
+    console.log('backend', newPantry);
     res.send(newPantry);
   } catch (error) {
     next(error);
