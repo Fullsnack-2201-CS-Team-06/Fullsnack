@@ -97,7 +97,8 @@ const EditRecipe = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      addNewRecipe({
+      updateRecipe({
+        id,
         name,
         description,
         rating,
@@ -107,7 +108,7 @@ const EditRecipe = () => {
         ingredients,
       })
     );
-    history.push('/recipes');
+    history.push(`/recipes/${id}`);
   };
 
   return (

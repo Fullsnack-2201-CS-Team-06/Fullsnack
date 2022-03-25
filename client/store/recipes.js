@@ -56,7 +56,7 @@ export const addNewRecipe = (recipe) => {
 export const updateRecipe = (recipe) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/robots/${recipe.id}`, recipe);
+      const { data } = await axios.put(`/api/recipes/${recipe.id}`, recipe);
       dispatch(_updateRecipe(data));
     } catch (error) {
       console.error('Error in updateRecipe thunk!!\n\n', error);
