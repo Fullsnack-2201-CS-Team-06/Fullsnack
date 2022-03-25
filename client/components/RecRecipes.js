@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { showRecRecipes } from '../store/recRecipes';
+import { showRecRecipes, addRecRecipe } from '../store/recRecipes';
 import { getOurFoods } from '../store/pantriesFoods';
 import styles from './RecRecipes.module.css';
 import { Card, Button, Accordion } from 'react-bootstrap';
@@ -17,6 +17,35 @@ const RecRecipes = () => {
   useEffect(() => {
     dispatch(showRecRecipes());
     dispatch(getOurFoods(id)); //Get the ingredients associated with the user to sort results.
+    async function getMoreRecs(reqs) {
+      const data = await fetch(
+        'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner'
+      ).then((response) => response.json());
+      console.log('data: ', data);
+      for (let i = 0; i < reqs; i++) {
+        const recipe = data.hits[i].recipe;
+        dispatch(
+          addRecRecipe({
+            name: recipe.label,
+            image: recipe.image,
+            cuisineType: recipe.cuisineType[0],
+            ingredients: recipe.ingredients.map((ingredient) => {
+              return {
+                name: ingredient.food,
+                uom: ingredient.measure,
+                category: ingredient.foodCategory,
+                image: ingredient.image,
+              };
+            }),
+          })
+        );
+      }
+    }
+    const recipesNeeded = 10 - recRecipes.length;
+    console.log('recipesNeeded: ', recipesNeeded);
+    if (recipesNeeded > 0) {
+      getMoreRecs(recipesNeeded);
+    }
   }, []);
 
   console.log('recRecipes: ', recRecipes);
@@ -57,14 +86,14 @@ const RecRecipes = () => {
     return recipes;
   };
 
-  recRecipes = sortByAvailablility(recRecipes);
-
   //TEST
-  fetch(
-    'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&diet=low-carb&cuisineType=Chinese'
-  )
-    .then((response) => response.json())
-    .then((data) => console.log('API RESPONSE: ', data));
+  // fetch(
+  //   'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&diet=low-carb&cuisineType=Chinese'
+  // )
+  //   .then((response) => response.json())
+  //   .then((data) => console.log('API RESPONSE: ', data));
+
+  recRecipes = sortByAvailablility(recRecipes);
 
   return (
     <div className={styles.container}>

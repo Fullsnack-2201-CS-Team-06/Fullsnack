@@ -113,6 +113,44 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+//POST api/recipes/recs
+router.post('/recs', async (req, res, next) => {
+  try {
+    const { name, image, cuisineType, ingredients } = req.body;
+
+    let newRecipe = await Recipe.create({
+      name,
+      image,
+      cuisineType,
+    });
+
+    ingredients.map(async (ingredient) => {
+      let ingredientToAdd = await Ingredient.findOne({
+        where: {
+          name: ingredient.name,
+        },
+      });
+
+      if (!ingredientToAdd) {
+        ingredientToAdd = await Ingredient.create(ingredient);
+      }
+      await newRecipe.addIngredient(ingredientToAdd);
+    });
+
+    newRecipe = await Recipe.findOne({
+      where: {
+        name: newRecipe.name,
+        userId: null,
+      },
+      include: Ingredient,
+    });
+
+    res.send(newRecipe);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // PUT /api/recipes/:id
 router.put('/:id', async (req, res, next) => {
   try {
