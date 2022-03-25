@@ -37,12 +37,11 @@ router.get('/:pantryId', async (req, res, next) => {
 // POST /api/pantries
 router.post('/', async (req, res, next) => {
   try {
-    console.log("backend", req.body)
-    const [ nameObj ] = req.body
-    const { name } = nameObj
-    console.log("here's our req.body", name)
+    const [nameObj] = req.body;
+    const { name } = nameObj;
+
     const newPantry = await Pantry.create({ name: name });
-    console.log("backend", newPantry)
+    console.log('backend', newPantry);
     res.send(newPantry);
   } catch (error) {
     next(error);
@@ -53,7 +52,7 @@ router.post('/', async (req, res, next) => {
 router.post('/add', async (req, res, next) => {
   try {
     const { id, name, category, quantity, cost, measure } = req.body;
-    console.log("WHAT IS MY CATEGORY", category)
+    console.log('WHAT IS MY CATEGORY', category);
 
     const [newItem, wasCreated] = (newPantryItem =
       await Ingredient.findOrCreate({

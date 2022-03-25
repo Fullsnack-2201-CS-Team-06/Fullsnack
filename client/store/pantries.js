@@ -12,10 +12,10 @@ export const showAll = (allPantries) => ({
   allPantries,
 });
 
-export const _createNewPantry = (newPantry) => {
+export const _createNewPantry = (newPantry) => ({
   type: CREATE_NEW_PANTRY,
   newPantry
-}
+})
 
 // THUNKS
 
