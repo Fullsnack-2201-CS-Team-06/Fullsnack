@@ -194,7 +194,7 @@ const AddRecipe = () => {
                   onChange={(e) => handleChange(index, e)}
                 />
 
-                <button onClick={() => removeIngredient(index)}>Remove</button>
+                <button type="button" onClick={() => removeIngredient(index)}>Remove</button>
               </div>
             );
           })}
