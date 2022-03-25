@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addNewRecipe } from '../store/recipes';
+import { getFoods } from '../store/foods';
 
 const AddRecipe = () => {
   const [name, setName] = useState('');
@@ -9,15 +10,63 @@ const AddRecipe = () => {
   const [rating, setRating] = useState('');
   const [cuisineType, setCuisineType] = useState('');
   const [image, setImage] = useState('');
+  const [ingredients, setIngredients] = useState([
+    {
+      name: '',
+      uom: '',
+      recipeQty: '',
+    },
+  ]);
 
-  const { userId } = useSelector((state) => {
+  const { userId, foods } = useSelector((state) => {
     return {
       userId: state.auth.id,
+      foods: state.foods,
     };
   });
 
+  useEffect(() => {
+    dispatch(getFoods(userId));
+  }, []);
+
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const addIngredient = () => {
+    let newIngredient = {
+      name: '',
+      UOM: '',
+      recipeQty: '',
+    };
+    setIngredients([...ingredients, newIngredient]);
+  };
+
+  const removeIngredient = (index) => {
+    let data = [...ingredients];
+    data.splice(index, 1);
+    setIngredients(data);
+  };
+
+  const handleChange = (index, e) => {
+    let data = [...ingredients];
+    data[index][e.target.name] = e.target.value;
+    setIngredients(data);
+
+    // If ingredient name === an existing food name, set UOM
+    if (e.target.name === 'name') {
+      // The following only runs if 'name' field changes
+      const foodNames = foods.map((food) => food.name);
+      if (foodNames.includes(e.target.value)) {
+        // The following only runs if 'name' field is included in food names
+        const existingFood = foods.filter(
+          (food) => food.name === e.target.value
+        );
+        const existingUOM = existingFood[0]['uom'];
+        data[index]['uom'] = existingUOM;
+        setIngredients(data);
+      }
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,6 +78,7 @@ const AddRecipe = () => {
         cuisineType,
         image,
         userId,
+        ingredients,
       })
     );
     history.push('/recipes');
@@ -41,21 +91,21 @@ const AddRecipe = () => {
         <label htmlFor="name">Recipe Name</label>
         <input
           name="name"
-          value={name}
+          value={name || ''}
           onChange={(e) => setName(e.target.value)}
         />
 
         <label htmlFor="description">Description</label>
         <textarea
           name="description"
-          value={description}
+          value={description || ''}
           onChange={(e) => setDescription(e.target.value)}
         />
 
         <label htmlFor="rating">Rating</label>
         <select
           name="rating"
-          value={rating}
+          value={rating || ''}
           onChange={(e) => setRating(e.target.value)}
         >
           <option value="" disabled selected>
@@ -71,7 +121,7 @@ const AddRecipe = () => {
         <label htmlFor="cuisineType">Cuisine Type</label>
         <select
           name="cuisineType"
-          value={cuisineType}
+          value={cuisineType || ''}
           onChange={(e) => setCuisineType(e.target.value)}
         >
           <option value="" disabled selected>
@@ -101,15 +151,63 @@ const AddRecipe = () => {
         <label htmlFor="image">Image URL</label>
         <input
           name="image"
-          value={image}
+          value={image || ''}
           onChange={(e) => setImage(e.target.value)}
         />
 
         <br />
         <br />
+
+        <div>
+          <h4>Ingredients</h4>
+          {ingredients.map((input, index) => {
+            return (
+              <div key={index}>
+                <label htmlFor="name">Name</label>
+                <input
+                  name="name"
+                  list="allFoods"
+                  value={input.name || ''}
+                  onChange={(e) => handleChange(index, e)}
+                  autoComplete="on"
+                />
+
+                <datalist id="allFoods">
+                  {foods.map((food) => (
+                    <option key={food.id}>{food.name}</option>
+                  ))}
+                </datalist>
+
+                <label htmlFor="uom">UOM</label>
+                <input
+                  type="text"
+                  name="uom"
+                  value={input.uom || ''}
+                  onChange={(e) => handleChange(index, e)}
+                />
+
+                <label htmlFor="recipeQty">Qty</label>
+                <input
+                  type="number"
+                  name="recipeQty"
+                  value={input.recipeQty || ''}
+                  onChange={(e) => handleChange(index, e)}
+                />
+
+                <button type="button" onClick={() => removeIngredient(index)}>Remove</button>
+              </div>
+            );
+          })}
+          <br />
+          <button type="button" onClick={addIngredient}>
+            Add Ingredient
+          </button>
+        </div>
         <button type="submit">Save</button>
         <button onClick={() => history.push('/recipes')}>Cancel</button>
       </form>
+      <br />
+      <br />
     </div>
   );
 };
