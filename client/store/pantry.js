@@ -39,6 +39,7 @@ export const fetchOnePantry = (id) => {
 export const addPantryItemThunk = (itemUpdate) => {
   return async (dispatch) => {
     try {
+      console.log("addPantryItemThunk fired", itemUpdate)
       const { data } = await axios.post(`/api/pantries/add`, itemUpdate);
       dispatch(updatePantry(data));
     } catch (error) {

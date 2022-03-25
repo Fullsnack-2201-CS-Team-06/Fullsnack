@@ -21,15 +21,16 @@ const NewPantryItem = () => {
   };
 
   const addFields = () => {
-    setInputFields([
-      ...inputFields,
-      {
+    let newField =  {
         name: '',
         category: '',
         quantity: '',
         cost: '',
         measure: '',
-      },
+      }
+    setInputFields([
+      ...inputFields,
+     newField
     ]);
   };
 
@@ -39,21 +40,16 @@ const NewPantryItem = () => {
     setInputFields(data)
   }
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log("Did HS fire")
-//     dispatch(
-//       addPantryItemThunk({
-//         id,
-//         name,
-//         category,
-//         quantity,
-//         cost,
-//         measure,
-//       })
-//     );
-//     history.push(`/pantries/${id}`);
-//   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Did HS fire")
+    dispatch(
+      addPantryItemThunk({
+        inputFields
+      })
+    );
+    history.push(`/pantries/${id}`);
+  };
 
   return (
     <div>
@@ -72,7 +68,7 @@ const NewPantryItem = () => {
               <select
                 name='category'
                 value={input.category}
-                onChange={(e) => handleFormChange(index ,e.target.value)}
+                onChange={(e) => handleFormChange(index, e)}
               >
                 <option value='' disabled selected>
                   Select Category
@@ -104,9 +100,9 @@ const NewPantryItem = () => {
                 onChange={(e) => handleFormChange(index, e)}
               />
 
-              <button onClick={addFields()}>Add More Ingredients</button>
-              <button onSubmit={() => handleSubmit()}>Submit</button>
-              <button onClick={() => removeFields(index)}>Remove</button>
+              <button type="button" onClick={() => addFields()}>Add More Ingredients</button>
+              <button type="submit" onSubmit={() => handleSubmit()}>Submit</button>
+              <button type="button" onClick={() => removeFields(index)}>Remove</button>
             </div>
           );
         })}
