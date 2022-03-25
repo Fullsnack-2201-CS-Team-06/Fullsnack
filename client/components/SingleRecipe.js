@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { fetchSingleRecipe } from '../store/singleRecipe';
+import { Link } from 'react-router-dom';
 
 const SingleRecipe = () => {
   const { singleRecipe } = useSelector((state) => {
@@ -49,7 +50,9 @@ const SingleRecipe = () => {
         <span>Protein: {singleRecipe.proteinPerRecipe} </span>
       </h6>
       <button onClick={() => history.push('/recipes')}>Back</button>
-      <button>Edit</button>
+      <Link>
+        <button to={`/recipes/${id}/edit`}>Edit</button>
+      </Link>
     </div>
   );
 };
