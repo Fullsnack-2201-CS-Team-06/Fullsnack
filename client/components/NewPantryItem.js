@@ -35,55 +35,21 @@ const NewPantryItem = () => {
     }
 
     const handleFormChange = (index, e) => {
-        console.log("Handle Form Change Fired")
         let data = [...inputFields]
         data[index][e.target.name] = e.target.value
         setInputFields(data)
     }
 
-    const addIngredientFields = () => {
+    const addFields = () => {
+        e.preventDefault();
         console.log("Add Ingredient Field Fired")
-        let newIngredientField =  { name: '', category: '', quantity: '', cost: '', measure: ''}
-        setInputFields([...inputFields, newIngredientField])
+        let newField =  { name: '', category: '', quantity: '', cost: '', measure: ''}
+        setInputFields([...inputFields, newField])
     }
 
 
     return(<div>
         <h1>Add Pantry Item</h1>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Item Name</label>
-            <input name="name" value={name} type="text" 
-            onChange={(e) => setName(e.target.value)}></input>
-            <label htmlFor="category">Category</label>
-            <select
-          name="category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="" disabled selected>
-            Select Category
-          </option>
-          <option value="produce">Produce</option>
-          <option value="meat">Meat</option>
-          <option value="dairy">Dairy</option>
-          <option value="dry goods">Dry Goods</option>
-          <option value="bakery">Baked Goods</option>
-          <option value="beverages">Beverages</option>
-          <option value="miscellaneous">Miscellaneous</option>
-        </select>
-            <label htmlFor="quantity">Quantity</label>
-            <input name="quantity" value={quantity} type="text"
-            onChange={(e) => setQuantity(e.target.value)}></input>
-            <label htmlFor="cost">Cost</label>
-            <input name="cost" value={cost} type="text"
-            onChange={(e) => setCost(e.target.value)}></input>
-            <label htmlFor="measurer">Measurer</label>
-            <input name="measure" value={measure} type="text"
-            onChange={(e) => setMeasure(e.target.value)}></input>
-            <br />
-            <button type="submit">Submit</button>
-        </form>
-
 
         <form>
         {inputFields.map((input, index) => {
@@ -120,11 +86,53 @@ const NewPantryItem = () => {
                 onChange={(e) => handleFormChange(index, e)}
               />
 
-              <button onClick={addIngredientFields}>Add More Ingredients</button>
+              <button onClick={addFields}>Add More Ingredients</button>
             </div>
           )
         })}
       </form>
+
+
+
+
+
+
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="name">Item Name</label>
+            <input name="name" value={name} type="text" 
+            onChange={(e) => setName(e.target.value)}></input>
+            <label htmlFor="category">Category</label>
+            <select
+          name="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="" disabled selected>
+            Select Category
+          </option>
+          <option value="produce">Produce</option>
+          <option value="meat">Meat</option>
+          <option value="dairy">Dairy</option>
+          <option value="dry goods">Dry Goods</option>
+          <option value="bakery">Baked Goods</option>
+          <option value="beverages">Beverages</option>
+          <option value="miscellaneous">Miscellaneous</option>
+        </select>
+            <label htmlFor="quantity">Quantity</label>
+            <input name="quantity" value={quantity} type="text"
+            onChange={(e) => setQuantity(e.target.value)}></input>
+            <label htmlFor="cost">Cost</label>
+            <input name="cost" value={cost} type="text"
+            onChange={(e) => setCost(e.target.value)}></input>
+            <label htmlFor="measurer">Measurer</label>
+            <input name="measure" value={measure} type="text"
+            onChange={(e) => setMeasure(e.target.value)}></input>
+            <br />
+            <button type="submit">Submit</button>
+        </form>
+
+
+        
     </div>
     
     
