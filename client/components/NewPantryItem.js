@@ -4,11 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { addPantryItemThunk } from '../store/pantry';
 
 const NewPantryItem = () => {
-  const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [cost, setCost] = useState('');
-  const [measure, setMeasure] = useState('');
   const [inputFields, setInputFields] = useState([
     { name: '', category: '', quantity: '', cost: '', measure: '' },
   ]);
@@ -20,7 +15,6 @@ const NewPantryItem = () => {
   const history = useHistory();
 
   const handleFormChange = (index, e) => {
-    e.preventDefault();
     let data = [...inputFields];
     data[index][e.target.name] = e.target.value;
     setInputFields(data);
@@ -39,26 +33,33 @@ const NewPantryItem = () => {
     ]);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      addPantryItemThunk({
-        id,
-        name,
-        category,
-        quantity,
-        cost,
-        measure,
-      })
-    );
-    history.push(`/pantries/${id}`);
-  };
+  const removeFields = (index) => {
+    let data = [...inputFields]
+    data.splice(index, 1)
+    setInputFields(data)
+  }
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     console.log("Did HS fire")
+//     dispatch(
+//       addPantryItemThunk({
+//         id,
+//         name,
+//         category,
+//         quantity,
+//         cost,
+//         measure,
+//       })
+//     );
+//     history.push(`/pantries/${id}`);
+//   };
 
   return (
     <div>
       <h1>Add Pantry Item</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form>
         {inputFields.map((input, index) => {
           return (
             <div key={index}>
@@ -70,7 +71,7 @@ const NewPantryItem = () => {
               />
               <select
                 name='category'
-                value={category}
+                value={input.category}
                 onChange={(e) => handleFormChange(index ,e.target.value)}
               >
                 <option value='' disabled selected>
@@ -103,8 +104,9 @@ const NewPantryItem = () => {
                 onChange={(e) => handleFormChange(index, e)}
               />
 
-              <button onClick={addFields}>Add More Ingredients</button>
-              <button onSubmit={handleSubmit}>Submit</button>
+              <button onClick={addFields()}>Add More Ingredients</button>
+              <button onSubmit={() => handleSubmit()}>Submit</button>
+              <button onClick={() => removeFields(index)}>Remove</button>
             </div>
           );
         })}
