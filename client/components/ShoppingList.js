@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { fetchCurrentShoppingList, fetchShoppingListHistory, editListThunk, sendToPantry } from '../store/ShoppingList';
+import { fetchCurrentShoppingList, sendToPantry } from '../store/ShoppingList';
 import { fetchAllPantries } from '../store/pantries'
 import ShoppingListForm from './ShoppingListForm'
 
@@ -16,7 +16,6 @@ const ShoppingList = () => {
 
   useEffect(() => {
     dispatch(fetchCurrentShoppingList(id));
-    dispatch(fetchShoppingListHistory(id))
     dispatch(fetchAllPantries(id))
   }, []);
 
@@ -25,10 +24,6 @@ const ShoppingList = () => {
   const { totalCost } = currentList || 0
   let length = 0
   if (ingredients) length = ingredients.length
-
-  async function handleChange(itemId, userId, quantity) {
-    dispatch(editListThunk(itemId, userId, quantity))
-  }
 
   async function handleSubmit() {
     if (typeof selectedPantry === 'number' && ingredients.length) {
@@ -63,7 +58,7 @@ const ShoppingList = () => {
         <ShoppingListForm key={item.id}  props={item} />
           )
         }):
-        <tr></tr>
+        <tbody></tbody>
         }
     </table>
     <div>

@@ -35,7 +35,7 @@ const ShoppingListHistoryAll = () => {
     <tr key={list.id}>
       <td><Link to={`/list/${list.id}`}>{list.name}</Link></td>
       <td>{list.checkoutDate}</td>
-      <td>{list.totalCost}</td>
+      <td>${list.totalCost}</td>
       <td>{totalItems}</td>
     </tr>)
   }) :

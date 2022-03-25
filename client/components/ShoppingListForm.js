@@ -41,13 +41,3 @@ return (
 }
 
 export default ShoppingListForm
-
-
-
-      //   {/* <button onClick={() => handleChange(item.id, id, quantity - 1)}>-</button> */}
-      //   {props.shoppingListIngredient.sliQuantity}
-      //   {/* <button onClick={() => handleChange(item.id, id, quantity + 1)}>+</button> */}
-      //   </td>
-      // <td>{props.shoppingListIngredient.uom}</td>
-      // <td>{props.shoppingListIngredient.cost}</td>
-      // {/* <td><button onClick={() => handleChange(props.id, id, 0)}>X</button></td> */}
