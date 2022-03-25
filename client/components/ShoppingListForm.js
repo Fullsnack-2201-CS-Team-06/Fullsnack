@@ -1,12 +1,53 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { editListThunk } from '../store/ShoppingList';
 
-const ShoppingListForm = (props) => {
-  console.log('props ', props)
+const ShoppingListForm = ({props}) => {
+  const dispatch = useDispatch()
+  const { id } = useSelector((state) => state.auth);
+  const {cost} = props.shoppingListIngredient || 0
+  const {sliQuantity} = props.shoppingListIngredient || 0
+  const {uom} = props.shoppingListIngredient || 0
+  const [newCost, setNewCost] = useState(cost)
+  const [newQuantity, setNewQuantity] = useState(sliQuantity)
+
+  const handleCostChange = (e) => {
+    console.log(e.target.value)
+    console.log(newCost)
+    setNewCost(e.target.value)
+    dispatch(editListThunk(props.id, id, newQuantity, e.target.value))
+  }
+  const handleQuantityChange = (e) => {
+    setNewQuantity(e.target.value)
+    dispatch(editListThunk(props.id, id, e.target.value, newCost))
+  }
+  const handleRemoveItem = () => {
+    dispatch(editListThunk(props.id, id, 0, newCost))
+  }
+
 return (
-  <div>
-
-  </div>
+    <>
+    <tbody>
+      <tr>
+        <td>{props.name}</td>
+        <td>Quantity: <input type="text" name="quantity" value={newQuantity}  onChange={(e) => handleQuantityChange(e)} /> </td>
+        <td>{uom}</td>
+        <td><input type="text" name="cost" value={newCost} onChange={(e) => handleCostChange(e)} /> </td>
+        <td><button onClick={() => handleRemoveItem()}>X</button></td>
+      </tr>
+    </tbody>
+    </>
 )
 }
 
-module.exports = ShoppingListForm
+export default ShoppingListForm
+
+
+
+      //   {/* <button onClick={() => handleChange(item.id, id, quantity - 1)}>-</button> */}
+      //   {props.shoppingListIngredient.sliQuantity}
+      //   {/* <button onClick={() => handleChange(item.id, id, quantity + 1)}>+</button> */}
+      //   </td>
+      // <td>{props.shoppingListIngredient.uom}</td>
+      // <td>{props.shoppingListIngredient.cost}</td>
+      // {/* <td><button onClick={() => handleChange(props.id, id, 0)}>X</button></td> */}

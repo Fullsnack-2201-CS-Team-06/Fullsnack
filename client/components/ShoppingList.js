@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { fetchCurrentShoppingList, fetchShoppingListHistory, editListThunk, sendToPantry } from '../store/ShoppingList';
 import { fetchAllPantries } from '../store/pantries'
+import ShoppingListForm from './ShoppingListForm'
 
 const ShoppingList = () => {
   const { id } = useSelector((state) => state.auth);
@@ -45,37 +46,26 @@ const ShoppingList = () => {
   <div>
    <p>{name}</p>
    <p><Link to={'/list/history'} >View History</Link></p>
-<table>
-  <colgroup span="4"></colgroup>
-  <tbody>
-  <tr>
-    <td>List Items</td>
-    <td>Quantity</td>
-    <td>Unit of Measure</td>
-    <td>Cost/Item</td>
-    <td>Remove item from list</td>
-  </tr>
-  { ingredients ?
-  ingredients.map(item => {
-    const quantity = item.shoppingListIngredient.sliQuantity
-    return (
-      <tr key={item.id}>
-        <td>{item.name}</td>
-        <td>
-        <button onClick={() => handleChange(item.id, id, quantity - 1)}>-</button>
-          {item.shoppingListIngredient.sliQuantity}
-          <button onClick={() => handleChange(item.id, id, quantity + 1)}>+</button>
-          </td>
-        <td>{item.shoppingListIngredient.uom}</td>
-        <td>{item.shoppingListIngredient.cost}</td>
-        <td><button onClick={() => handleChange(item.id, id, 0)}>X</button></td>
-      </tr>
-    )
-  }):
-  <tr></tr>
-  }
-  </tbody>
-</table>
+   <form method="GET" id="my_form"></form>
+    <table>
+      <thead>
+        <tr>
+          <th>List Items</th>
+          <th>Quantity</th>
+          <th>Unit of Measure</th>
+          <th>Cost/Item</th>
+          <th>Remove item from list</th>
+        </tr>
+      </thead>
+        { ingredients ?
+          ingredients.map(item => {
+          return (
+        <ShoppingListForm key={item.id}  props={item} />
+          )
+        }):
+        <tr></tr>
+        }
+    </table>
     <div>
     <select name="pantries" onChange={(e) => setSelectedPantry(e.target.value)} >
         <option value="View All Pantries">Select Pantry</option>

@@ -57,10 +57,10 @@ export const setSingleHistoryView = (listId) => {
   }
 }
 
-export const editListThunk = (itemId, userId, quantity) => {
+export const editListThunk = (itemId, userId, quantity, cost) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/shoppinglist?userId=${userId}`, { itemId, quantity })
+      const { data } = await axios.put(`/api/shoppinglist?userId=${userId}`, { itemId, quantity, cost })
       dispatch(editList(data))
     } catch (error) {
       console.log(error)

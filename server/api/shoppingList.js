@@ -56,11 +56,11 @@ router.put('/', async (req, res, next) => {
       where: { userId: req.query.userId, status: 'open' },
       include: Ingredient,
     })
-    const { itemId, quantity } = req.body
+    const { itemId, quantity, cost } = req.body
     const ingredientToUpdate = await Ingredient.findByPk(itemId)
     if (quantity === 0) await shoppingList.removeIngredient(ingredientToUpdate)
     else {
-      await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: quantity }})
+      await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: quantity, cost: cost }})
     }
     const refreshList = await ShoppingList.findOne({
       where: { userId: req.query.userId, status: 'open' },
