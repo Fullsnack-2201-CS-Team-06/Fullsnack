@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchShoppingListHistory } from '../store/ShoppingList';
 
-const ShoppingList = () => {
+const ShoppingListHistoryAll = () => {
   const { id } = useSelector((state) => state.auth);
   const { shoppingList } = useSelector((state) => state)
   const dispatch = useDispatch()
@@ -29,7 +29,7 @@ const ShoppingList = () => {
   shoppingHistory.map(list => {
     return (
     <tr key={list.id}>
-      <td><Link to={'/list/'}>{list.name}</Link></td>
+      <td><Link to={`/list/${list.id}`}>{list.name}</Link></td>
       <td>{list.checkoutDate}</td>
       <td>{list.totalCost}</td>
     </tr>)
@@ -42,4 +42,4 @@ const ShoppingList = () => {
   );
 };
 
-export default ShoppingList;
+export default ShoppingListHistoryAll;
