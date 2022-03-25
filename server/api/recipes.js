@@ -116,14 +116,25 @@ router.post('/', async (req, res, next) => {
 //POST api/recipes/recs
 router.post('/recs', async (req, res, next) => {
   try {
-    const { name, image, cuisineType, caloriesPerRecipe, ingredients } =
-      req.body;
+    const {
+      name,
+      image,
+      cuisineType,
+      caloriesPerRecipe,
+      proteinPerRecipe,
+      carbsPerRecipe,
+      fatPerRecipe,
+      ingredients,
+    } = req.body;
 
     let newRecipe = await Recipe.create({
       name,
       image,
       cuisineType,
       caloriesPerRecipe,
+      proteinPerRecipe,
+      carbsPerRecipe,
+      fatPerRecipe,
     });
 
     await Promise.all(

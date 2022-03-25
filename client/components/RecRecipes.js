@@ -13,7 +13,7 @@ import { Card, Button, Accordion } from 'react-bootstrap';
 /* OBJECTIVE: Show a number of recipes as recommendations to the user. For now, search all the recipes that are not already associated with the user. Sort those such that the top results show recipes that require the least number of new ingredients. When we implement the API, we can obtain either the full list of rec recipes from there, or we could use the api to fill in a deficit of results once we filter the user's preferences.*/
 
 const RecRecipes = () => {
-  const { id } = useSelector((state) => state.auth);
+  const { id, cuisinePref, diet, health } = useSelector((state) => state.auth);
   let { recRecipes, pantriesFoods, recipes } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [currentView, setCurrentView] = useState(null);
@@ -46,6 +46,9 @@ const RecRecipes = () => {
             image: recipe.image,
             cuisineType: recipe.cuisineType[0],
             caloriesPerRecipe: Math.floor(recipe.calories),
+            proteinPerRecipe: recipe.totalNutrients.PROCNT.quantity,
+            carbsPerRecipe: recipe.totalNutrients.CHOCDF.quantity,
+            fatPerRecipe: recipe.totalNutrients.FAT.quantity,
             ingredients: recipe.ingredients.map((ingredient) => {
               return {
                 name: ingredient.food,
