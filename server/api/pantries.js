@@ -51,8 +51,6 @@ router.post('/add', async (req, res, next) => {
     const { id, inputFields} = req.body
     const [ foodInfo ] = inputFields
     const {  name, category, quantity, cost, measure } = foodInfo
-    console.log("backend", foodInfo)
-    console.log("backend", id)
 
     const [newItem, wasCreated] = newPantryItem =
       await Ingredient.findOrCreate({

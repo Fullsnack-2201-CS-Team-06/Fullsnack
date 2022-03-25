@@ -6,8 +6,16 @@ import { addPantryItemThunk } from '../store/pantry';
 const NewPantryItem = () => {
   const { userId } = useSelector((state) => state.auth);
   const { id } = useSelector((state) => state.pantry);
+  const { foods } = useSelector((state) => state);
+
   const [inputFields, setInputFields] = useState([
-    { name: '', category: '', quantity: '', cost: '', measure: '' },
+    {
+      name: '',
+      category: '',
+      quantity: '',
+      cost: '',
+      measure: '',
+    },
   ]);
 
   const dispatch = useDispatch();
@@ -17,35 +25,47 @@ const NewPantryItem = () => {
     let data = [...inputFields];
     data[index][e.target.name] = e.target.value;
     setInputFields(data);
+
+    // If ingredient name === an existing food name, set UOM
+    if (e.target.name === 'name') {
+      // The following only runs if 'name' field changes
+      const foodNames = foods.map((food) => food.name);
+      if (foodNames.includes(e.target.value)) {
+        // The following only runs if 'name' field is included in food names
+        const existingFood = foods.filter(
+          (food) => food.name === e.target.value
+        );
+        const existingUOM = existingFood[0]['uom'];
+        data[index]['uom'] = existingUOM;
+        setInputFields(data);
+      }
+    }
   };
 
   const addFields = () => {
-    let newField =  {
-        name: '',
-        category: '',
-        quantity: '',
-        cost: '',
-        measure: '',
-      }
-    setInputFields([
-      ...inputFields,
-     newField
-    ]);
+    let newField = {
+      name: '',
+      category: '',
+      quantity: '',
+      cost: '',
+      measure: '',
+    };
+    setInputFields([...inputFields, newField]);
   };
 
   const removeFields = (index) => {
-    let data = [...inputFields]
-    data.splice(index, 1)
-    setInputFields(data)
-  }
+    let data = [...inputFields];
+    data.splice(index, 1);
+    setInputFields(data);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Did HS fire")
+    console.log('Did HS fire');
     dispatch(
       addPantryItemThunk({
         id,
-        inputFields
+        inputFields,
       })
     );
     history.push(`/pantries/${id}`);
@@ -59,17 +79,28 @@ const NewPantryItem = () => {
         {inputFields.map((input, index) => {
           return (
             <div key={index}>
+              <label htmlFor='Item Name'>Item Name</label>
               <input
                 name='name'
+                list='allFoods'
                 placeholder='Item Name'
                 value={input.name}
                 onChange={(e) => handleFormChange(index, e)}
+                autocomplete='on'
               />
+
+              <datalist id='allFoods'>
+                {foods.map((food) => (
+                  <option key={food.id}>{food.name}</option>
+                ))}
+              </datalist>
+
               <select
                 name='category'
                 value={input.category}
                 onChange={(e) => handleFormChange(index, e)}
               >
+                <label htmlFor='Category'>Category</label>
                 <option value='' disabled selected>
                   Select Category
                 </option>
@@ -87,12 +118,16 @@ const NewPantryItem = () => {
                 value={input.quantity}
                 onChange={(e) => handleFormChange(index, e)}
               />
+
+              <label htmlFor='Cost'>Cost</label>
               <input
                 name='cost'
                 placeholder='Cost'
                 value={input.cost}
                 onChange={(e) => handleFormChange(index, e)}
               />
+
+              <label htmlFor='Measure'>Measure</label>
               <input
                 name='measure'
                 placeholder='Measure'
@@ -100,9 +135,15 @@ const NewPantryItem = () => {
                 onChange={(e) => handleFormChange(index, e)}
               />
 
-              <button type="button" onClick={() => addFields()}>Add More Ingredients</button>
-              <button type="submit" onClick={handleSubmit}>Submit</button>
-              <button type="button" onClick={() => removeFields(index)}>Remove</button>
+              <button type='button' onClick={() => addFields()}>
+                Add More Ingredients
+              </button>
+              <button type='submit' onClick={handleSubmit}>
+                Submit
+              </button>
+              <button type='button' onClick={() => removeFields(index)}>
+                Remove
+              </button>
             </div>
           );
         })}
