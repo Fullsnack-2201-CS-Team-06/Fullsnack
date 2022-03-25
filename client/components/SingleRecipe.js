@@ -50,8 +50,8 @@ const SingleRecipe = () => {
         <span>Protein: {singleRecipe.proteinPerRecipe} </span>
       </h6>
       <button onClick={() => history.push('/recipes')}>Back</button>
-      <Link>
-        <button to={`/recipes/${id}/edit`}>Edit</button>
+      <Link to={`/recipes/${id}/edit`}>
+        <button>Edit</button>
       </Link>
     </div>
   );
