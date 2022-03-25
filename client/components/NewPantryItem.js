@@ -9,6 +9,9 @@ const NewPantryItem = () => {
     const [quantity, setQuantity] = useState('');
     const [cost, setCost] = useState('')
     const [measure, setMeasure] = useState('')
+    const [inputFields, setInputFields] = useState([
+        { item: '', category: '', quantity: '', Cost: '', Measure: ''}
+    ])
 
     const { userId } = useSelector((state) => state.auth)
     const { id } = useSelector((state) => state.pantry)
@@ -66,7 +69,40 @@ const NewPantryItem = () => {
             <br />
             <button type="submit">Submit</button>
         </form>
-    </div>)
+
+
+        <form>
+        {inputFields.map((input, index) => {
+          return (
+            <div key={index}>
+              <input
+                name='Item Name'
+                placeholder='Item Name'
+              />
+              <input
+                name='Category'
+                placeholder='Category'
+              />
+               <input
+                name='Quantity'
+                placeholder='Quantity'
+              />
+               <input
+                name='Cost'
+                placeholder='Cost'
+              />
+               <input
+                name='Measure'
+                placeholder='Measure'
+              />
+            </div>
+          )
+        })}
+      </form>
+    </div>
+    
+    
+    )
 
 }
 
