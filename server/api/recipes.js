@@ -126,20 +126,22 @@ router.post('/recs', async (req, res, next) => {
       caloriesPerRecipe,
     });
 
-    ingredients.map(async (ingredient) => {
-      let ingredientToAdd = await Ingredient.findOne({
-        where: {
-          name: ingredient.name,
-        },
-      });
+    await Promise.all(
+      ingredients.map(async (ingredient) => {
+        let ingredientToAdd = await Ingredient.findOne({
+          where: {
+            name: ingredient.name,
+          },
+        });
 
-      if (!ingredientToAdd) {
-        ingredientToAdd = await Ingredient.create(ingredient);
-      }
-      await newRecipe.addIngredient(ingredientToAdd, {
-        through: { recipeQty: ingredient.quantity },
-      });
-    });
+        if (!ingredientToAdd) {
+          ingredientToAdd = await Ingredient.create(ingredient);
+        }
+        await newRecipe.addIngredient(ingredientToAdd, {
+          through: { recipeQty: ingredient.quantity },
+        });
+      })
+    );
 
     newRecipe = await Recipe.findOne({
       where: {

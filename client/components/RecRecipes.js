@@ -18,6 +18,7 @@ const RecRecipes = () => {
   const dispatch = useDispatch();
   const [currentView, setCurrentView] = useState(null);
 
+  //First, get the recommended recipes and the user's pantry ingredients.
   useEffect(() => {
     dispatch(showRecRecipes());
     dispatch(getOurFoods(id)); //Get the ingredients associated with the user to sort results.
