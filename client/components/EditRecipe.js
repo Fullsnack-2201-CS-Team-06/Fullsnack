@@ -43,7 +43,17 @@ const EditRecipe = () => {
     setCuisineType(singleRecipe.cuisineType);
     setImage(singleRecipe.image);
 
-    const singleRecipeIngredients = singleRecipe.ingredients || '';
+    let singleRecipeIngredients = singleRecipe.ingredients || '';
+
+    if (singleRecipeIngredients) {
+      singleRecipeIngredients = singleRecipeIngredients.map((ingredient) => {
+        return {
+          name: ingredient.name,
+          uom: ingredient.uom,
+          recipeQty: ingredient.recipeIngredient.recipeQty,
+        };
+      });
+    }
 
     setIngredients([...singleRecipeIngredients]);
   }, [singleRecipe]);
@@ -51,7 +61,7 @@ const EditRecipe = () => {
   const addIngredient = () => {
     let newIngredient = {
       name: '',
-      UOM: '',
+      uom: '',
       recipeQty: '',
     };
     setIngredients([...ingredients, newIngredient]);

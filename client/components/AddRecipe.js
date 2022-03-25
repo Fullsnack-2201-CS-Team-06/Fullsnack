@@ -35,7 +35,7 @@ const AddRecipe = () => {
   const addIngredient = () => {
     let newIngredient = {
       name: '',
-      UOM: '',
+      uom: '',
       recipeQty: '',
     };
     setIngredients([...ingredients, newIngredient]);
@@ -194,7 +194,9 @@ const AddRecipe = () => {
                   onChange={(e) => handleChange(index, e)}
                 />
 
-                <button type="button" onClick={() => removeIngredient(index)}>Remove</button>
+                <button type="button" onClick={() => removeIngredient(index)}>
+                  Remove
+                </button>
               </div>
             );
           })}
