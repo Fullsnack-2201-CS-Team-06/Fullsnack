@@ -116,12 +116,14 @@ router.post('/', async (req, res, next) => {
 //POST api/recipes/recs
 router.post('/recs', async (req, res, next) => {
   try {
-    const { name, image, cuisineType, ingredients } = req.body;
+    const { name, image, cuisineType, caloriesPerRecipe, ingredients } =
+      req.body;
 
     let newRecipe = await Recipe.create({
       name,
       image,
       cuisineType,
+      caloriesPerRecipe,
     });
 
     ingredients.map(async (ingredient) => {
@@ -134,7 +136,9 @@ router.post('/recs', async (req, res, next) => {
       if (!ingredientToAdd) {
         ingredientToAdd = await Ingredient.create(ingredient);
       }
-      await newRecipe.addIngredient(ingredientToAdd);
+      await newRecipe.addIngredient(ingredientToAdd, {
+        through: { recipeQty: ingredient.quantity },
+      });
     });
 
     newRecipe = await Recipe.findOne({

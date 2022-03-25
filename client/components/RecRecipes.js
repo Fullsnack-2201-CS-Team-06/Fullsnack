@@ -12,13 +12,13 @@ const RecRecipes = () => {
   let { recRecipes, pantriesFoods } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [currentView, setCurrentView] = useState(null);
-  const didMount = useRef(false);
 
   useEffect(() => {
     dispatch(showRecRecipes());
     dispatch(getOurFoods(id)); //Get the ingredients associated with the user to sort results.
   }, []);
 
+  const didMount = useRef(false);
   //Get all the recommended recipes not associated with the current user.
   useEffect(() => {
     async function getMoreRecs(reqs) {
@@ -26,6 +26,8 @@ const RecRecipes = () => {
         'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner'
       ).then((response) => response.json());
       console.log('data: ', data);
+
+      //Create recipes for the needed number to meet the threshold. For example, if we already have 3 to recommend, get 7 from the api.
       for (let i = 0; i < reqs; i++) {
         const recipe = data.hits[i].recipe;
         dispatch(
@@ -33,21 +35,24 @@ const RecRecipes = () => {
             name: recipe.label,
             image: recipe.image,
             cuisineType: recipe.cuisineType[0],
+            caloriesPerRecipe: Math.floor(recipe.calories),
             ingredients: recipe.ingredients.map((ingredient) => {
               return {
                 name: ingredient.food,
                 uom: ingredient.measure,
                 category: ingredient.foodCategory,
                 image: ingredient.image,
+                quantity: ingredient.quantity,
               };
             }),
           })
         );
       }
     }
+
+    //Only execute the api call after the 2nd render. Otherwise, the recipes needed will be inaccurate.
     if (didMount.current) {
       const recipesNeeded = 10 - recRecipes.length;
-      console.log('recipesNeeded: ', recipesNeeded);
       if (recipesNeeded > 0) {
         getMoreRecs(recipesNeeded);
       }
