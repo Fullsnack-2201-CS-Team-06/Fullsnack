@@ -25,7 +25,8 @@ const Food = () => {
   const dispatch = useDispatch();
   const [searchCriteria, setSearchCriteria] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
-
+  const [minCalories, setMinCalories] = useState(0);
+  const [maxCalories, setMaxCalories] = useState(100000);
   //Get all foods associated with that user's pantries, recipes, and shopping lists.
   useEffect(() => {
     dispatch(getFoods(id));
@@ -41,18 +42,37 @@ const Food = () => {
     setCategoryFilter(e.target.value);
   }
 
+  function editCaloriesRange(e) {
+    if (e.target.name === 'minCalories') {
+      setMinCalories(Number(e.target.value));
+    } else if (e.target.name === 'maxCalories') {
+      setMaxCalories(Number(e.target.value));
+    }
+  }
+
   //Filter foods according to the search criteria.
   if (searchCriteria !== '') {
     foods = foods.filter((food) => food.name.includes(searchCriteria));
   }
 
+  //Filter foods according to a selected category.
   if (categoryFilter === 'other') {
     foods = foods.filter((food) => !foodCategories.includes(food.category));
   } else if (categoryFilter !== '') {
     foods = foods.filter((food) => food.category === categoryFilter);
   }
 
-  //Filter foods according to the category filter criteria.
+  //Filter for those above the minimum calories.
+  if (minCalories !== 0) {
+    foods = foods.filter((food) => food.caloriesPerUnit >= minCalories);
+  }
+
+  //Filter for those below the maximum calories.
+  if (maxCalories !== 0) {
+    foods = foods.filter(
+      (food) => food.caloriesPerUnit <= maxCalories || !food.caloriesPerUnit
+    );
+  }
 
   return (
     <div>
@@ -61,7 +81,7 @@ const Food = () => {
           <label htmlFor="search">Search Foods</label>
           <input name="search" type="text" onChange={editSearch} />
         </div>
-        <div className={styles.filterCategories}>
+        <div className={styles.allFoodsSetting}>
           <label htmlFor="category-filter">Filter Categories: </label>
           <select
             name="category-filter"
@@ -77,6 +97,28 @@ const Food = () => {
             ))}
             <option value="other">other</option>
           </select>
+        </div>
+        <div className={styles.allFoodsSetting}>
+          <div className={styles.minmaxSetting}>
+            <label htmlFor="minCalories">Min Calories: </label>
+            <input
+              type="number"
+              name="minCalories"
+              min="0"
+              value={minCalories}
+              onChange={editCaloriesRange}
+            />
+          </div>
+          <div className={styles.minmaxSetting}>
+            <label htmlFor="maxCalories">Max Calories: </label>
+            <input
+              type="number"
+              name="maxCalories"
+              min="0"
+              value={maxCalories}
+              onChange={editCaloriesRange}
+            />
+          </div>
         </div>
       </div>
       <div className={styles.foodcards}>
