@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { showRecRecipes, addRecRecipe } from '../store/recRecipes';
 import { getOurFoods } from '../store/pantriesFoods';
@@ -12,11 +12,15 @@ const RecRecipes = () => {
   let { recRecipes, pantriesFoods } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [currentView, setCurrentView] = useState(null);
+  const didMount = useRef(false);
 
-  //Get all the recommended recipes not associated with the current user.
   useEffect(() => {
     dispatch(showRecRecipes());
     dispatch(getOurFoods(id)); //Get the ingredients associated with the user to sort results.
+  }, []);
+
+  //Get all the recommended recipes not associated with the current user.
+  useEffect(() => {
     async function getMoreRecs(reqs) {
       const data = await fetch(
         'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner'
@@ -41,12 +45,16 @@ const RecRecipes = () => {
         );
       }
     }
-    const recipesNeeded = 10 - recRecipes.length;
-    console.log('recipesNeeded: ', recipesNeeded);
-    if (recipesNeeded > 0) {
-      getMoreRecs(recipesNeeded);
+    if (didMount.current) {
+      const recipesNeeded = 10 - recRecipes.length;
+      console.log('recipesNeeded: ', recipesNeeded);
+      if (recipesNeeded > 0) {
+        getMoreRecs(recipesNeeded);
+      }
+    } else {
+      didMount.current = true;
     }
-  }, []);
+  }, [pantriesFoods]);
 
   console.log('recRecipes: ', recRecipes);
 
