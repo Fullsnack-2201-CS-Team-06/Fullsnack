@@ -27,9 +27,13 @@ const RecRecipes = () => {
   //Get all the recommended recipes not associated with the current user.
   useEffect(() => {
     async function getMoreRecs(reqs) {
-      const data = await fetch(
-        'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner&random=true'
-      ).then((response) => response.json());
+      let apiRequest =
+        'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner';
+      recipes.forEach((recipe) => (apiRequest += `&excluded=${recipe.name}`));
+      recRecipes.forEach(
+        (recRecipe) => (apiRequest += `&excluded=${recRecipe.name}`)
+      );
+      const data = await fetch(apiRequest).then((response) => response.json());
       console.log('data: ', data);
 
       //Create recipes for the needed number to meet the threshold. For example, if we already have 3 to recommend, get 7 from the api.
