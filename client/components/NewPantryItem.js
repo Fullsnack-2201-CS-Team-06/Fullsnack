@@ -10,7 +10,7 @@ const NewPantryItem = () => {
     const [cost, setCost] = useState('')
     const [measure, setMeasure] = useState('')
     const [inputFields, setInputFields] = useState([
-        { item: '', category: '', quantity: '', Cost: '', Measure: ''}
+        { name: '', category: '', quantity: '', cost: '', measure: ''}
     ])
 
     const { userId } = useSelector((state) => state.auth)
@@ -32,6 +32,12 @@ const NewPantryItem = () => {
             })
         );
         history.push(`/pantries/${id}`)
+    }
+
+    const handleFormChange = (index, e) => {
+        let data = [...inputFields]
+        data[index][e.target.name] = e.target.value
+        setInputFields(data)
     }
 
     return(<div>
@@ -76,24 +82,34 @@ const NewPantryItem = () => {
           return (
             <div key={index}>
               <input
-                name='Item Name'
+                name='name'
                 placeholder='Item Name'
+                value={input.name}
+                onChange={(e) => handleFormChange(index, event)}
               />
               <input
-                name='Category'
+                name='category'
                 placeholder='Category'
+                value={input.category}
+                onChange={(e) => handleFormChange(index, event)}
               />
                <input
-                name='Quantity'
+                name='quantity'
                 placeholder='Quantity'
+                value={input.quantity}
+                onChange={(e) => handleFormChange(index, event)}
               />
                <input
-                name='Cost'
+                name='cost'
                 placeholder='Cost'
+                value={input.cost}
+                onChange={(e) => handleFormChange(index, event)}
               />
                <input
-                name='Measure'
+                name='measure'
                 placeholder='Measure'
+                value={input.measure}
+                onChange={(e) => handleFormChange(index, event)}
               />
             </div>
           )
