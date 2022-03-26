@@ -68,10 +68,10 @@ export const editListThunk = (itemId, userId, quantity, cost) => {
   }
 }
 
-export const sendToPantry = (userId, currentList) => {
+export const sendToPantry = (userId, currentList, pantryId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`/api/shoppinglist?userId=${userId}`, { currentList })
+      const { data } = await axios.post(`/api/shoppinglist?userId=${userId}`, { currentList, pantryId })
       dispatch(toPantry(data))
     } catch (error) {
       console.log(error)

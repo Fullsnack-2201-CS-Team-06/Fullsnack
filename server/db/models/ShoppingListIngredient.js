@@ -8,6 +8,7 @@ const ShoppingListIngredient = db.define('shoppingListIngredient', {
 
   cost: {
     type: Sequelize.DECIMAL,
+    defaultValue: 0.0,
     validate: {
       min: 0.0,
     },

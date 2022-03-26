@@ -4,6 +4,7 @@ const User = require('../db/models/User');
 const Ingredient = require('../db/models/Ingredient');
 const ShoppingList = require('../db/models/ShoppingList');
 const ShoppingListIngredient = require('../db/models/ShoppingListIngredient');
+const Pantry = require('../db/models/Pantry')
 
 //GET /api/shoppingList/all?userId=1 status: closed
 router.get('/all', async (req, res, next) => {
@@ -97,7 +98,20 @@ router.post('/', async (req, res, next) => {
     if (!shoppingList) {
       next({ status: 404, message: 'No shopping list found at this id' });
     }
-    const { totalCost } = req.body;
+    const { totalCost, pantryId } = req.body;
+    console.log('here is the shopping list ingredients: ', shoppingList.ingredients)
+    const currentPantry = await Pantry.findByPk(pantryId, { include: Ingredient })
+
+    await shoppingList.ingredients.forEach(curr => {
+      const { id } = curr
+      const {sliQuantity, cost} = curr.shoppingListIngredient
+      const addMeToPantry = Ingredient.findByPk(id)
+      currentPantry.addIngredient(addMeToPantry, {through: {
+        pantryQty: sliQuantity, cost: cost
+      }})
+    })
+
+
     await shoppingList.update({
       totalCost,
       status: 'closed',
