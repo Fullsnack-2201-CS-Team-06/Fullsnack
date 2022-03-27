@@ -68,7 +68,14 @@ router.put('/', async (req, res, next) => {
     if (!quantity) {
       console.log('quantity: ', shoppingList)
       if (shoppingList.hasIngredient(ingredientToUpdate)) {
-        await shoppingList.addIngredients(ingredientToUpdate, { through: { sliQuantity: 1 }})
+        let initialAmount = 0
+        shoppingList.ingredients.forEach(curr => {
+          if (itemId === curr.id) {
+            console.log('here is the currrrr', curr)
+            initialAmount += curr.shoppingListIngredient.sliQuantity
+          }
+        })
+        await shoppingList.addIngredients(ingredientToUpdate, { through: { sliQuantity: initialAmount * 1 + 1 }})
       } else {
         await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: 1 }})
       }
