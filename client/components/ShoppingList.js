@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { fetchCurrentShoppingList, sendToPantry } from '../store/ShoppingList';
 import { fetchAllPantries } from '../store/pantries'
 import ShoppingListForm from './ShoppingListForm'
@@ -11,7 +11,6 @@ const ShoppingList = () => {
   const dispatch = useDispatch()
   const { currentList } = shoppingList
   const [selectedPantry, setSelectedPantry] = useState(pantries[0]);
-  const history = useHistory()
   const [newPantry, setNewPantry] = useState('')
   const { name } = currentList || ''
   const { ingredients } = currentList || []
@@ -33,7 +32,7 @@ const ShoppingList = () => {
   if (ingredients) length = ingredients.length
 
   async function handleSubmit() {
-    if (typeof selectedPantry === 'number' && ingredients.length) {
+    if (typeof selectedPantry === 'string' && ingredients.length) {
       dispatch(sendToPantry(id, currentList, selectedPantry))
     } else if (ingredients.length) {
       dispatch(sendToPantry(id, currentList, pantries[0].id))
@@ -41,6 +40,7 @@ const ShoppingList = () => {
       window.alert('There are no items to add to your pantry!')
     }
   }
+  console.log(typeof selectedPantry)
 
   return (
   <div>
