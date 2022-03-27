@@ -35,10 +35,8 @@ const ShoppingList = () => {
   async function handleSubmit() {
     if (typeof selectedPantry === 'number' && ingredients.length) {
       dispatch(sendToPantry(id, currentList, selectedPantry))
-      history.push(`/pantries/${selectedPantry}`)
     } else if (ingredients.length) {
       dispatch(sendToPantry(id, currentList, pantries[0].id))
-      history.push(`/pantries/${pantries[0].id}`)
     } else {
       window.alert('There are no items to add to your pantry!')
     }

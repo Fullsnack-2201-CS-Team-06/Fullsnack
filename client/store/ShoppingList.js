@@ -1,7 +1,7 @@
 import axios from 'axios';
+import history from '../history';
 
 // ACTION TYPE
-
 const SHOPPING_HISTORY = 'SHOPPING_HISTORY';
 const CURRENT_SHOPPING_LIST = 'CURRENT_SHOPPING_LIST'
 const EDIT_LIST = 'EDIT_LIST'
@@ -76,6 +76,7 @@ export const sendToPantry = (userId, currentList, pantryId) => {
     } catch (error) {
       console.log(error)
     }
+    history.push(`/pantries/${pantryId}`)
   }
 }
 

@@ -67,8 +67,7 @@ router.put('/', async (req, res, next) => {
     const ingredientToUpdate = await Ingredient.findByPk(itemId)
     if (!quantity) {
       console.log('quantity: ', shoppingList)
-      const hasIngredient = await shoppingList.hasIngredient(ingredientToUpdate)
-      if (hasIngredient) {
+      if (shoppingList.hasIngredient(ingredientToUpdate)) {
         await shoppingList.addIngredients(ingredientToUpdate, { through: { sliQuantity: 1 }})
       } else {
         await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: 1 }})
@@ -124,7 +123,6 @@ router.post('/', async (req, res, next) => {
         }})
       }
     })
-
 
     await shoppingList.update({
       totalCost,
