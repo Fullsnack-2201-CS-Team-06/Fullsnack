@@ -38,7 +38,6 @@ router.get('/:pantryId', async (req, res, next) => {
 // POST /api/pantries
 router.post('/', async (req, res, next) => {
   try {
-    console.log('backend', req.body);
     const { name, id } = req.body;
     const newName = name[0].name;
 
@@ -57,7 +56,7 @@ router.post('/', async (req, res, next) => {
 router.post('/add', async (req, res, next) => {
   try {
     const { id, inputFields } = req.body;
-    const [foodInfo] = inputFields;
+    const [ foodInfo ] = inputFields;
     const { name, category, quantity, cost, measure } = foodInfo;
 
     const [newItem, wasCreated] = (newPantryItem =
