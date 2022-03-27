@@ -99,16 +99,30 @@ router.post('/', async (req, res, next) => {
       next({ status: 404, message: 'No shopping list found at this id' });
     }
     const { totalCost, pantryId } = req.body;
-    console.log('here is the shopping list ingredients: ', shoppingList.ingredients)
+    console.log(shoppingList.ingredients.forEach(ing => {
+      console.log('shopp ing: ', ing.shoppingListIngredient)
+    }))
     const currentPantry = await Pantry.findByPk(pantryId, { include: Ingredient })
 
-    await shoppingList.ingredients.forEach(curr => {
-      const { id } = curr
-      const {sliQuantity, cost} = curr.shoppingListIngredient
-      const addMeToPantry = Ingredient.findByPk(id)
-      currentPantry.addIngredient(addMeToPantry, {through: {
-        pantryQty: sliQuantity, cost: cost
-      }})
+    await shoppingList.ingredients.forEach(addMeToPantry => {
+      const { id } = addMeToPantry
+      const {sliQuantity, cost} = addMeToPantry.shoppingListIngredient
+      console.log('inside ', addMeToPantry)
+      if (currentPantry.hasIngredient(addMeToPantry)) {
+        let initialAmount = 0
+        currentPantry.ingredients.forEach(curr => {
+          if (id === curr.id) {
+            initialAmount += curr.pantryIngredient.pantryQty
+          }
+        })
+        currentPantry.addIngredient(addMeToPantry, {through: {
+          pantryQty: sliQuantity * 1 + initialAmount * 1, cost: cost
+        }})
+      } else {
+        currentPantry.addIngredient(addMeToPantry, {through: {
+          pantryQty: sliQuantity, cost: cost
+        }})
+      }
     })
 
 
