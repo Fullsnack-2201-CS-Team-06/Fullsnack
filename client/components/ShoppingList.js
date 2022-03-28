@@ -32,7 +32,7 @@ const ShoppingList = () => {
   if (ingredients) length = ingredients.length
 
   async function handleCreatePantry() {
-    dispatch(createNewPantry([{name: newPantry}]))
+    dispatch(createNewPantry([{name: newPantry}], id))
   }
 
   async function handleSubmit() {
