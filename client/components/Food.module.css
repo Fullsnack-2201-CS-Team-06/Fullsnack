@@ -15,9 +15,18 @@
   width: 400px;
 }
 
-.filterCategories {
+.allFoodsSetting {
   display: flex;
   flex-direction: column;
+}
+
+.minmaxSetting {
+  display: flex;
+  flex-direction: row;
+}
+
+.minmaxSetting > input {
+  width: 80px;
 }
 
 .foodcards {
