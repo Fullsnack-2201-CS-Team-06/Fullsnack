@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchCurrentShoppingList, sendToPantry } from '../store/ShoppingList';
-import { fetchAllPantries } from '../store/pantries'
+import { fetchAllPantries, createNewPantry } from '../store/pantries'
 import ShoppingListForm from './ShoppingListForm'
 
 const ShoppingList = () => {
@@ -31,6 +31,10 @@ const ShoppingList = () => {
   let length = 0
   if (ingredients) length = ingredients.length
 
+  async function handleCreatePantry() {
+    dispatch(createNewPantry([{name: newPantry}]))
+  }
+
   async function handleSubmit() {
     if (typeof selectedPantry === 'string' && ingredients.length) {
       dispatch(sendToPantry(id, currentList, selectedPantry))
@@ -40,7 +44,6 @@ const ShoppingList = () => {
       window.alert('There are no items to add to your pantry!')
     }
   }
-  console.log(typeof selectedPantry)
 
   return (
   <div>
@@ -77,10 +80,12 @@ const ShoppingList = () => {
         <option value={-1}>Create New Pantry</option>
       </select>
       {selectedPantry < 0 ?
-      <form>
+      <form method="GET" id="my_form">
         <label htmlFor='name' >Pantry Name: </label>
-        {/* <input type='text' name='name' value={newPantry.name} onSubmit={() => dispatch()} /> */}
-      </form> :
+        <input type='text' name='name' value={newPantry} onChange={(e) => setNewPantry(e.target.value)} />
+        <button name='button' onClick={() => handleCreatePantry()}>Create New Pantry</button>
+      </form>
+       :
       <form></form>}
       <button name='button' onClick={() => handleSubmit()}>Send list to Pantry</button>
       <p>Total # of unique items: {length}</p>

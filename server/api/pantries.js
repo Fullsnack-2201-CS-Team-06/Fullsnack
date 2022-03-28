@@ -37,6 +37,7 @@ router.get('/:pantryId', async (req, res, next) => {
 // POST /api/pantries
 router.post('/', async (req, res, next) => {
   try {
+    console.log('in the route!', req.body)
     const [nameObj] = req.body;
     const { name } = nameObj;
 
