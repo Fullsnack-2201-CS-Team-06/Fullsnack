@@ -257,7 +257,7 @@ router.put('/:id', async (req, res, next) => {
               name: ingredient.dataValues.name,
             },
           });
-          
+
           await updatedRecipe.removeIngredient(ingredientToRemove);
         }
       });
@@ -280,16 +280,16 @@ router.delete('/:id', async (req, res, next) => {
       next({ status: 404, message: `Recipe no. ${req.params.id} not found.` });
     }
 
-    const deletedRecipe = await recipe.destroy();
+    await recipe.destroy();
 
-    if (result !== 1) {
+    if (recipe !== 1) {
       next({
         status: 404,
         message: `Failed to destroy recipe no. ${req.params.id}`,
       });
     }
 
-    res.send(deletedRecipe);
+    res.send(recipe);
   } catch (error) {
     next(error);
   }
