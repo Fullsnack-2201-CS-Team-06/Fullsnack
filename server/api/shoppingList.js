@@ -4,6 +4,7 @@ const User = require('../db/models/User');
 const Ingredient = require('../db/models/Ingredient');
 const ShoppingList = require('../db/models/ShoppingList');
 const ShoppingListIngredient = require('../db/models/ShoppingListIngredient');
+const Pantry = require('../db/models/Pantry')
 
 //GET /api/shoppingList/all?userId=1 status: closed
 router.get('/all', async (req, res, next) => {
@@ -66,9 +67,15 @@ router.put('/', async (req, res, next) => {
     const ingredientToUpdate = await Ingredient.findByPk(itemId)
     if (!quantity) {
       console.log('quantity: ', shoppingList)
-      const hasIngredient = await shoppingList.hasIngredient(ingredientToUpdate)
-      if (hasIngredient) {
-        await shoppingList.addIngredients(ingredientToUpdate, { through: { sliQuantity: 1 }})
+      if (shoppingList.hasIngredient(ingredientToUpdate)) {
+        let initialAmount = 0
+        shoppingList.ingredients.forEach(curr => {
+          if (itemId === curr.id) {
+            console.log('here is the currrrr', curr)
+            initialAmount += curr.shoppingListIngredient.sliQuantity
+          }
+        })
+        await shoppingList.addIngredients(ingredientToUpdate, { through: { sliQuantity: initialAmount * 1 + 1 }})
       } else {
         await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: 1 }})
       }
@@ -97,7 +104,33 @@ router.post('/', async (req, res, next) => {
     if (!shoppingList) {
       next({ status: 404, message: 'No shopping list found at this id' });
     }
-    const { totalCost } = req.body;
+    const { totalCost, pantryId } = req.body;
+    console.log(shoppingList.ingredients.forEach(ing => {
+      console.log('shopp ing: ', ing.shoppingListIngredient)
+    }))
+    const currentPantry = await Pantry.findByPk(pantryId, { include: Ingredient })
+
+    await shoppingList.ingredients.forEach(addMeToPantry => {
+      const { id } = addMeToPantry
+      const {sliQuantity, cost} = addMeToPantry.shoppingListIngredient
+      console.log('inside ', addMeToPantry)
+      if (currentPantry.hasIngredient(addMeToPantry)) {
+        let initialAmount = 0
+        currentPantry.ingredients.forEach(curr => {
+          if (id === curr.id) {
+            initialAmount += curr.pantryIngredient.pantryQty
+          }
+        })
+        currentPantry.addIngredient(addMeToPantry, {through: {
+          pantryQty: sliQuantity * 1 + initialAmount * 1, cost: cost
+        }})
+      } else {
+        currentPantry.addIngredient(addMeToPantry, {through: {
+          pantryQty: sliQuantity, cost: cost
+        }})
+      }
+    })
+
     await shoppingList.update({
       totalCost,
       status: 'closed',
