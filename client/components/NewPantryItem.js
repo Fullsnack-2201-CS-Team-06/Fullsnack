@@ -22,6 +22,7 @@ const NewPantryItem = () => {
   const history = useHistory();
 
   const handleFormChange = (index, e) => {
+    console.log("Handle form change fired.")
     let data = [...inputFields];
     data[index][e.target.name] = e.target.value;
     setInputFields(data);
@@ -40,6 +41,7 @@ const NewPantryItem = () => {
   };
 
   const addFields = () => {
+    console.log("Add field fired.")
     let newField = {
       name: '',
       category: '',
@@ -51,6 +53,7 @@ const NewPantryItem = () => {
   };
 
   const removeFields = (index) => {
+    console.log("Remove field fired.")
     let data = [...inputFields];
     data.splice(index, 1);
     setInputFields(data);
@@ -58,6 +61,8 @@ const NewPantryItem = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Handle Submit fired")
+    console.log("Here's what I sent.", inputFields)
     dispatch(
       addPantryItemThunk({
         id,
@@ -65,15 +70,15 @@ const NewPantryItem = () => {
       })
     );
     history.push(`/pantries/${id}`);
-    setInputFields([
-      {
-        name: '',
-        category: '',
-        quantity: '',
-        cost: '',
-        measure: '',
-      },
-    ]);
+    // setInputFields([
+    //   {
+    //     name: '',
+    //     category: '',
+    //     quantity: '',
+    //     cost: '',
+    //     measure: '',
+    //   },
+    // ]);
   };
 
   return (
@@ -149,7 +154,7 @@ const NewPantryItem = () => {
             </div>
           );
         })}
-        <br/>
+        <br />
         <button type='button' onClick={() => addFields()}>
           Add More Ingredients
         </button>
