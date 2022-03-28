@@ -66,13 +66,24 @@ const NewPantryItem = () => {
       })
     );
     history.push(`/pantries/${id}`);
+    setInputFields([
+      {
+        name: '',
+        category: '',
+        quantity: '',
+        cost: '',
+        measure: '',
+      },
+    ]);
   };
 
   return (
     <div>
+      <br/>
+      <br/>
       <h1>Add Pantry Item</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}><ul></ul>
         {inputFields.map((input, index) => {
           return (
             <div key={index}>
@@ -83,7 +94,7 @@ const NewPantryItem = () => {
                 placeholder='Item Name'
                 value={input.name}
                 onChange={(e) => handleFormChange(index, e)}
-                autocomplete='on'
+                autoComplete='on'
               />
 
               <datalist id='allFoods'>
@@ -135,7 +146,6 @@ const NewPantryItem = () => {
                 value={input.measure}
                 onChange={(e) => handleFormChange(index, e)}
               />
-
               <button type='button' onClick={() => removeFields(index)}>
                 Remove
               </button>
