@@ -48,24 +48,28 @@ router.post('/', async (req, res, next) => {
 // POST /api/pantries/add
 router.post('/add', async (req, res, next) => {
   try {
-    const { id, inputFields } = req.body
-    const [ foodInfo ] = inputFields
-    console.log("Here are my input Fields", inputFields)
-    console.log("Here are my food info", foodInfo)
+    const { id, inputFields } = req.body;
+    const [...foodInfo] = inputFields;
 
-    const [newItem, wasCreated] = newPantryItem =
-      await Ingredient.findOrCreate({
-        where: { name: name },
-        defaults: {
-          uom: measure,
-          category: category,
-        }
+    foodInfo.map(async (item) => {
+      const { name, category, quantity, cost, measure } = item;
+      console.log("the foodInfo map fired.")
+
+      const [newItem, wasCreated] = (newPantryItem =
+        await Ingredient.findOrCreate({
+          where: { name: name },
+          defaults: {
+            uom: measure,
+            category: category,
+          },
+        }));
+
+      const currentPantry = await Pantry.findByPk(id);
+      await currentPantry.addIngredients(newItem, {
+        through: { pantryQty: quantity, cost: cost },
       });
-
-    const currentPantry = await Pantry.findByPk(id);
-    await currentPantry.addIngredients(newItem, {
-      through: { pantryQty: quantity, cost: cost },
     });
+
     const updatedPantry = await Pantry.findByPk(id, { include: Ingredient });
 
     res.send(updatedPantry);
