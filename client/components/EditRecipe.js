@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { updateRecipe } from '../store/recipes';
 import { fetchSingleRecipe } from '../store/singleRecipe';
 import { getFoods } from '../store/foods';
+import { deleteRecipe } from '../store/recipes';
 
 const EditRecipe = () => {
   const [name, setName] = useState('');
@@ -236,6 +237,14 @@ const EditRecipe = () => {
         </div>
         <button type="submit">Save</button>
         <button onClick={() => history.push(`/recipes/${id}`)}>Cancel</button>
+        <br />
+        <br />
+        <button
+          type="button"
+          onClick={() => dispatch(deleteRecipe(id, history))}
+        >
+          Delete Recipe
+        </button>
       </form>
       <br />
       <br />

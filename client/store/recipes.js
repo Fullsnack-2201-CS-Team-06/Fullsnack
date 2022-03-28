@@ -6,6 +6,7 @@ const SHOW_ALL_RECIPES = 'SHOW_ALL_RECIPES';
 const ADD_NEW_RECIPE = 'ADD_NEW_RECIPE';
 const ADD_REC_TO_MY_RECIPES = 'ADD_REC_TO_MY_RECIPES';
 const UPDATE_RECIPE = 'UPDATE_RECIPE';
+const DELETE_RECIPE = 'DELETE_RECIPE';
 
 // Action creators
 
@@ -33,6 +34,13 @@ const _addRecRecipe = (recRecipe) => {
 const _updateRecipe = (recipe) => {
   return {
     type: UPDATE_RECIPE,
+    recipe,
+  };
+};
+
+const _deleteRecipe = (recipe) => {
+  return {
+    type: DELETE_RECIPE,
     recipe,
   };
 };
@@ -86,6 +94,18 @@ export const updateRecipe = (recipe, history) => {
   };
 };
 
+export const deleteRecipe = (id, history) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`/api/recipes/${id}`);
+      dispatch(_deleteRecipe(data));
+      history.push('/recipes');
+    } catch (error) {
+      console.error('Error in deleteRecipe thunk!!\n\n', error);
+    }
+  };
+};
+
 // Initial state
 
 const initialState = [];
@@ -107,6 +127,9 @@ const recipesReducer = (state = initialState, action) => {
       return state.map((recipe) =>
         recipe.id === action.recipe.id ? action.recipe : recipe
       );
+    }
+    case DELETE_RECIPE: {
+      return state.filter((recipe) => recipe.id !== action.recipe.id);
     }
     default: {
       return state;
