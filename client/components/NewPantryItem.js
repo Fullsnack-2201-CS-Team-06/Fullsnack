@@ -26,12 +26,9 @@ const NewPantryItem = () => {
     data[index][e.target.name] = e.target.value;
     setInputFields(data);
 
-   
     if (e.target.name === 'name') {
-      
       const foodNames = foods.map((food) => food.name);
       if (foodNames.includes(e.target.value)) {
-       
         const existingFood = foods.filter(
           (food) => food.name === e.target.value
         );
@@ -68,6 +65,15 @@ const NewPantryItem = () => {
       })
     );
     history.push(`/pantries/${id}`);
+    setInputFields([
+      {
+        name: '',
+        category: '',
+        quantity: '',
+        cost: '',
+        measure: '',
+      },
+    ]);
   };
 
   return (
@@ -114,7 +120,7 @@ const NewPantryItem = () => {
 
               <label htmlFor='Quantity'>Quantity</label>
               <input
-                type="number"
+                type='number'
                 name='quantity'
                 placeholder='Quantity'
                 value={input.quantity}
@@ -123,7 +129,7 @@ const NewPantryItem = () => {
 
               <label htmlFor='Cost'>Cost</label>
               <input
-                type="number"
+                type='number'
                 name='cost'
                 placeholder='Cost'
                 value={input.cost}
@@ -137,19 +143,19 @@ const NewPantryItem = () => {
                 value={input.measure}
                 onChange={(e) => handleFormChange(index, e)}
               />
-
-              <button type='button' onClick={() => addFields()}>
-                Add More Ingredients
-              </button>
-              <button type='submit' onClick={handleSubmit}>
-                Submit
-              </button>
               <button type='button' onClick={() => removeFields(index)}>
                 Remove
               </button>
             </div>
           );
         })}
+        <br/>
+        <button type='button' onClick={() => addFields()}>
+          Add More Ingredients
+        </button>
+        <button type='submit' onClick={handleSubmit}>
+          Submit
+        </button>
       </form>
     </div>
   );
