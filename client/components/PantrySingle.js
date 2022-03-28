@@ -3,12 +3,8 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOnePantry, editPantryThunk } from '../store/pantry';
 import NewPantryItem from './NewPantryItem';
-
-
-// import Accordion from 'react-bootstrap/Accordion'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-// import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 
 
@@ -40,13 +36,17 @@ const PantrySingle = ({ match }) => {
               <th>Category</th>
               <th>Quantity</th>
               <th>Cost/Item</th>
-              <th>Measurer</th>
+              <th>Unit of Measure</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {ingredients ? (
-              ingredients.sort().map((item) => {
+              ingredients.sort(function(a, b) {
+                if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                return 0;
+               }).map((item) => {
                 const quantity = item.pantryIngredient.pantryQty
                 return (
                   <tr key={item.id}>

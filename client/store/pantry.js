@@ -1,4 +1,5 @@
 import axios from 'axios';
+import history from '../history';
 
 // ACTION TYPE
 
@@ -38,12 +39,15 @@ export const fetchOnePantry = (id) => {
 
 export const addPantryItemThunk = (itemUpdate) => {
   return async (dispatch) => {
+    const { id } = itemUpdate
     try {
       const { data } = await axios.post(`/api/pantries/add`, itemUpdate);
+      console.log("OUR DATA", data)
       dispatch(updatePantry(data));
     } catch (error) {
       console.log(error);
     }
+    history.push(`/pantries/${id}`);
   };
 };
 
@@ -69,7 +73,7 @@ const pantryReducer = (state = initialState, action) => {
     case SHOW_ONE:
       return action.singlePantry;
     case ADD_PANTRY_ITEM:
-      return action.updatePantry;
+      return action.updatePantry
     case EDIT_PANTRY:
       return action.editPantry;
     default:
