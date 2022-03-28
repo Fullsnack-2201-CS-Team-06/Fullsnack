@@ -31,11 +31,11 @@ export const fetchAllPantries = (id) => {
   };
 };
 
-export const createNewPantry = (name) => {
+export const createNewPantry = (name, id) => {
   return async (dispatch) => {
     try {
-      console.log("frontend", name)
-      const { data } = await axios.post("/api/pantries", name)
+      console.log("frontend", name, id)
+      const { data } = await axios.post("/api/pantries", {name, id})
       console.log("our data", data)
       dispatch(_createNewPantry(data));
     } catch (error) {

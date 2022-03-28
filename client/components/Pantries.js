@@ -17,7 +17,6 @@ const Pantries = () => {
   }, []);
 
   const handleFormChange = (index, e) => {
-    console.log("I'M FIRING.")
     let data = [...inputField]
     data[index][e.target.name] = e.target.value
     setInputField(data)
@@ -25,7 +24,7 @@ const Pantries = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createNewPantry(inputField));
+    dispatch(createNewPantry(inputField, id));
   };
 
   return (
