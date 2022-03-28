@@ -74,11 +74,12 @@ export const addRecToMyRecipes = (recRecipeId, userId) => {
   };
 };
 
-export const updateRecipe = (recipe) => {
+export const updateRecipe = (recipe, history) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`/api/recipes/${recipe.id}`, recipe);
       dispatch(_updateRecipe(data));
+      history.push(`/recipes/${recipe.id}`);
     } catch (error) {
       console.error('Error in updateRecipe thunk!!\n\n', error);
     }
