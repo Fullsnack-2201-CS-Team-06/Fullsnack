@@ -48,9 +48,10 @@ router.post('/', async (req, res, next) => {
 // POST /api/pantries/add
 router.post('/add', async (req, res, next) => {
   try {
-    const { id, inputFields} = req.body
+    const { id, inputFields } = req.body
     const [ foodInfo ] = inputFields
-    const {  name, category, quantity, cost, measure } = foodInfo
+    console.log("Here are my input Fields", inputFields)
+    console.log("Here are my food info", foodInfo)
 
     const [newItem, wasCreated] = newPantryItem =
       await Ingredient.findOrCreate({
