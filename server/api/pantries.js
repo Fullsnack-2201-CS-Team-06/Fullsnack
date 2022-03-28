@@ -50,28 +50,32 @@ router.post('/add', async (req, res, next) => {
   try {
     const { id, inputFields } = req.body;
     const [...foodInfo] = inputFields;
+    const currentPantry = await Pantry.findByPk(id);
 
-    foodInfo.map(async (item) => {
-      const { name, category, quantity, cost, measure } = item;
-      console.log("the foodInfo map fired.")
+    /**Magic methods aren't finishing before the res.send occurs.
+     *
+     */
 
-      const [newItem, wasCreated] = (newPantryItem =
-        await Ingredient.findOrCreate({
-          where: { name: name },
-          defaults: {
-            uom: measure,
-            category: category,
-          },
-        }));
+    await Promise.all(
+      foodInfo.map(async (item) => {
+        const { name, category, quantity, cost, measure } = item;
 
-      const currentPantry = await Pantry.findByPk(id);
-      await currentPantry.addIngredients(newItem, {
-        through: { pantryQty: quantity, cost: cost },
-      });
-    });
+        const [newItem, wasCreated] = (newPantryItem =
+          await Ingredient.findOrCreate({
+            where: { name: name },
+            defaults: {
+              uom: measure,
+              category: category,
+            },
+          }));
+
+        await currentPantry.addIngredient(newItem, {
+          through: { pantryQty: quantity, cost: cost },
+        });
+      })
+    );
 
     const updatedPantry = await Pantry.findByPk(id, { include: Ingredient });
-
     res.send(updatedPantry);
   } catch (error) {
     next(error);

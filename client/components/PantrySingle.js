@@ -4,10 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchOnePantry, editPantryThunk } from '../store/pantry';
 import NewPantryItem from './NewPantryItem';
 
-// import Accordion from 'react-bootstrap/Accordion'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-// import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 
 
@@ -36,7 +34,7 @@ const PantrySingle = ({ match }) => {
               <th>Category</th>
               <th>Quantity</th>
               <th>Cost/Item</th>
-              <th>Measurer</th>
+              <th>Unit of Measure</th>
               <th></th>
             </tr>
           </thead>
