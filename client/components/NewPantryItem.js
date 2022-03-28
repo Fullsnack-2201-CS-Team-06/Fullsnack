@@ -58,7 +58,6 @@ const NewPantryItem = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Here's what I sent.", inputFields)
     dispatch(
       addPantryItemThunk({
         id,
@@ -79,9 +78,11 @@ const NewPantryItem = () => {
 
   return (
     <div>
+      <br/>
+      <br/>
       <h1>Add Pantry Item</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}><ul></ul>
         {inputFields.map((input, index) => {
           return (
             <div key={index}>
