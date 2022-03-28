@@ -29,6 +29,10 @@ const Food = () => {
   const [maxCalories, setMaxCalories] = useState(100000);
   const [minProtein, setMinProtein] = useState(0);
   const [maxProtein, setMaxProtein] = useState(100000);
+  const [minCarbs, setMinCarbs] = useState(0);
+  const [maxCarbs, setMaxCarbs] = useState(100000);
+  const [minFat, setMinFat] = useState(0);
+  const [maxFat, setMaxFat] = useState(100000);
   //Get all foods associated with that user's pantries, recipes, and shopping lists.
   useEffect(() => {
     dispatch(getFoods(id));
@@ -44,16 +48,19 @@ const Food = () => {
     setCategoryFilter(e.target.value);
   }
 
+  const memo = {
+    minCalories: setMinCalories,
+    maxCalories: setMaxCalories,
+    minProtein: setMinProtein,
+    maxProtein: setMaxProtein,
+    minCarbs: setMinCarbs,
+    maxCarbs: setMaxCarbs,
+    minFat: setMinFat,
+    maxFat: setMaxFat,
+  };
   function editNutritionRange(e) {
-    if (e.target.name === 'minCalories') {
-      setMinCalories(Number(e.target.value));
-    } else if (e.target.name === 'maxCalories') {
-      setMaxCalories(Number(e.target.value));
-    } else if (e.target.name === 'minProtein') {
-      setMinProtein(Number(e.target.value));
-    } else if (e.target.name === 'maxProtein') {
-      setMaxProtein(Number(e.target.value));
-    }
+    const setFilter = memo[e.target.name];
+    setFilter(Number(e.target.value));
   }
 
   //Filter foods according to the search criteria.
@@ -89,6 +96,30 @@ const Food = () => {
   if (maxProtein !== 0) {
     foods = foods.filter(
       (food) => food.proteinPerUnit <= maxProtein || !food.proteinPerUnit
+    );
+  }
+
+  //Filter for the carbs range.
+  if (minCarbs !== 0) {
+    foods = foods.filter(
+      (food) => food.carbsPerUnit >= minCarbs || !food.carbsPerUnit
+    );
+  }
+  if (maxCarbs !== 0) {
+    foods = foods.filter(
+      (food) => food.carbsPerUnit <= maxCarbs || !food.carbsPerUnit
+    );
+  }
+
+  //Filter for the fats range.
+  if (minFat !== 0) {
+    foods = foods.filter(
+      (food) => food.fatsPerUnit >= minFat || !food.fatsPerUnit
+    );
+  }
+  if (maxFat !== 0) {
+    foods = foods.filter(
+      (food) => food.fatsPerUnit <= maxFat || !food.fatsPerUnit
     );
   }
 
@@ -178,6 +209,50 @@ const Food = () => {
               name="maxProtein"
               min="0"
               value={maxProtein}
+              onChange={editNutritionRange}
+            />
+          </div>
+        </div>
+        <div className={styles.allFoodsSetting}>
+          <div className={styles.minmaxSetting}>
+            <label htmlFor="minCarbs">Min Carbs: </label>
+            <input
+              type="number"
+              name="minCarbs"
+              min="0"
+              value={minCarbs}
+              onChange={editNutritionRange}
+            />
+          </div>
+          <div className={styles.minmaxSetting}>
+            <label htmlFor="maxCarbs">Max Carbs: </label>
+            <input
+              type="number"
+              name="maxCarbs"
+              min="0"
+              value={maxCarbs}
+              onChange={editNutritionRange}
+            />
+          </div>
+        </div>
+        <div className={styles.allFoodsSetting}>
+          <div className={styles.minmaxSetting}>
+            <label htmlFor="minFat">Min Fat: </label>
+            <input
+              type="number"
+              name="minFat"
+              min="0"
+              value={minFat}
+              onChange={editNutritionRange}
+            />
+          </div>
+          <div className={styles.minmaxSetting}>
+            <label htmlFor="maxFat">Max Fat: </label>
+            <input
+              type="number"
+              name="maxFat"
+              min="0"
+              value={maxFat}
               onChange={editNutritionRange}
             />
           </div>

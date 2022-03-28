@@ -6,7 +6,7 @@ import { editListThunk } from '../store/ShoppingList';
 
 /* The card view of a single food ingredient on the All Foods page.*/
 const SingleFood = (props) => {
-  const { id } = useSelector(state => state.auth)
+  const { id } = useSelector((state) => state.auth);
   const { food } = props;
   const dispatch = useDispatch();
 
@@ -39,7 +39,7 @@ const SingleFood = (props) => {
           </ListGroupItem>
           <ListGroupItem>
             {' '}
-            Fat: {food.fatPerUnit ? food.fatPerUnit : ''}
+            Fat: {food.fatsPerUnit ? food.fatsPerUnit : ''}
           </ListGroupItem>
         </ListGroup>
         <Button className={styles.button} onClick={handleSubmit}>
