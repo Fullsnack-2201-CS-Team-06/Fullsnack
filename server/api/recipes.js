@@ -222,13 +222,15 @@ router.put('/:id', async (req, res, next) => {
       cuisineType,
     });
 
+    // Get ingredients currently attached to recipe
     const currentIngredients = await updatedRecipe.getIngredients();
 
+    // Get list of names of ingredients to update from request body
     const newIngredientNames = ingredients.map((ingredient) => ingredient.name);
 
-    // Update associated recipe ingredients & qtys
+    // For each recipe, update associated recipe ingredient & its qty
     ingredients.map(async (ingredient) => {
-      // Add ingredients and/or update qtys
+      // Find ingredient to update
       const ingredientToAdd = await Ingredient.findOne({
         where: {
           name: ingredient.name,
@@ -242,19 +244,28 @@ router.put('/:id', async (req, res, next) => {
         });
       }
 
+      // Add/updated qty
       await updatedRecipe.addIngredient(ingredientToAdd, {
         through: { recipeQty: ingredient.recipeQty },
       });
 
-      // If current ingredient is not in new ingredients, remove association
-      currentIngredients.map((ingredient) => {
+      // If current ingredient is not in list of updated ingredients, remove association
+      currentIngredients.map(async (ingredient) => {
         if (!newIngredientNames.includes(ingredient.dataValues.name)) {
-          updatedRecipe.removeIngredient(ingredientToAdd);
+          const ingredientToRemove = await Ingredient.findOne({
+            where: {
+              name: ingredient.dataValues.name,
+            },
+          });
+          
+          await updatedRecipe.removeIngredient(ingredientToRemove);
         }
       });
     });
 
-    res.send(updatedRecipe);
+    const newUpdatedRecipe = await Recipe.findByPk(req.params.id);
+
+    res.send(newUpdatedRecipe);
   } catch (error) {
     next(error);
   }
