@@ -2,6 +2,7 @@ const router = require('express').Router();
 module.exports = router;
 const Ingredient = require('../db/models/Ingredient');
 const Pantry = require('../db/models/Pantry');
+const User = require('../db/models/User')
 
 //GET /api/pantries?userId=1
 router.get('/', async (req, res, next) => {
@@ -37,8 +38,14 @@ router.get('/:pantryId', async (req, res, next) => {
 // POST /api/pantries
 router.post('/', async (req, res, next) => {
   try {
-    const { name } = req.body;
-    const newPantry = await Pantry.create(name);
+    const { name, id } = req.body;
+    const newName = name[0].name;
+
+    const newPantry = await Pantry.create({ name: newName });
+    const currentUser = await User.findByPk(id);
+
+    await currentUser.addPantry(newPantry)
+
     res.send(newPantry);
   } catch (error) {
     next(error);
@@ -51,10 +58,6 @@ router.post('/add', async (req, res, next) => {
     const { id, inputFields } = req.body;
     const [...foodInfo] = inputFields;
     const currentPantry = await Pantry.findByPk(id);
-
-    /**Magic methods aren't finishing before the res.send occurs.
-     *
-     */
 
     await Promise.all(
       foodInfo.map(async (item) => {

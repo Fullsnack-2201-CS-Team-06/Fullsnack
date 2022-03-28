@@ -40,7 +40,7 @@ async function seed() {
     ShoppingList.create({
       name: 'needProduce',
       status: 'closed',
-      totalCost: 12,
+      totalCost: 20,
       checkoutDate: Date.now(),
     }),
   ]);

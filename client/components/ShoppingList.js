@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { fetchCurrentShoppingList, fetchShoppingListHistory, editListThunk, sendToPantry } from '../store/ShoppingList';
-import { fetchAllPantries } from '../store/pantries'
+import { Link } from 'react-router-dom';
+import { fetchCurrentShoppingList, sendToPantry } from '../store/ShoppingList';
+import { fetchAllPantries, createNewPantry } from '../store/pantries'
+import ShoppingListForm from './ShoppingListForm'
 
 const ShoppingList = () => {
   const { id } = useSelector((state) => state.auth);
@@ -10,32 +11,35 @@ const ShoppingList = () => {
   const dispatch = useDispatch()
   const { currentList } = shoppingList
   const [selectedPantry, setSelectedPantry] = useState(pantries[0]);
-  const history = useHistory()
   const [newPantry, setNewPantry] = useState('')
+  const { name } = currentList || ''
+  const { ingredients } = currentList || []
+  let { totalCost } = currentList || 0
 
   useEffect(() => {
     dispatch(fetchCurrentShoppingList(id));
-    dispatch(fetchShoppingListHistory(id))
     dispatch(fetchAllPantries(id))
   }, []);
 
-  const { name } = currentList || ''
-  const { ingredients } = currentList || []
-  const { totalCost } = currentList || 0
+  if (ingredients) {
+  totalCost = ingredients.reduce((acc, curr) => {
+    return acc + Number(curr.shoppingListIngredient.sliQuantity) * Number(curr.shoppingListIngredient.cost)
+  }, 0)
+  }
+
+
   let length = 0
   if (ingredients) length = ingredients.length
 
-  async function handleChange(itemId, userId, quantity) {
-    dispatch(editListThunk(itemId, userId, quantity))
+  async function handleCreatePantry() {
+    dispatch(createNewPantry([{name: newPantry}]))
   }
 
   async function handleSubmit() {
-    if (typeof selectedPantry === 'number' && ingredients.length) {
-      dispatch(sendToPantry(id, currentList))
-      history.push(`/pantries/${selectedPantry}`)
+    if (typeof selectedPantry === 'string' && ingredients.length) {
+      dispatch(sendToPantry(id, currentList, selectedPantry))
     } else if (ingredients.length) {
-      dispatch(sendToPantry(id, currentList))
-      history.push(`/pantries/${pantries[0].id}`)
+      dispatch(sendToPantry(id, currentList, pantries[0].id))
     } else {
       window.alert('There are no items to add to your pantry!')
     }
@@ -45,37 +49,26 @@ const ShoppingList = () => {
   <div>
    <p>{name}</p>
    <p><Link to={'/list/history'} >View History</Link></p>
-<table>
-  <colgroup span="4"></colgroup>
-  <tbody>
-  <tr>
-    <td>List Items</td>
-    <td>Quantity</td>
-    <td>Unit of Measure</td>
-    <td>Cost/Item</td>
-    <td>Remove item from list</td>
-  </tr>
-  { ingredients ?
-  ingredients.map(item => {
-    const quantity = item.shoppingListIngredient.sliQuantity
-    return (
-      <tr key={item.id}>
-        <td>{item.name}</td>
-        <td>
-        <button onClick={() => handleChange(item.id, id, quantity - 1)}>-</button>
-          {item.shoppingListIngredient.sliQuantity}
-          <button onClick={() => handleChange(item.id, id, quantity + 1)}>+</button>
-          </td>
-        <td>{item.shoppingListIngredient.uom}</td>
-        <td>{item.shoppingListIngredient.cost}</td>
-        <td><button onClick={() => handleChange(item.id, id, 0)}>X</button></td>
-      </tr>
-    )
-  }):
-  <tr></tr>
-  }
-  </tbody>
-</table>
+   <form method="GET" id="my_form"></form>
+    <table>
+      <thead>
+        <tr>
+          <th>List Items</th>
+          <th>Quantity</th>
+          <th>Unit of Measure</th>
+          <th>Cost/Item</th>
+          <th>Remove item from list</th>
+        </tr>
+      </thead>
+        { ingredients ?
+          ingredients.map(item => {
+          return (
+        <ShoppingListForm key={item.id}  props={item} />
+          )
+        }):
+        <tbody></tbody>
+        }
+    </table>
     <div>
     <select name="pantries" onChange={(e) => setSelectedPantry(e.target.value)} >
         <option value="View All Pantries">Select Pantry</option>
@@ -87,14 +80,16 @@ const ShoppingList = () => {
         <option value={-1}>Create New Pantry</option>
       </select>
       {selectedPantry < 0 ?
-      <form>
+      <form method="GET" id="my_form">
         <label htmlFor='name' >Pantry Name: </label>
-        {/* <input type='text' name='name' value={newPantry.name} onSubmit={() => dispatch()} /> */}
-      </form> :
+        <input type='text' name='name' value={newPantry} onChange={(e) => setNewPantry(e.target.value)} />
+        <button name='button' onClick={() => handleCreatePantry()}>Create New Pantry</button>
+      </form>
+       :
       <form></form>}
       <button name='button' onClick={() => handleSubmit()}>Send list to Pantry</button>
       <p>Total # of unique items: {length}</p>
-      <p>Estimated Total Cost: ${totalCost}</p>
+      <p>Total Cost: ${totalCost}</p>
     </div>
   </div>
   );

@@ -1,7 +1,7 @@
 import axios from 'axios';
+import history from '../history';
 
 // ACTION TYPE
-
 const SHOPPING_HISTORY = 'SHOPPING_HISTORY';
 const CURRENT_SHOPPING_LIST = 'CURRENT_SHOPPING_LIST'
 const EDIT_LIST = 'EDIT_LIST'
@@ -57,10 +57,10 @@ export const setSingleHistoryView = (listId) => {
   }
 }
 
-export const editListThunk = (itemId, userId, quantity) => {
+export const editListThunk = (itemId, userId, quantity, cost) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/shoppinglist?userId=${userId}`, { itemId, quantity })
+      const { data } = await axios.put(`/api/shoppinglist?userId=${userId}`, { itemId, quantity, cost })
       dispatch(editList(data))
     } catch (error) {
       console.log(error)
@@ -68,14 +68,15 @@ export const editListThunk = (itemId, userId, quantity) => {
   }
 }
 
-export const sendToPantry = (userId, currentList) => {
+export const sendToPantry = (userId, currentList, pantryId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`/api/shoppinglist?userId=${userId}`, { currentList })
+      const { data } = await axios.post(`/api/shoppinglist?userId=${userId}`, { currentList, pantryId })
       dispatch(toPantry(data))
     } catch (error) {
       console.log(error)
     }
+    history.push(`/pantries/${pantryId}`)
   }
 }
 

@@ -1,19 +1,29 @@
-import React from 'react';
-import { Card, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import {
+  Card,
+  ListGroup,
+  ListGroupItem,
+  Button,
+  OverlayTrigger,
+  Popover,
+} from 'react-bootstrap';
 import styles from './SingleFood.module.css';
-import { useDispatch } from 'react-redux';
-// import { addList } from '../store/shoppingList';
+import { useDispatch, useSelector } from 'react-redux';
+import { editListThunk } from '../store/ShoppingList';
 
 /* The card view of a single food ingredient on the All Foods page.*/
 const SingleFood = (props) => {
+  const { id } = useSelector((state) => state.auth);
   const { food } = props;
   const dispatch = useDispatch();
+  const [showButtonOverlay, setButtonOverlay] = useState(false);
 
   const handleSubmit = () => {
-    // dispatch(addList(food));
-    console.log(
-      'This add-to-shopping-list button will work once the page/allfoods branch is integrated onto main with the shopping list.'
-    );
+    dispatch(editListThunk(food.id, id));
+    setButtonOverlay(true);
+    setTimeout(() => {
+      setButtonOverlay(false);
+    }, 10000);
   };
 
   return (
@@ -38,12 +48,29 @@ const SingleFood = (props) => {
           </ListGroupItem>
           <ListGroupItem>
             {' '}
-            Fat: {food.fatPerUnit ? food.fatPerUnit : ''}
+            Fat: {food.fatsPerUnit ? food.fatsPerUnit : ''}
           </ListGroupItem>
         </ListGroup>
-        <Button className={styles.button} onClick={handleSubmit}>
-          Add to Shopping List
-        </Button>
+        <OverlayTrigger
+          trigger="click"
+          placement="right"
+          overlay={
+            showButtonOverlay ? (
+              <Popover id="popover-basic">
+                <Popover.Body>
+                  You've added <strong>one</strong> {food.name} to your shopping
+                  list!
+                </Popover.Body>
+              </Popover>
+            ) : (
+              <div></div>
+            )
+          }
+        >
+          <Button className={styles.button} onClick={handleSubmit}>
+            Add to Shopping List
+          </Button>
+        </OverlayTrigger>
       </Card.Body>
     </Card>
   );

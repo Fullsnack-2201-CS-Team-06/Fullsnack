@@ -3,6 +3,8 @@ module.exports = router;
 const User = require('../db/models/User');
 const Ingredient = require('../db/models/Ingredient');
 const ShoppingList = require('../db/models/ShoppingList');
+const ShoppingListIngredient = require('../db/models/ShoppingListIngredient');
+const Pantry = require('../db/models/Pantry')
 
 //GET /api/shoppingList/all?userId=1 status: closed
 router.get('/all', async (req, res, next) => {
@@ -39,7 +41,9 @@ router.get('/', async (req, res, next) => {
 //GET /api/shoppingList/:listId status: open
 router.get('/:listId', async (req, res, next) => {
   try {
-    const shoppingList = await ShoppingList.findByPk(req.params.listId, {include: Ingredient })
+    const shoppingList = await ShoppingList.findByPk(req.params.listId, {
+      include: Ingredient,
+    });
     if (!shoppingList) {
       next({ status: 404, message: 'No shopping lists found for this userId' });
     }
@@ -52,25 +56,43 @@ router.get('/:listId', async (req, res, next) => {
 //PUT /api/shoppingList?userId=1
 router.put('/', async (req, res, next) => {
   try {
+    //Find the user's current shopping list
     const shoppingList = await ShoppingList.findOne({
       where: { userId: req.query.userId, status: 'open' },
       include: Ingredient,
     })
-    const { itemId, quantity } = req.body
+    //itemId = Ingredient.id, quantity = INT
+    const { itemId, quantity, cost } = req.body
+    //Find the ingredient associated with the id we have
     const ingredientToUpdate = await Ingredient.findByPk(itemId)
+    if (!quantity) {
+      console.log('quantity: ', shoppingList)
+      if (shoppingList.hasIngredient(ingredientToUpdate)) {
+        let initialAmount = 0
+        shoppingList.ingredients.forEach(curr => {
+          if (itemId === curr.id) {
+            console.log('here is the currrrr', curr)
+            initialAmount += curr.shoppingListIngredient.sliQuantity
+          }
+        })
+        await shoppingList.addIngredients(ingredientToUpdate, { through: { sliQuantity: initialAmount * 1 + 1 }})
+      } else {
+        await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: 1 }})
+      }
+    }
     if (quantity === 0) await shoppingList.removeIngredient(ingredientToUpdate)
     else {
-      await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: quantity }})
+      await shoppingList.addIngredient(ingredientToUpdate, { through: { sliQuantity: quantity, cost: cost }})
     }
     const refreshList = await ShoppingList.findOne({
       where: { userId: req.query.userId, status: 'open' },
       include: Ingredient,
-    })
-    res.send(refreshList)
+    });
+    res.send(refreshList);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 // POST /api/shoppingList?userId=1
 router.post('/', async (req, res, next) => {
@@ -78,19 +100,47 @@ router.post('/', async (req, res, next) => {
     const shoppingList = await ShoppingList.findOne({
       where: { userId: req.query.userId, status: 'open' },
       include: Ingredient,
-    })
+    });
     if (!shoppingList) {
       next({ status: 404, message: 'No shopping list found at this id' });
     }
-    const { totalCost } = req.body;
+    const { totalCost, pantryId } = req.body;
+    console.log(shoppingList.ingredients.forEach(ing => {
+      console.log('shopp ing: ', ing.shoppingListIngredient)
+    }))
+    const currentPantry = await Pantry.findByPk(pantryId, { include: Ingredient })
+
+    await shoppingList.ingredients.forEach(addMeToPantry => {
+      const { id } = addMeToPantry
+      const {sliQuantity, cost} = addMeToPantry.shoppingListIngredient
+      console.log('inside ', addMeToPantry)
+      if (currentPantry.hasIngredient(addMeToPantry)) {
+        let initialAmount = 0
+        currentPantry.ingredients.forEach(curr => {
+          if (id === curr.id) {
+            initialAmount += curr.pantryIngredient.pantryQty
+          }
+        })
+        currentPantry.addIngredient(addMeToPantry, {through: {
+          pantryQty: sliQuantity * 1 + initialAmount * 1, cost: cost
+        }})
+      } else {
+        currentPantry.addIngredient(addMeToPantry, {through: {
+          pantryQty: sliQuantity, cost: cost
+        }})
+      }
+    })
+
     await shoppingList.update({
       totalCost,
       status: 'closed',
-      checkoutDate: Date.now()
+      checkoutDate: Date.now(),
     });
-    const newShoppingList = await ShoppingList.create({ name: 'new shopping list' });
-    const user = await User.findByPk(req.query.userId)
-    await newShoppingList.setUser(user)
+    const newShoppingList = await ShoppingList.create({
+      name: 'new shopping list',
+    });
+    const user = await User.findByPk(req.query.userId);
+    await newShoppingList.setUser(user);
     res.sendStatus(201);
   } catch (error) {
     next(error);
@@ -106,7 +156,10 @@ router.delete('/:id', async (req, res, next) => {
     }
     const result = await shoppingList.destroy();
     if (result !== 1) {
-      next({ status: 404, message: 'Failed to destroy the shopping list at this id' });
+      next({
+        status: 404,
+        message: 'Failed to destroy the shopping list at this id',
+      });
     }
     res.send(result);
   } catch (error) {

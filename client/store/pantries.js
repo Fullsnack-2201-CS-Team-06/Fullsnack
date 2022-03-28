@@ -12,10 +12,11 @@ export const showAll = (allPantries) => ({
   allPantries,
 });
 
-export const _createNewPantry = (newPantry) => {
+export const _createNewPantry = (newPantry) => ({
   type: CREATE_NEW_PANTRY,
   newPantry
-}
+})
+
 
 // THUNKS
 
@@ -30,15 +31,18 @@ export const fetchAllPantries = (id) => {
   };
 };
 
-// export const createNewPantry = (data) => {
-//   return async(dispatch) => {
-//     try {
-      
-//     } catch (error) {
-      
-//     }
-//   }
-// }
+export const createNewPantry = (name, id) => {
+  return async (dispatch) => {
+    try {
+      console.log("frontend", name, id)
+      const { data } = await axios.post("/api/pantries", {name, id})
+      console.log("our data", data)
+      dispatch(_createNewPantry(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 const initialState = [];
 
@@ -46,6 +50,8 @@ const pantriesReducer = (state = initialState, action) => {
   switch (action.type) {
     case SHOW_ALL:
       return action.allPantries;
+    case CREATE_NEW_PANTRY:
+      return [...state, action.newPantry]
     default:
       return state;
   }

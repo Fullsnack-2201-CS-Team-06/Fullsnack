@@ -48,6 +48,7 @@ const NewPantryItem = () => {
       measure: '',
     };
     setInputFields([...inputFields, newField]);
+    history.push(`/pantries/${id}`);
   };
 
   const removeFields = (index) => {
@@ -156,7 +157,7 @@ const NewPantryItem = () => {
           Add More Ingredients
         </button>
         <button type='submit' onClick={handleSubmit}>
-          Submit
+          Save
         </button>
       </form>
     </div>

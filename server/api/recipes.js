@@ -3,6 +3,7 @@ module.exports = router;
 const Recipe = require('../db/models/Recipe');
 const Ingredient = require('../db/models/Ingredient');
 const User = require('../db/models/User');
+const ShoppingList = require('../db/models/ShoppingList');
 const { Op } = require('@sequelize/core');
 
 // GET /api/recipes?userId=1
@@ -113,6 +114,94 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+//POST api/recipes/recs
+router.post('/recs', async (req, res, next) => {
+  try {
+    const {
+      name,
+      image,
+      cuisineType,
+      caloriesPerRecipe,
+      proteinPerRecipe,
+      carbsPerRecipe,
+      fatPerRecipe,
+      ingredients,
+    } = req.body;
+
+    let newRecipe = await Recipe.create({
+      name,
+      image,
+      cuisineType,
+      caloriesPerRecipe,
+      proteinPerRecipe,
+      carbsPerRecipe,
+      fatPerRecipe,
+    });
+
+    await Promise.all(
+      ingredients.map(async (ingredient) => {
+        let ingredientToAdd = await Ingredient.findOne({
+          where: {
+            name: ingredient.name,
+          },
+        });
+
+        if (!ingredientToAdd) {
+          ingredientToAdd = await Ingredient.create(ingredient);
+        }
+        await newRecipe.addIngredient(ingredientToAdd, {
+          through: { recipeQty: ingredient.quantity },
+        });
+      })
+    );
+
+    newRecipe = await Recipe.findOne({
+      where: {
+        name: newRecipe.name,
+        userId: null,
+      },
+      include: Ingredient,
+    });
+
+    res.send(newRecipe);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// PUT /api/recipes/recs/:id?userId=INT
+router.put('/recs/:id', async (req, res, next) => {
+  try {
+    //Step 1: Assign the existing recipe to the user.
+    const recRecipeId = req.params.id;
+    const { userId } = req.query;
+    const recRecipe = await Recipe.findByPk(recRecipeId, {
+      include: Ingredient,
+    });
+    const user = await User.findByPk(userId);
+    await recRecipe.setUser(user);
+
+    //Step 2: Find the ingredients and assign them to the shopping list.
+    const shoppingList = await ShoppingList.findOne({
+      where: {
+        status: 'open',
+        userId: userId,
+      },
+    });
+
+    //Assign each ingredient to the user's open shopping list.
+    await Promise.all(
+      recRecipe.ingredients.map(async (ingredient) => {
+        await ingredient.addShoppingList(shoppingList);
+      })
+    );
+    const updatedRecipe = await Recipe.findByPk(recRecipeId);
+    res.send(updatedRecipe);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // PUT /api/recipes/:id
 router.put('/:id', async (req, res, next) => {
   try {
@@ -122,33 +211,61 @@ router.put('/:id', async (req, res, next) => {
       next({ status: 404, message: `Recipe no. ${req.params.id} not found.` });
     }
 
-    const {
-      name,
-      description,
-      rating,
-      caloriesPerRecipe,
-      proteinPerRecipe,
-      carbsPerRecipe,
-      fatPerRecipe,
-      image,
-      cuisineType,
-      frequency,
-    } = req.body;
+    const { name, description, rating, image, cuisineType, ingredients } =
+      req.body;
 
     const updatedRecipe = await recipe.update({
       name,
       description,
       rating,
-      caloriesPerRecipe,
-      proteinPerRecipe,
-      carbsPerRecipe,
-      fatPerRecipe,
       image,
       cuisineType,
-      frequency,
     });
 
-    res.send(updatedRecipe);
+    // Get ingredients currently attached to recipe
+    const currentIngredients = await updatedRecipe.getIngredients();
+
+    // Get list of names of ingredients to update from request body
+    const newIngredientNames = ingredients.map((ingredient) => ingredient.name);
+
+    // For each recipe, update associated recipe ingredient & its qty
+    ingredients.map(async (ingredient) => {
+      // Find ingredient to update
+      const ingredientToAdd = await Ingredient.findOne({
+        where: {
+          name: ingredient.name,
+        },
+      });
+
+      if (!ingredientToAdd) {
+        next({
+          status: 404,
+          message: `Ingredient ${ingredient.name} not found.`,
+        });
+      }
+
+      // Add/updated qty
+      await updatedRecipe.addIngredient(ingredientToAdd, {
+        through: { recipeQty: ingredient.recipeQty },
+      });
+
+      // If current ingredient is not in list of updated ingredients, remove association
+      currentIngredients.map(async (ingredient) => {
+        if (!newIngredientNames.includes(ingredient.dataValues.name)) {
+          const ingredientToRemove = await Ingredient.findOne({
+            where: {
+              name: ingredient.dataValues.name,
+            },
+          });
+          
+          await updatedRecipe.removeIngredient(ingredientToRemove);
+        }
+      });
+    });
+
+    const newUpdatedRecipe = await Recipe.findByPk(req.params.id);
+
+    res.send(newUpdatedRecipe);
   } catch (error) {
     next(error);
   }
