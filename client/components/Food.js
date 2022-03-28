@@ -27,6 +27,8 @@ const Food = () => {
   const [categoryFilter, setCategoryFilter] = useState('');
   const [minCalories, setMinCalories] = useState(0);
   const [maxCalories, setMaxCalories] = useState(100000);
+  const [minProtein, setMinProtein] = useState(0);
+  const [maxProtein, setMaxProtein] = useState(100000);
   //Get all foods associated with that user's pantries, recipes, and shopping lists.
   useEffect(() => {
     dispatch(getFoods(id));
@@ -42,11 +44,15 @@ const Food = () => {
     setCategoryFilter(e.target.value);
   }
 
-  function editCaloriesRange(e) {
+  function editNutritionRange(e) {
     if (e.target.name === 'minCalories') {
       setMinCalories(Number(e.target.value));
     } else if (e.target.name === 'maxCalories') {
       setMaxCalories(Number(e.target.value));
+    } else if (e.target.name === 'minProtein') {
+      setMinProtein(Number(e.target.value));
+    } else if (e.target.name === 'maxProtein') {
+      setMaxProtein(Number(e.target.value));
     }
   }
 
@@ -71,6 +77,18 @@ const Food = () => {
   if (maxCalories !== 0) {
     foods = foods.filter(
       (food) => food.caloriesPerUnit <= maxCalories || !food.caloriesPerUnit
+    );
+  }
+
+  //Filter for the protein range.
+  if (minProtein !== 0) {
+    foods = foods.filter(
+      (food) => food.proteinPerUnit >= minProtein || !food.proteinPerUnit
+    );
+  }
+  if (maxProtein !== 0) {
+    foods = foods.filter(
+      (food) => food.proteinPerUnit <= maxProtein || !food.proteinPerUnit
     );
   }
 
@@ -106,7 +124,7 @@ const Food = () => {
               name="minCalories"
               min="0"
               value={minCalories}
-              onChange={editCaloriesRange}
+              onChange={editNutritionRange}
             />
           </div>
           <div className={styles.minmaxSetting}>
@@ -116,7 +134,51 @@ const Food = () => {
               name="maxCalories"
               min="0"
               value={maxCalories}
-              onChange={editCaloriesRange}
+              onChange={editNutritionRange}
+            />
+          </div>
+        </div>
+        <div className={styles.allFoodsSetting}>
+          <div className={styles.minmaxSetting}>
+            <label htmlFor="minCalories">Min Calories: </label>
+            <input
+              type="number"
+              name="minCalories"
+              min="0"
+              value={minCalories}
+              onChange={editNutritionRange}
+            />
+          </div>
+          <div className={styles.minmaxSetting}>
+            <label htmlFor="maxCalories">Max Calories: </label>
+            <input
+              type="number"
+              name="maxCalories"
+              min="0"
+              value={maxCalories}
+              onChange={editNutritionRange}
+            />
+          </div>
+        </div>
+        <div className={styles.allFoodsSetting}>
+          <div className={styles.minmaxSetting}>
+            <label htmlFor="minProtein">Min Protein: </label>
+            <input
+              type="number"
+              name="minProtein"
+              min="0"
+              value={minProtein}
+              onChange={editNutritionRange}
+            />
+          </div>
+          <div className={styles.minmaxSetting}>
+            <label htmlFor="maxProtein">Max Protein: </label>
+            <input
+              type="number"
+              name="maxProtein"
+              min="0"
+              value={maxProtein}
+              onChange={editNutritionRange}
             />
           </div>
         </div>
