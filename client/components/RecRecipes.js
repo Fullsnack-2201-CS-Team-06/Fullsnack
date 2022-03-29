@@ -150,7 +150,14 @@ const RecRecipes = () => {
             >
               <Card.Img variant="top" src={recipe.image} />
               <div className={styles.cardTitle}>
-                <Card.Title>{recipe.name}</Card.Title>
+                <Card.Title>
+                  {recipe.id === currentView
+                    ? recipe.name
+                    : recipe.name.slice(0, 20)}
+                  {recipe.id !== currentView && recipe.name.length > 20
+                    ? '...'
+                    : ''}
+                </Card.Title>
               </div>
               <Button
                 variant="primary"
