@@ -17,8 +17,8 @@ const PantrySingle = ({ match }) => {
   const currentPantry = pantry.id
 
   useEffect(() => {
-    console.log("use effect fired")
-    dispatch(fetchOnePantry(match.params.id));
+    console.log("use effect fired", currentPantry)
+    dispatch(fetchOnePantry(currentPantry));
   }, []);
 
   async function handleChange(itemId, userId, quantity){

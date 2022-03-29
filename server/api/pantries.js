@@ -7,6 +7,7 @@ const User = require('../db/models/User')
 //GET /api/pantries?userId=1
 router.get('/', async (req, res, next) => {
   try {
+    console.log("entered allPantries")
     const pantries = await Pantry.findAll({
       where: { userId: req.query.userId },
       include: Ingredient,
@@ -23,6 +24,7 @@ router.get('/', async (req, res, next) => {
 //GET /api/pantries/:pantryId
 router.get('/:pantryId', async (req, res, next) => {
   try {
+    console.log("entered pantryID")
     const singlePantry = await Pantry.findByPk(req.params.pantryId, {
       include: Ingredient,
     });
