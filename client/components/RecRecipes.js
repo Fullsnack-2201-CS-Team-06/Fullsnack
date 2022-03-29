@@ -129,9 +129,9 @@ const RecRecipes = () => {
   return (
     <div className={styles.container}>
       <h1>Recommended Recipes</h1>
-      <div className={styles.recRecipes}>
-        {recRecipes.map((recipe, i) => (
-          <Accordion key={i}>
+      <Accordion defaultActiveKey="0">
+        <div className={styles.recRecipes}>
+          {recRecipes.map((recipe, i) => (
             <Card
               key={i}
               className={
@@ -160,9 +160,9 @@ const RecRecipes = () => {
                 </Accordion.Body>
               </Accordion.Item>
             </Card>
-          </Accordion>
-        ))}
-      </div>
+          ))}
+        </div>
+      </Accordion>
     </div>
   );
 };
