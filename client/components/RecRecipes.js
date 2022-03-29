@@ -175,7 +175,7 @@ const RecRecipes = () => {
                   <p>Carbs: {recipe.carbsPerRecipe}</p>
                   <p>Fat: {recipe.fatPerRecipe}</p>
                   <a href={recipe.description}>
-                    <p>Read More</p>
+                    <p>Read Full Recipe</p>
                   </a>
                 </Accordion.Body>
               </Accordion.Item>
