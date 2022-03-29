@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
   showRecRecipes,
   addRecRecipe,
@@ -40,6 +41,12 @@ const RecRecipes = () => {
       if (cuisinePref !== '' && cuisinePref !== 'No Preference') {
         apiRequest += `&cuisineType=${cuisinePref}`;
       }
+      if (diet) {
+        apiRequest += `&diet=${diet}`;
+      }
+      if (health) {
+        apiRequest += `&health=${health}`;
+      }
       const data = await fetch(apiRequest).then((response) => response.json());
       console.log('data: ', data);
 
@@ -49,12 +56,13 @@ const RecRecipes = () => {
         dispatch(
           addRecRecipe({
             name: recipe.label,
+            description: recipe.url,
             image: recipe.image,
             cuisineType: recipe.cuisineType[0],
             caloriesPerRecipe: Math.floor(recipe.calories),
-            proteinPerRecipe: recipe.totalNutrients.PROCNT.quantity,
-            carbsPerRecipe: recipe.totalNutrients.CHOCDF.quantity,
-            fatPerRecipe: recipe.totalNutrients.FAT.quantity,
+            proteinPerRecipe: Math.floor(recipe.totalNutrients.PROCNT.quantity),
+            carbsPerRecipe: Math.floor(recipe.totalNutrients.CHOCDF.quantity),
+            fatPerRecipe: Math.floor(recipe.totalNutrients.FAT.quantity),
             ingredients: recipe.ingredients.map((ingredient) => {
               return {
                 name: ingredient.food,
@@ -129,9 +137,9 @@ const RecRecipes = () => {
   return (
     <div className={styles.container}>
       <h1>Recommended Recipes</h1>
-      <div className={styles.recRecipes}>
-        {recRecipes.map((recipe, i) => (
-          <Accordion key={i}>
+      <Accordion defaultActiveKey="0">
+        <div className={styles.recRecipes}>
+          {recRecipes.map((recipe, i) => (
             <Card
               key={i}
               className={
@@ -141,7 +149,16 @@ const RecRecipes = () => {
               }
             >
               <Card.Img variant="top" src={recipe.image} />
-              <Card.Title>{recipe.name}</Card.Title>
+              <div className={styles.cardTitle}>
+                <Card.Title>
+                  {recipe.id === currentView
+                    ? recipe.name
+                    : recipe.name.slice(0, 20)}
+                  {recipe.id !== currentView && recipe.name.length > 20
+                    ? '...'
+                    : ''}
+                </Card.Title>
+              </div>
               <Button
                 variant="primary"
                 onClick={() => addToMyRecipes(recipe.id)}
@@ -157,12 +174,15 @@ const RecRecipes = () => {
                   <p>Protein: {recipe.proteinPerRecipe}</p>
                   <p>Carbs: {recipe.carbsPerRecipe}</p>
                   <p>Fat: {recipe.fatPerRecipe}</p>
+                  <a href={recipe.description}>
+                    <p>Read Full Recipe</p>
+                  </a>
                 </Accordion.Body>
               </Accordion.Item>
             </Card>
-          </Accordion>
-        ))}
-      </div>
+          ))}
+        </div>
+      </Accordion>
     </div>
   );
 };
