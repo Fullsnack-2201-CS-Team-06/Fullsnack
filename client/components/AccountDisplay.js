@@ -22,13 +22,16 @@ const AccountDisplay = () => {
                 <td> {username}</td>
               </tr>
               <tr>
-                <td>email:</td> <td>{email || 'No Email'}</td>
+                <td>email:</td>
+                <td>{email || 'No Email'}</td>
               </tr>
               <tr>
-                <td>Cuisine:</td> <td>{cuisinePref || 'No Preference'}</td>
+                <td>Cuisine:</td>
+                <td>{cuisinePref || 'No Preference'}</td>
               </tr>
               <tr>
-                <td>Diet Restrictions:</td> <td>{diet || 'No Preference'}</td>
+                <td>Diet Restrictions:</td>
+                <td>{diet || 'No Preference'}</td>
               </tr>
               <tr>
                 <td>Health Restrictions:</td>
