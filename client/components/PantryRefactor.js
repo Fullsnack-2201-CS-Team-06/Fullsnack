@@ -5,11 +5,6 @@ import { fetchSinglePantry } from '../store/pantry'
 
 import PantrySingle from './PantrySingle'
 
-import NewPantryItem from './NewPantryItem';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Table from 'react-bootstrap/Table';
-
 const PantryRefactor = () => {
   const { id } = useSelector((state) => state.auth);
   const { pantries } = useSelector((state) => state);
@@ -17,9 +12,7 @@ const PantryRefactor = () => {
   const [selectedPantry, setSelectedPantry] = useState(0);
   const { ingredients } = pantry || [];
 
-
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     dispatch(fetchAllPantries(id));

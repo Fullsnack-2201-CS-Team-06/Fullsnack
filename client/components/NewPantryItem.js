@@ -81,7 +81,7 @@ const NewPantryItem = () => {
     <div>
       <br/>
       <br/>
-      <h1>Add Pantry Item</h1>
+      <h6>Add Pantry Items</h6>
 
       <form onSubmit={handleSubmit}><ul></ul>
         {inputFields.map((input, index) => {
