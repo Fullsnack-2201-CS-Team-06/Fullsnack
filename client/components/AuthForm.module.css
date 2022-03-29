@@ -19,3 +19,18 @@
 .button:hover {
   background-color: #e54946;
 }
+
+.authPageContainer {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.authPageImg {
+  width: 45%;
+}
+
+.formTitle {
+  color: #012a36;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+}
