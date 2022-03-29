@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <Link to="/home">
+      <Link to="/">
         <h1 className="logo">Fullsnack</h1>
       </Link>
       <nav>
