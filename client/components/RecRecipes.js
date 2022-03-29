@@ -53,9 +53,9 @@ const RecRecipes = () => {
             image: recipe.image,
             cuisineType: recipe.cuisineType[0],
             caloriesPerRecipe: Math.floor(recipe.calories),
-            proteinPerRecipe: recipe.totalNutrients.PROCNT.quantity,
-            carbsPerRecipe: recipe.totalNutrients.CHOCDF.quantity,
-            fatPerRecipe: recipe.totalNutrients.FAT.quantity,
+            proteinPerRecipe: Math.floor(recipe.totalNutrients.PROCNT.quantity),
+            carbsPerRecipe: Math.floor(recipe.totalNutrients.CHOCDF.quantity),
+            fatPerRecipe: Math.floor(recipe.totalNutrients.FAT.quantity),
             ingredients: recipe.ingredients.map((ingredient) => {
               return {
                 name: ingredient.food,
