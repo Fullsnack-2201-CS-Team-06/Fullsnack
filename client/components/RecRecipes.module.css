@@ -5,6 +5,10 @@
   margin: 20px;
 }
 
+.container > h1 {
+  margin-left: 20px;
+}
+
 .recRecipes {
   display: flex;
   flex-direction: row;
@@ -28,6 +32,12 @@
   height: 700px;
   width: 400px;
   margin: 20px;
+}
+
+.cardTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 Button {

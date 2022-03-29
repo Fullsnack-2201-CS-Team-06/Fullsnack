@@ -141,7 +141,9 @@ const RecRecipes = () => {
               }
             >
               <Card.Img variant="top" src={recipe.image} />
-              <Card.Title>{recipe.name}</Card.Title>
+              <div className={styles.cardTitle}>
+                <Card.Title>{recipe.name}</Card.Title>
+              </div>
               <Button
                 variant="primary"
                 onClick={() => addToMyRecipes(recipe.id)}
