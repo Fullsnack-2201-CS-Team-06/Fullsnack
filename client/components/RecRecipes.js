@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
   showRecRecipes,
   addRecRecipe,
@@ -160,6 +161,9 @@ const RecRecipes = () => {
                   <p>Protein: {recipe.proteinPerRecipe}</p>
                   <p>Carbs: {recipe.carbsPerRecipe}</p>
                   <p>Fat: {recipe.fatPerRecipe}</p>
+                  <a href={recipe.description}>
+                    <p>Read More</p>
+                  </a>
                 </Accordion.Body>
               </Accordion.Item>
             </Card>
