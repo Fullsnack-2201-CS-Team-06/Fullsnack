@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { fetchAllPantries, createNewPantry } from '../store/pantries';
 
-const Pantries = () => {
+const PantryCreate = () => {
   const { id } = useSelector((state) => state.auth);
   const { pantries } = useSelector((state) => state);
   const [inputField, setInputField] = useState([{ name: '' }]);
@@ -57,4 +57,4 @@ const Pantries = () => {
   );
 };
 
-export default Pantries;
+export default PantryCreate;

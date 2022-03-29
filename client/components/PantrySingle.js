@@ -6,6 +6,7 @@ import NewPantryItem from './NewPantryItem';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
+import PantryCreate from './PantryCreate'
 
 
 const PantrySingle = ({ match }) => {
@@ -25,9 +26,7 @@ const PantrySingle = ({ match }) => {
 
   return (
     <div className='PantrySingle'>
-      <Link to='/pantries/add'>
-    <Button>Add Item</Button>
-    </Link>
+      <PantryCreate/>
       <Container>
         <Table striped>
           <thead>
@@ -35,8 +34,6 @@ const PantrySingle = ({ match }) => {
               <th>Item</th>
               <th>Category</th>
               <th>Quantity</th>
-              <th>Cost/Item</th>
-              <th>Unit of Measure</th>
               <th></th>
             </tr>
           </thead>
@@ -52,12 +49,10 @@ const PantrySingle = ({ match }) => {
                   <tr key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.category}</td>
-                    <td><Button onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
-                    <Button onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td> 
-                    <td>{item.pantryIngredient.cost}</td>
-                    <td>{item.uom}</td>
+                    <td><Button type="button" class="btn btn-secondary btn-sm" onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
+                    <Button class="btn btn-secondary btn-sm" onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td> 
                     <td>
-                      <Button onClick={() => handleChange(item.id, id, 0)}>x</Button>
+                      <Button type="button" onClick={() => handleChange(item.id, id, 0)}>x</Button>
                     </td>
                   </tr>
                 );

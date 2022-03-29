@@ -16,6 +16,7 @@ const Visuals = () => {
   const [selectedPantry, setSelectedPantry] = useState('View All Pantries');
 
   const dispatch = useDispatch();
+ 
 
   useEffect(() => {
     dispatch(fetchAllPantries(id));
@@ -34,6 +35,8 @@ const Visuals = () => {
       contents: contents,
     };
   });
+
+  console.log("Here's state", pantries)
 
   const selectPantry = (pantries, pantryName) => {
     const selectedPantry = pantries.filter(

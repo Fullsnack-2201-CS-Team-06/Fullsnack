@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { VictoryBar } from 'victory'
 import { fetchAllPantries } from '../store/pantries'
 import Visuals from './Visuals'
+import Visuals3 from './Visuals3'
 
 /**
  * COMPONENT

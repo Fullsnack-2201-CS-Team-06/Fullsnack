@@ -129,23 +129,6 @@ const NewPantryItem = () => {
                 value={input.quantity}
                 onChange={(e) => handleFormChange(index, e)}
               />
-
-              <label htmlFor='Cost'>Cost</label>
-              <input
-                type='number'
-                name='cost'
-                placeholder='Cost'
-                value={input.cost}
-                onChange={(e) => handleFormChange(index, e)}
-              />
-
-              <label htmlFor='Measure'>Measure</label>
-              <input
-                name='measure'
-                placeholder='Measure'
-                value={input.measure}
-                onChange={(e) => handleFormChange(index, e)}
-              />
               <button type='button' onClick={() => removeFields(index)}>
                 Remove
               </button>

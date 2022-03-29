@@ -46,7 +46,7 @@ const Routes = () => {
             path="/list/:listId"
             component={ShoppingListHistorySingle}
           />
-          <Route exact path="/pantries" component={Pantries} />
+          <Route exact path="/pantries" component={PantrySingle} />
           <Route path="/pantries/add" component={NewPantryItem} />
           <Route path="/pantries/:id" component={PantrySingle} />
           <Route path="/foods" component={Food} />
