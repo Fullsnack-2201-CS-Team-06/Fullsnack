@@ -16,6 +16,7 @@ import SingleRecipe from './components/SingleRecipe';
 import EditRecipe from './components/EditRecipe';
 import AddRecipe from './components/AddRecipe';
 import NewPantryItem from './components/NewPantryItem';
+import HomeGuest from './components/HomeGuest';
 
 /**
  * COMPONENT
@@ -59,7 +60,7 @@ const Routes = () => {
       ) : (
         <Switch>
           <Route path="/" exact>
-            {Login}
+            {HomeGuest}
           </Route>
           <Route path="/login">{Login}</Route>
           <Route path="/signup">{Signup}</Route>
