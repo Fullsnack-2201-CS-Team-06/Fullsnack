@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.carousel {
+  width: 800px;
+  height: 600px;
+}
