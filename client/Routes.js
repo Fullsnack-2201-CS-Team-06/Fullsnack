@@ -17,6 +17,7 @@ import EditRecipe from './components/EditRecipe';
 import AddRecipe from './components/AddRecipe';
 import NewPantryItem from './components/NewPantryItem';
 import HomeGuest from './components/HomeGuest';
+import PantryRefactor from './components/PantryRefactor'
 
 /**
  * COMPONENT
@@ -46,7 +47,7 @@ const Routes = () => {
             path="/list/:listId"
             component={ShoppingListHistorySingle}
           />
-          <Route path="/pantries" component={PantrySingle} />
+          <Route path="/pantries" component={PantryRefactor} />
           <Route path="/pantries/add" component={NewPantryItem} />
           <Route path="/pantries/:id" component={PantrySingle} />
           <Route path="/foods" component={Food} />

@@ -26,7 +26,7 @@ export const editPantry = (editPantry) => ({
 
 // THUNKS
 
-export const fetchOnePantry = (id) => {
+export const fetchSinglePantry = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/api/pantries/${id}`);

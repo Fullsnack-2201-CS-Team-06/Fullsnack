@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { fetchAllPantries, createNewPantry } from '../store/pantries';
+import PantrySingle from './PantrySingle'
 
 const PantryCreate = () => {
   const { id } = useSelector((state) => state.auth);
@@ -51,6 +52,7 @@ const PantryCreate = () => {
       ) : (
         <div>Nothing to show</div>
       )}
+      <PantrySingle/>
     </div>
   );
 };

@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchOnePantry, editPantryThunk } from '../store/pantry';
+import { fetchDefaultPantry, editPantryThunk } from '../store/pantry';
 import NewPantryItem from './NewPantryItem';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
-import PantryCreate from './PantryCreate'
+import styles from './PantrySingle.module.css'
 
 
 const PantrySingle = ({ match }) => {
@@ -16,9 +16,10 @@ const PantrySingle = ({ match }) => {
   const { ingredients } = pantry || [];
   const currentPantry = pantry.id
 
+
   useEffect(() => {
-    console.log("use effect fired", currentPantry)
-    dispatch(fetchOnePantry(currentPantry));
+    console.log("use effect fired", id)
+    dispatch(fetchDefaultPantry(id));
   }, []);
 
   async function handleChange(itemId, userId, quantity){
@@ -27,8 +28,7 @@ const PantrySingle = ({ match }) => {
 
   return (
     <div className='PantrySingle'>
-      <PantryCreate/>
-      <Container>
+      <Container className={styles.container}>
         <Table striped>
           <thead>
             <tr>
@@ -50,10 +50,10 @@ const PantrySingle = ({ match }) => {
                   <tr key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.category}</td>
-                    <td><Button type="button" class="btn btn-secondary btn-sm" onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
-                    <Button class="btn btn-secondary btn-sm" onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td> 
+                    <td><Button className={styles.Button} onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
+                    <Button className={styles.Button} onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td> 
                     <td>
-                      <Button type="button" onClick={() => handleChange(item.id, id, 0)}>x</Button>
+                      <Button className={styles.Button} type="button" onClick={() => handleChange(item.id, id, 0)}>x</Button>
                     </td>
                   </tr>
                 );
