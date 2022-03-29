@@ -1,7 +1,8 @@
 body {
   font-family: 'Lato', sans-serif;
   color: #012a36;
-  background: linear-gradient(#F5F5F5, #F5F5F5);
+  background: linear-gradient(#f5f5f5, #f5f5f5);
+  padding-top: 107px;
 }
 
 a {
