@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.shopNav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.list {
+  display: flex;
+  width: 400px;
+}
+
+.removebutton {
+  width: 80px;
+  align-self: center;
+}
+
+.button {
+  width: 180px;
+  align-self: center;
+}

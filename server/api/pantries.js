@@ -37,6 +37,7 @@ router.get('/:pantryId', async (req, res, next) => {
 
 // POST /api/pantries
 router.post('/', async (req, res, next) => {
+  console.log('this is req.body', req.body)
   try {
     const { name, id } = req.body;
     const newName = name[0].name;
