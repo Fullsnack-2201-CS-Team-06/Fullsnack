@@ -6,6 +6,7 @@ import {
   Button,
   OverlayTrigger,
   Popover,
+  Accordion,
 } from 'react-bootstrap';
 import styles from './SingleFood.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,29 +28,18 @@ const SingleFood = (props) => {
   };
 
   return (
-    <Card>
+    <Card className={styles.container}>
       <Card.Img variant="top" src={food.image} />
       <Card.Body>
-        <Card.Title>
-          {food.name} ({food.uom})
-        </Card.Title>
+        <Card.Title>{food.name}</Card.Title>
         <ListGroup>
           <ListGroupItem>
             Category: {food.category ? food.category : ''}
           </ListGroupItem>
-          <ListGroupItem>
-            Calories: {food.caloriesPerUnit ? food.caloriesPerUnit : ''}
-          </ListGroupItem>
-          <ListGroupItem>
-            Protein: {food.proteinPerUnit ? food.proteinPerUnit : ''}
-          </ListGroupItem>
-          <ListGroupItem>
-            Carbs: {food.carbsPerUnit ? food.carbsPerUnit : ''}
-          </ListGroupItem>
-          <ListGroupItem>
-            {' '}
-            Fat: {food.fatsPerUnit ? food.fatsPerUnit : ''}
-          </ListGroupItem>
+          <ListGroupItem>Calories: {food.caloriesPerUnit}</ListGroupItem>
+          <ListGroupItem>Protein: {food.proteinPerUnit}</ListGroupItem>
+          <ListGroupItem>Carbs: {food.carbsPerUnit}</ListGroupItem>
+          <ListGroupItem> Fat: {food.fatsPerUnit}</ListGroupItem>
         </ListGroup>
         <OverlayTrigger
           trigger="click"
