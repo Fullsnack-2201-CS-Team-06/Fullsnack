@@ -2,9 +2,29 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
+  color: #012A36;
+}
+
+.introduction {
+  font-size: 62px;
+  margin: 20px;
 }
 
 .carousel {
-  width: 800px;
-  height: 600px;
+  width: 100%;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  background-color: #E85F5C;
+  border: none;
+}
+
+.buttonOutline {
+  border-color: #E85F5C;
+  color: #E85F5C;
 }
