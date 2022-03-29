@@ -24,7 +24,6 @@ const cuisines = [
   'nordic',
   'south american',
   'south east asian',
-  'No Preference',
 ];
 
 const diets = [
@@ -34,6 +33,44 @@ const diets = [
   'low-carb',
   'low-fat',
   'low-sodium',
+];
+
+const healthOps = [
+  'alcohol-cocktail',
+  'alcohol-free',
+  'celery-free',
+  'crustacean-free',
+  'dairy-free',
+  'DASH',
+  'egg-free',
+  'fish-free',
+  'fodmap-free',
+  'gluten-free',
+  'immuno-supportive',
+  'keto-friendly',
+  'kidney-friendly',
+  'kosher',
+  'low-potassium',
+  'low-sugar',
+  'lupine-free',
+  'Mediterranean',
+  'mollusk-free',
+  'mustard-free',
+  'No-oil-added',
+  'paleo',
+  'peanut-free',
+  'pescatarian',
+  'pork-free',
+  'red-meat-free',
+  'sesame-free',
+  'shellfish-free',
+  'soy-free',
+  'sugar-conscious',
+  'sulfite-free',
+  '	tree-nut-free',
+  'vegan',
+  'vegetarian',
+  'wheat-free',
 ];
 
 const AccountUpdate = () => {
@@ -97,6 +134,7 @@ const AccountUpdate = () => {
           value={newAccount.cuisinePref}
           onChange={handleChange}
         >
+          <option value="">Choose a Cuisine Option</option>
           {cuisines.map((cuisine, i) => (
             <option key={i} value={cuisine}>
               {cuisine}
@@ -114,21 +152,17 @@ const AccountUpdate = () => {
             </option>
           ))}
         </select>
-        {/* <input
-          type="text"
-          name="diet"
-          value={newAccount.diet}
-          onChange={handleChange}
-        /> */}
       </div>
       <div>
         <label htmlFor="health">Health: </label>
-        <input
-          type="text"
-          name="health"
-          value={newAccount.health}
-          onChange={handleChange}
-        />
+        <select name="health" value={newAccount.health} onChange={handleChange}>
+          <option value="">Choose Health Restrictions</option>
+          {healthOps.map((health, i) => (
+            <option key={i} value={health}>
+              {health}
+            </option>
+          ))}
+        </select>
       </div>
       <button type="button" onClick={togglePassword}>
         Change Password
