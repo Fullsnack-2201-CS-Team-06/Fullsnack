@@ -4,6 +4,7 @@ import AccountDisplay from './AccountDisplay';
 import AccountUpdate from './AccountUpdate';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './Account.module.css';
+import { Button } from 'react-bootstrap';
 
 const Account = () => {
   const [showForm, setFormStatus] = useState(false);
@@ -34,9 +35,9 @@ const Account = () => {
   ) : (
     <div className={styles.container}>
       <AccountDisplay />
-      <button type="button" onClick={toggleStatus}>
+      <Button variant="primary" onClick={toggleStatus}>
         Update
-      </button>
+      </Button>
     </div>
   );
 };
