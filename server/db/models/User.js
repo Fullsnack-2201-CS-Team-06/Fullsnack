@@ -39,10 +39,8 @@ const User = db.define('user', {
       'middle eastern',
       'nordic',
       'south american',
-      'south east asian',
-      'No Preference'
+      'south east asian'
     ),
-    defaultValue: 'No Preference',
   },
   // Note: check values of 'diet' on Edamam API
   diet: {

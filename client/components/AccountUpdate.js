@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { update } from '../store/auth';
 import styles from './AccountUpdate.module.css';
 import AccountPWUpdate from './AccountPWUpdate';
+import { Card, Table, Button } from 'react-bootstrap';
 
-//Note: Correct typo in 'Japanese' in the model definition
 const cuisines = [
   'american',
   'asian',
@@ -24,7 +24,6 @@ const cuisines = [
   'nordic',
   'south american',
   'south east asian',
-  'No Preference',
 ];
 
 const diets = [
@@ -34,6 +33,44 @@ const diets = [
   'low-carb',
   'low-fat',
   'low-sodium',
+];
+
+const healthOps = [
+  'alcohol-cocktail',
+  'alcohol-free',
+  'celery-free',
+  'crustacean-free',
+  'dairy-free',
+  'DASH',
+  'egg-free',
+  'fish-free',
+  'fodmap-free',
+  'gluten-free',
+  'immuno-supportive',
+  'keto-friendly',
+  'kidney-friendly',
+  'kosher',
+  'low-potassium',
+  'low-sugar',
+  'lupine-free',
+  'Mediterranean',
+  'mollusk-free',
+  'mustard-free',
+  'No-oil-added',
+  'paleo',
+  'peanut-free',
+  'pescatarian',
+  'pork-free',
+  'red-meat-free',
+  'sesame-free',
+  'shellfish-free',
+  'soy-free',
+  'sugar-conscious',
+  'sulfite-free',
+  '	tree-nut-free',
+  'vegan',
+  'vegetarian',
+  'wheat-free',
 ];
 
 const AccountUpdate = () => {
@@ -71,72 +108,111 @@ const AccountUpdate = () => {
   return showPassword ? (
     <AccountPWUpdate />
   ) : (
-    <form className={styles.container}>
-      <div>
-        <label htmlFor="username">Username: </label>
-        <input
-          type="text"
-          name="username"
-          value={newAccount.username}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="email">email: </label>
-        <input
-          type="text"
-          name="email"
-          value={newAccount.email}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="cuisinePref">Cuisine: </label>
-        <select
-          name="cuisinePref"
-          value={newAccount.cuisinePref}
-          onChange={handleChange}
+    <Card className={styles.container}>
+      <Card.Body className={styles.cardContents}>
+        <Table>
+          <tbody>
+            <tr>
+              <td>
+                <label htmlFor="username">Username: </label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="username"
+                  value={newAccount.username}
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label htmlFor="email">email: </label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="email"
+                  value={newAccount.email}
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label htmlFor="cuisinePref">Cuisine: </label>
+              </td>
+              <td>
+                <select
+                  name="cuisinePref"
+                  value={newAccount.cuisinePref}
+                  onChange={handleChange}
+                >
+                  <option value="">Choose a Cuisine Option</option>
+                  {cuisines.map((cuisine, i) => (
+                    <option key={i} value={cuisine}>
+                      {cuisine}
+                    </option>
+                  ))}
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label htmlFor="diet">Diet: </label>
+              </td>
+              <td>
+                <select
+                  name="diet"
+                  value={newAccount.diet}
+                  onChange={handleChange}
+                >
+                  <option value="">Choose A Diet Option</option>
+                  {diets.map((diet, i) => (
+                    <option key={i} value={diet}>
+                      {diet}
+                    </option>
+                  ))}
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label htmlFor="health">Health: </label>
+              </td>
+              <td>
+                <select
+                  name="health"
+                  value={newAccount.health}
+                  onChange={handleChange}
+                >
+                  <option value="">Choose Health Restrictions</option>
+                  {healthOps.map((health, i) => (
+                    <option key={i} value={health}>
+                      {health}
+                    </option>
+                  ))}
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+        <Button
+          variant="primary"
+          className={styles.button}
+          onClick={togglePassword}
         >
-          {cuisines.map((cuisine, i) => (
-            <option key={i} value={cuisine}>
-              {cuisine}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label htmlFor="diet">Diet: </label>
-        <select name="diet" value={newAccount.diet} onChange={handleChange}>
-          <option value="">Choose A Diet Option</option>
-          {diets.map((diet, i) => (
-            <option key={i} value={diet}>
-              {diet}
-            </option>
-          ))}
-        </select>
-        {/* <input
-          type="text"
-          name="diet"
-          value={newAccount.diet}
-          onChange={handleChange}
-        /> */}
-      </div>
-      <div>
-        <label htmlFor="health">Health: </label>
-        <input
-          type="text"
-          name="health"
-          value={newAccount.health}
-          onChange={handleChange}
-        />
-      </div>
-      <button type="button" onClick={togglePassword}>
-        Change Password
-      </button>
-      <button type="button" onClick={handleSubmit}>
-        Submit Changes
-      </button>
-    </form>
+          Change Password
+        </Button>
+        <Button
+          variant="success"
+          className={styles.button}
+          onClick={handleSubmit}
+        >
+          Submit Changes
+        </Button>
+      </Card.Body>
+    </Card>
   );
 };
 
