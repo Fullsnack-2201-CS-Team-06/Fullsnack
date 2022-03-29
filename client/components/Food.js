@@ -259,7 +259,7 @@ const Food = () => {
         </div>
       </div>
       <div className={styles.foodcards}>
-        <NewFood />
+        {/* <NewFood /> */}
         {foods.map((food, i) => (
           <SingleFood key={i} food={food} />
         ))}
