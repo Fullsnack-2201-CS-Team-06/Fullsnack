@@ -1,4 +1,7 @@
 const router = require('express').Router();
+const Pantry = require('../db/models/Pantry');
+const ShoppingList = require('../db/models/ShoppingList');
+
 const {
   models: { User },
 } = require('../db');
@@ -15,6 +18,13 @@ router.post('/login', async (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   try {
     const user = await User.create(req.body);
+    const defaultPantry = await Pantry.create({ name: 'Home' });
+    await defaultPantry.setUser(user);
+    const defaultList = await ShoppingList.create({
+      name: 'My Shopping List',
+      status: 'open',
+    });
+    await defaultList.setUser(user);
     res.send({ token: await user.generateToken() });
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
