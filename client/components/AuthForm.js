@@ -24,27 +24,25 @@ const AuthForm = ({ name, displayName }) => {
       <div className={styles.authFormContainer}>
         <Form className={styles.authForm} onSubmit={handleSubmit} name={name}>
           <h1 className={styles.formTitle}>Login</h1>
-          <div>
+          <Form.Group>
             <Form.Label htmlFor="username">Username</Form.Label>
             <Form.Control
               name="username"
               type="text"
               placeholder="Enter username"
             />
-          </div>
-          <div>
+          </Form.Group>
+          <Form.Group>
             <Form.Label htmlFor="password">Password</Form.Label>
             <Form.Control
               name="password"
               type="password"
               placeholder="Enter Password"
             />
-          </div>
-          <div>
-            <Button variant="primary" className={styles.button} type="submit">
-              {displayName}
-            </Button>
-          </div>
+          </Form.Group>
+          <Button variant="primary" className={styles.button} type="submit">
+            {displayName}
+          </Button>
           {error && error.response && <div> {error.response.data} </div>}
         </Form>
       </div>
