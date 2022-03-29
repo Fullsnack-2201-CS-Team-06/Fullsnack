@@ -41,6 +41,12 @@ const RecRecipes = () => {
       if (cuisinePref !== '' && cuisinePref !== 'No Preference') {
         apiRequest += `&cuisineType=${cuisinePref}`;
       }
+      if (diet) {
+        apiRequest += `&diet=${diet}`;
+      }
+      if (health) {
+        apiRequest += `&health=${health}`;
+      }
       const data = await fetch(apiRequest).then((response) => response.json());
       console.log('data: ', data);
 
