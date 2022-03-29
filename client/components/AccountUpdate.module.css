@@ -1,8 +1,14 @@
 .container {
   display: flex;
   flex-direction: column;
+  padding: 10px;
 }
 
-.container > button {
-  width: 200px;
+.cardContents {
+  padding: 15px;
+}
+
+.button {
+  width: 180px;
+  margin: 15px;
 }

@@ -28,9 +28,9 @@ const Account = () => {
   return showForm ? (
     <div className={styles.container}>
       <AccountUpdate />
-      <button type="button" onClick={toggleStatus}>
+      <Button variant="secondary" onClick={toggleStatus}>
         Cancel
-      </button>
+      </Button>
     </div>
   ) : (
     <div className={styles.container}>
