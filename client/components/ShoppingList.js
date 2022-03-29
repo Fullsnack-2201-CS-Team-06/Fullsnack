@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { fetchCurrentShoppingList, sendToPantry } from '../store/ShoppingList';
 import { fetchAllPantries, createNewPantry } from '../store/pantries'
 import ShoppingListForm from './ShoppingListForm'
+import styles from './ShoppingList.module.css'
 
 const ShoppingList = () => {
   const { id } = useSelector((state) => state.auth);
@@ -44,11 +45,12 @@ const ShoppingList = () => {
   }
 
   return (
-  <div>
-   <p>Shopping List: {name}</p>
+  <div className={styles.container}>
+   <div className={styles.container} >Shopping List: {name}
    <p><Link to={'/list/history'} >View History</Link></p>
+   </div>
    <form method="GET" id="my_form"></form>
-    <table>
+    <table >
       <thead>
         <tr>
           <th>List Items</th>

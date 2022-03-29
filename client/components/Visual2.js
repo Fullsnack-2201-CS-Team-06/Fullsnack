@@ -9,7 +9,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchShoppingListHistory } from '../store/ShoppingList';
 
-
 const Visual2 = () => {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.auth);
@@ -34,9 +33,9 @@ let innerData = []
     })
   }
 
-  innerData.forEach()
+  // innerData.forEach()
 
-  console.log(innerData)
+  console.log(data)
 
   return (
     <div style={{ height: '650px' }}>

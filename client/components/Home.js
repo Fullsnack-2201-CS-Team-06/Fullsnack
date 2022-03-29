@@ -23,6 +23,7 @@ const Home = props => {
     <div>
       <h3>Welcome, {username}</h3>
       <Visuals />
+      <Visual2 />
     </div>
   )
 }
