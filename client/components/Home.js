@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { VictoryBar } from 'victory'
 import { fetchAllPantries } from '../store/pantries'
 import Visuals from './Visuals'
-import Visuals3 from './Visuals3'
+import Visual2 from './Visual2'
 
 /**
  * COMPONENT
@@ -23,6 +23,7 @@ const Home = props => {
     <div>
       <h3>Welcome, {username}</h3>
       <Visuals />
+      <Visual2 />
     </div>
   )
 }

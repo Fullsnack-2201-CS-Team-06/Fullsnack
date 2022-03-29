@@ -35,7 +35,7 @@ const Food = () => {
   const [maxFat, setMaxFat] = useState(100000);
   //Get all foods associated with that user's pantries, recipes, and shopping lists.
   useEffect(() => {
-    dispatch(getFoods(id));
+    dispatch(getFoods());
   }, []);
 
   //FN: Set the search criteria upon typing in the search box.
@@ -259,7 +259,7 @@ const Food = () => {
         </div>
       </div>
       <div className={styles.foodcards}>
-        <NewFood />
+        {/* <NewFood /> */}
         {foods.map((food, i) => (
           <SingleFood key={i} food={food} />
         ))}

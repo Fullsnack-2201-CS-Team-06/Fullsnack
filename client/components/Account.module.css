@@ -1,10 +1,28 @@
+.page {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.page > * {
+  padding: 20px;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   margin-left: 20px;
+  align-items: center;
 }
 
 .container > button {
   width: 200px;
   margin-top: 20px;
+}
+
+.image {
+  border-radius: 50%;
+  width: 500px;
+  height: 500px;
 }

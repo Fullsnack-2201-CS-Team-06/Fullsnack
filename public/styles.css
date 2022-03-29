@@ -1,6 +1,7 @@
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(#d9e7fa, #d9e7fa);
+  font-family: 'Lato', sans-serif;
+  color: #012a36;
+  background: linear-gradient(#F5F5F5, #F5F5F5);
 }
 
 a {
@@ -21,8 +22,12 @@ form div {
   display: inline-block;
 }
 
-.logo {
+/* .logo {
   font-family: 'Russo One', sans-serif;
+} */
+
+.PantrySingle {
+  text-align: center;
 }
 
 table,
