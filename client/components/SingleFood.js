@@ -36,19 +36,10 @@ const SingleFood = (props) => {
           <ListGroupItem>
             Category: {food.category ? food.category : ''}
           </ListGroupItem>
-          <ListGroupItem>
-            Calories: {food.caloriesPerUnit ? food.caloriesPerUnit : ''}
-          </ListGroupItem>
-          <ListGroupItem>
-            Protein: {food.proteinPerUnit ? food.proteinPerUnit : ''}
-          </ListGroupItem>
-          <ListGroupItem>
-            Carbs: {food.carbsPerUnit ? food.carbsPerUnit : ''}
-          </ListGroupItem>
-          <ListGroupItem>
-            {' '}
-            Fat: {food.fatsPerUnit ? food.fatsPerUnit : ''}
-          </ListGroupItem>
+          <ListGroupItem>Calories: {food.caloriesPerUnit}</ListGroupItem>
+          <ListGroupItem>Protein: {food.proteinPerUnit}</ListGroupItem>
+          <ListGroupItem>Carbs: {food.carbsPerUnit}</ListGroupItem>
+          <ListGroupItem> Fat: {food.fatsPerUnit}</ListGroupItem>
         </ListGroup>
         <OverlayTrigger
           trigger="click"
