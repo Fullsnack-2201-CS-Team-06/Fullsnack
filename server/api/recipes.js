@@ -119,6 +119,7 @@ router.post('/recs', async (req, res, next) => {
   try {
     const {
       name,
+      description,
       image,
       cuisineType,
       caloriesPerRecipe,
@@ -130,6 +131,7 @@ router.post('/recs', async (req, res, next) => {
 
     let newRecipe = await Recipe.create({
       name,
+      description,
       image,
       cuisineType,
       caloriesPerRecipe,

@@ -49,6 +49,7 @@ const RecRecipes = () => {
         dispatch(
           addRecRecipe({
             name: recipe.label,
+            description: recipe.url,
             image: recipe.image,
             cuisineType: recipe.cuisineType[0],
             caloriesPerRecipe: Math.floor(recipe.calories),
