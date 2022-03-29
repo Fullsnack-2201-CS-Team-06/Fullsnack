@@ -8,7 +8,7 @@ import Account from './components/Account';
 import ShoppingList from './components/ShoppingList';
 import ShoppingListHistoryAll from './components/ShoppingListHistoryAll';
 import ShoppingListHistorySingle from './components/ShoppingListHistorySingle';
-import Pantries from './components/Pantries';
+import PantryCreate from './components/PantryCreate';
 import Food from './components/Food';
 import PantrySingle from './components/PantrySingle';
 import Recipes from './components/Recipes';
@@ -17,6 +17,7 @@ import EditRecipe from './components/EditRecipe';
 import AddRecipe from './components/AddRecipe';
 import NewPantryItem from './components/NewPantryItem';
 import HomeGuest from './components/HomeGuest';
+import PantryRefactor from './components/PantryRefactor'
 
 /**
  * COMPONENT
@@ -46,7 +47,7 @@ const Routes = () => {
             path="/list/:listId"
             component={ShoppingListHistorySingle}
           />
-          <Route exact path="/pantries" component={Pantries} />
+          <Route path="/pantries" component={PantryRefactor} />
           <Route path="/pantries/add" component={NewPantryItem} />
           <Route path="/pantries/:id" component={PantrySingle} />
           <Route path="/foods" component={Food} />

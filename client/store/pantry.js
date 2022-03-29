@@ -26,7 +26,7 @@ export const editPantry = (editPantry) => ({
 
 // THUNKS
 
-export const fetchOnePantry = (id) => {
+export const fetchSinglePantry = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/api/pantries/${id}`);
@@ -42,7 +42,6 @@ export const addPantryItemThunk = (itemUpdate) => {
     const { id } = itemUpdate
     try {
       const { data } = await axios.post(`/api/pantries/add`, itemUpdate);
-      console.log("OUR DATA", data)
       dispatch(updatePantry(data));
     } catch (error) {
       console.log(error);

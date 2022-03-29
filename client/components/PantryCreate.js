@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { fetchAllPantries, createNewPantry } from '../store/pantries';
+import PantrySingle from './PantrySingle'
 
-const Pantries = () => {
+const PantryCreate = () => {
   const { id } = useSelector((state) => state.auth);
   const { pantries } = useSelector((state) => state);
   const [inputField, setInputField] = useState([{ name: '' }]);
@@ -29,17 +30,15 @@ const Pantries = () => {
 
   return (
     <div>
-      <h2>My Pantry</h2>
       <form onSubmit={handleSubmit}>
         {inputField.map((input, index) => {
           return (
             <div key={index}>
-              <label htmlFor='name'>Pantry Name</label>
-              <input name='name' placeholder='Pantry' value={input.name} onChange={(e) => handleFormChange(index, e)}/>
+              <input name='name' placeholder='Create Pantry' value={input.name} onChange={(e) => handleFormChange(index, e)}/>
             </div>
           );
         })}
-      <button onClick={handleSubmit}></button>
+      <button onClick={handleSubmit}>Create Pantry</button>
       </form>
 
       {pantries.length > 0 ? (
@@ -53,8 +52,9 @@ const Pantries = () => {
       ) : (
         <div>Nothing to show</div>
       )}
+      <PantrySingle/>
     </div>
   );
 };
 
-export default Pantries;
+export default PantryCreate;

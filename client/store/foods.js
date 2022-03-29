@@ -35,7 +35,8 @@ export const getFoods = (id) => {
         const { data } = await axios.get(`/api/ingredients?userId=${id}`);
         dispatch(_getFoods(data));
       } else {
-        console.log('Missing id for getFoods thunk');
+        const { data } = await axios.get('/api/ingredients/all');
+        dispatch(_getFoods(data));
       }
     } catch (error) {
       console.error('Failed to retrieve the foods', error);

@@ -5,6 +5,16 @@ const Pantry = require('../db/models/Pantry');
 const ShoppingList = require('../db/models/ShoppingList');
 const Recipe = require('../db/models/Recipe');
 
+//GET /api/ingredients/all
+router.get('/all', async (req, res, next) => {
+  try {
+    const foods = await Ingredient.findAll();
+    res.send(foods);
+  } catch (error) {
+    next(error);
+  }
+});
+
 //GET /api/ingredients?userId=INT
 router.get('/', async (req, res, next) => {
   try {

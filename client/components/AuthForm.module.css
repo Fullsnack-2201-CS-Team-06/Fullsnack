@@ -1,0 +1,36 @@
+.authFormContainer {
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.button {
+  background-color: #e85f5c;
+  border: none;
+  margin: 15px;
+}
+
+.button:hover {
+  background-color: #e54946;
+}
+
+.authPageContainer {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.authPageImg {
+  width: 30%;
+}
+
+.formTitle {
+  color: #012a36;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+}

@@ -1,3 +1,8 @@
+.container {
+  max-width: 300px;
+  max-height: 650px;
+}
+
 .button {
   margin-top: 10px;
 }

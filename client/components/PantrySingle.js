@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchOnePantry, editPantryThunk } from '../store/pantry';
+import { fetchSinglePantry, editPantryThunk } from '../store/pantry';
 import NewPantryItem from './NewPantryItem';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
+import styles from './PantrySingle.module.css'
 
 
 const PantrySingle = ({ match }) => {
@@ -15,8 +16,10 @@ const PantrySingle = ({ match }) => {
   const { ingredients } = pantry || [];
   const currentPantry = pantry.id
 
+
   useEffect(() => {
-    dispatch(fetchOnePantry(match.params.id));
+    console.log("use effect fired", id)
+    dispatch(fetchSinglePantry(id));
   }, []);
 
   async function handleChange(itemId, userId, quantity){
@@ -25,18 +28,13 @@ const PantrySingle = ({ match }) => {
 
   return (
     <div className='PantrySingle'>
-      <Link to='/pantries/add'>
-    <Button>Add Item</Button>
-    </Link>
-      <Container>
+      <Container className={styles.container}>
         <Table striped>
           <thead>
             <tr>
               <th>Item</th>
               <th>Category</th>
               <th>Quantity</th>
-              <th>Cost/Item</th>
-              <th>Unit of Measure</th>
               <th></th>
             </tr>
           </thead>
@@ -52,12 +50,10 @@ const PantrySingle = ({ match }) => {
                   <tr key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.category}</td>
-                    <td><Button onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
-                    <Button onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td> 
-                    <td>{item.pantryIngredient.cost}</td>
-                    <td>{item.uom}</td>
+                    <td><Button className={styles.Button} onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
+                    <Button className={styles.Button} onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td> 
                     <td>
-                      <Button onClick={() => handleChange(item.id, id, 0)}>x</Button>
+                      <Button className={styles.Button} type="button" onClick={() => handleChange(item.id, id, 0)}>x</Button>
                     </td>
                   </tr>
                 );
