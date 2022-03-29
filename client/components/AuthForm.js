@@ -1,45 +1,53 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import {authenticate} from '../store'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { authenticate } from '../store';
+import styles from './AuthForm.module.css';
+import { Form, Button } from 'react-bootstrap';
 
 /**
  * COMPONENT
  */
 const AuthForm = ({ name, displayName }) => {
-  const { error } = useSelector(state => state.auth)
-  const dispatch = useDispatch()
+  const { error } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const handleSubmit = (evt) => {
-    evt.preventDefault()
-    const formName = evt.target.name
-    const username = evt.target.username.value
-    const password = evt.target.password.value
-    dispatch(authenticate(username, password, formName))
-  }
+    evt.preventDefault();
+    const formName = evt.target.name;
+    const username = evt.target.username.value;
+    const password = evt.target.password.value;
+    dispatch(authenticate(username, password, formName));
+  };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
+    <div className={styles.authFormContainer}>
+      <Form className={styles.authForm} onSubmit={handleSubmit} name={name}>
         <div>
-          <label htmlFor="username">
-            <small>Username</small>
-          </label>
-          <input name="username" type="text" />
+          <Form.Label htmlFor="username">Username</Form.Label>
+          <Form.Control
+            name="username"
+            type="text"
+            placeholder="Enter username"
+          />
         </div>
         <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
+          <Form.Label htmlFor="password">Password</Form.Label>
+          <Form.Control
+            name="password"
+            type="password"
+            placeholder="Enter Password"
+          />
         </div>
         <div>
-          <button type="submit">{displayName}</button>
+          <Button variant="primary" className={styles.button} type="submit">
+            {displayName}
+          </Button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
-      </form>
+      </Form>
     </div>
-  )
-}
+  );
+};
 
-export const Login = <AuthForm name="login" displayName="Login" />
-export const Signup = <AuthForm name="signup" displayName="Sign Up" />
+export const Login = <AuthForm name="login" displayName="Login" />;
+export const Signup = <AuthForm name="signup" displayName="Sign Up" />;
