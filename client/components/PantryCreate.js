@@ -29,17 +29,15 @@ const PantryCreate = () => {
 
   return (
     <div>
-      <h2>My Pantry</h2>
       <form onSubmit={handleSubmit}>
         {inputField.map((input, index) => {
           return (
             <div key={index}>
-              <label htmlFor='name'>Pantry Name</label>
-              <input name='name' placeholder='Pantry' value={input.name} onChange={(e) => handleFormChange(index, e)}/>
+              <input name='name' placeholder='Create Pantry' value={input.name} onChange={(e) => handleFormChange(index, e)}/>
             </div>
           );
         })}
-      <button onClick={handleSubmit}></button>
+      <button onClick={handleSubmit}>Create Pantry</button>
       </form>
 
       {pantries.length > 0 ? (
