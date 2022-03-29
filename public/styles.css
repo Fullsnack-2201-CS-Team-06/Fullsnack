@@ -42,7 +42,7 @@ tfoot {
 .recipesPage {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .allRecipesContainer {
@@ -64,7 +64,7 @@ tfoot {
 
 .recipeCardContainer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -74,6 +74,8 @@ tfoot {
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
+  height: 400px;
+  width: 300px;
 }
 
 .recipeImg {

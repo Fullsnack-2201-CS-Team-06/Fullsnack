@@ -39,7 +39,7 @@ const Recipe = db.define('recipe', {
   },
 
   image: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
 
   cuisineType: {
