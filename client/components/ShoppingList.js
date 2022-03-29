@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { fetchCurrentShoppingList, sendToPantry } from '../store/ShoppingList';
 import { fetchAllPantries, createNewPantry } from '../store/pantries'
 import ShoppingListForm from './ShoppingListForm'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { ListGroup, Table, Button, Container, Dropdown } from 'react-bootstrap'
 import styles from './ShoppingList.module.css'
 
 const ShoppingList = () => {
@@ -45,28 +47,35 @@ const ShoppingList = () => {
   }
 
   return (
-  <div className={styles.container}>
-   <div className={styles.container} >Shopping List: {name}
-   <p><Link to={'/list/history'} >View History</Link></p>
-   </div>
-   <form method="GET" id="my_form"></form>
-    <table >
-      <thead>
-        <tr>
-          <th>List Items</th>
-          <th>Quantity</th>
-          <th>Remove item from list</th>
-        </tr>
-      </thead>
-        { ingredients ?
-          ingredients.map(item => {
+    <Container >
+  <div  >
+    <div className={styles.shopNav} >
+      <p>Shopping List: {name}</p>
+      <Link to={'/list/history'} >View History</Link>
+    </div>
+    <div >
+      <form method="GET" id="my_form"></form>
+        { ingredients ? (
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>List Item</th>
+                <th>Quantity</th>
+                <th>Remove from list</th>
+              </tr>
+            </thead>
+            <tbody>
+         { ingredients.map(item => {
           return (
-        <ShoppingListForm key={item.id}  props={item} />
+            <ShoppingListForm key={item.id} props={item} />
           )
-        }):
-        <tbody></tbody>
-        }
-    </table>
+        }) }
+        </tbody>
+      </Table> )
+        :
+        <></>
+      }
+      </div>
     <div>
     <select name="pantries" onChange={(e) => setSelectedPantry(e.target.value)} >
         <option value="1">{defaultName.name}</option>
@@ -82,16 +91,16 @@ const ShoppingList = () => {
       </select>
       {selectedPantry < 0 ?
       <form method="GET" id="my_form">
-        <label htmlFor='name' >Pantry Name: </label>
-        <input type='text' name='name' value={newPantry} onChange={(e) => setNewPantry(e.target.value)} />
-        <button name='button' onClick={() => handleCreatePantry()}>Create New Pantry</button>
+        <input type='text' placeholder='New pantry name' name='name' value={newPantry} onChange={(e) => setNewPantry(e.target.value)} />
+        <Button className={styles.button} variant="primary" onClick={() => handleCreatePantry()}>Create New Pantry</Button>
       </form>
        :
       <form></form>}
-      <button name='button' onClick={() => handleSubmit()}>Send list to Pantry</button>
+      <Button className={styles.button} variant="primary" onClick={() => handleSubmit()}>Send list to Pantry</Button>
       <p>Total # of unique items: {length}</p>
     </div>
   </div>
+  </Container>
   );
 };
 
