@@ -15,7 +15,6 @@ const Navbar = () => {
         <Link to="/">
           <h1 className={styles.logo}>FULLSNACK</h1>
         </Link>
-
         <nav>
           {isLoggedIn ? (
             <div>
