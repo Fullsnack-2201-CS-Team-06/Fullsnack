@@ -2,11 +2,13 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
-  color: #012A36;
+  color: #012a36;
+  font-family: 'Lato', sans-serif;
 }
 
 .introduction {
   font-size: 62px;
+  font-weight: 700;
   margin: 20px;
 }
 
@@ -20,11 +22,25 @@
 }
 
 .button {
-  background-color: #E85F5C;
+  background-color: #e85f5c;
   border: none;
 }
 
 .buttonOutline {
-  border-color: #E85F5C;
-  color: #E85F5C;
+  border-color: #e85f5c;
+  color: #e85f5c;
+}
+
+hr {
+  width: 35%;
+  height: 1px;
+  background-color: #012a36;
+  height: 12px;
+  margin: 35px;
+}
+
+.guestHomeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

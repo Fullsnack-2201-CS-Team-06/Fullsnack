@@ -71,12 +71,20 @@ const HomeGuest = () => {
   return (
     <div>
       <ControlledCarousel />
-      <Container className={styles.container}>
-        <h1 className={styles.introduction}>SIMPLIFY YOUR CRAVINGS.</h1>
-      </Container>
-      <Container className={styles.buttonContainer}>
-        <Button className={styles.button} variant="primary">Learn More</Button>
-        <Button className={styles.buttonOutline} variant="outline-primary">Login</Button>
+      <Container className={styles.guestHomeContainer}>
+        <hr />
+        <Container className={styles.container}>
+          <h1 className={styles.introduction}>SIMPLIFY YOUR CRAVINGS.</h1>
+        </Container>
+        <hr />
+        <Container className={styles.buttonContainer}>
+          <Button className={styles.button} variant="primary">
+            Learn More
+          </Button>
+          <Button className={styles.buttonOutline} variant="outline-primary">
+            Login
+          </Button>
+        </Container>
       </Container>
     </div>
   );
