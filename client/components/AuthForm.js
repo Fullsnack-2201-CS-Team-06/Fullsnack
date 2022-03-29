@@ -40,7 +40,7 @@ const AuthForm = ({ name, displayName }) => {
               placeholder="Enter Password"
             />
           </Form.Group>
-          <Button variant="primary" className={styles.button} type="submit">
+          <Button variant="danger" className={styles.button} type="submit">
             {displayName}
           </Button>
           {error && error.response && <div> {error.response.data} </div>}
