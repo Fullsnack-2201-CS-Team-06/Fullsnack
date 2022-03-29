@@ -6,6 +6,7 @@ import {
   Button,
   OverlayTrigger,
   Popover,
+  Accordion,
 } from 'react-bootstrap';
 import styles from './SingleFood.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,12 +28,10 @@ const SingleFood = (props) => {
   };
 
   return (
-    <Card>
+    <Card className={styles.container}>
       <Card.Img variant="top" src={food.image} />
       <Card.Body>
-        <Card.Title>
-          {food.name} ({food.uom})
-        </Card.Title>
+        <Card.Title>{food.name}</Card.Title>
         <ListGroup>
           <ListGroupItem>
             Category: {food.category ? food.category : ''}
