@@ -2,12 +2,11 @@ const router = require('express').Router();
 module.exports = router;
 const Ingredient = require('../db/models/Ingredient');
 const Pantry = require('../db/models/Pantry');
-const User = require('../db/models/User')
+const User = require('../db/models/User');
 
 //GET /api/pantries?userId=1
 router.get('/', async (req, res, next) => {
   try {
-    console.log("entered allPantries")
     const pantries = await Pantry.findAll({
       where: { userId: req.query.userId },
       include: Ingredient,
@@ -24,7 +23,7 @@ router.get('/', async (req, res, next) => {
 //GET /api/pantries/:pantryId
 router.get('/:pantryId', async (req, res, next) => {
   try {
-    console.log("entered pantryID")
+    console.log('entered pantryID');
     const singlePantry = await Pantry.findByPk(req.params.pantryId, {
       include: Ingredient,
     });
@@ -46,7 +45,7 @@ router.post('/', async (req, res, next) => {
     const newPantry = await Pantry.create({ name: newName });
     const currentUser = await User.findByPk(id);
 
-    await currentUser.addPantry(newPantry)
+    await currentUser.addPantry(newPantry);
 
     res.send(newPantry);
   } catch (error) {
@@ -63,19 +62,15 @@ router.post('/add', async (req, res, next) => {
 
     await Promise.all(
       foodInfo.map(async (item) => {
-        const { name, category, quantity, cost, measure } = item;
+        const { name, quantity } = item;
 
         const [newItem, wasCreated] = (newPantryItem =
           await Ingredient.findOrCreate({
             where: { name: name },
-            defaults: {
-              uom: measure,
-              category: category,
-            },
           }));
 
         await currentPantry.addIngredient(newItem, {
-          through: { pantryQty: quantity, cost: cost },
+          through: { pantryQty: quantity },
         });
       })
     );

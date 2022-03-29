@@ -42,7 +42,6 @@ export const addPantryItemThunk = (itemUpdate) => {
     const { id } = itemUpdate
     try {
       const { data } = await axios.post(`/api/pantries/add`, itemUpdate);
-      console.log("OUR DATA", data)
       dispatch(updatePantry(data));
     } catch (error) {
       console.log(error);

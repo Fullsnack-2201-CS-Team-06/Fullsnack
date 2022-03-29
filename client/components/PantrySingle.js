@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchDefaultPantry, editPantryThunk } from '../store/pantry';
+import { fetchSinglePantry, editPantryThunk } from '../store/pantry';
 import NewPantryItem from './NewPantryItem';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -19,7 +19,7 @@ const PantrySingle = ({ match }) => {
 
   useEffect(() => {
     console.log("use effect fired", id)
-    dispatch(fetchDefaultPantry(id));
+    dispatch(fetchSinglePantry(id));
   }, []);
 
   async function handleChange(itemId, userId, quantity){
