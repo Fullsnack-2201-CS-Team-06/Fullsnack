@@ -10,7 +10,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   return (
-    <Nav className={styles.navBar}>
+    <Nav fixed="top" className={styles.navBar}>
       <Container>
         <Link to="/">
           <h1 className={styles.logo}>FULLSNACK</h1>

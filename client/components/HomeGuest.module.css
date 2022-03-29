@@ -19,16 +19,27 @@
 .buttonContainer {
   display: flex;
   justify-content: center;
+  margin: 30px;
 }
 
 .button {
   background-color: #e85f5c;
   border: none;
+  margin: 15px;
+}
+
+.button:hover {
+  background-color: #e54946;
 }
 
 .buttonOutline {
   border-color: #e85f5c;
   color: #e85f5c;
+}
+
+.buttonOutline:hover {
+  border-color: #e54946;
+  background-color: #e54946;
 }
 
 hr {
@@ -43,4 +54,19 @@ hr {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.cardContainer {
+  margin: 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+.card {
+  width: 18rem;
+  margin: 20px;
+}
+
+.cardImg {
+  height: 180px;
 }

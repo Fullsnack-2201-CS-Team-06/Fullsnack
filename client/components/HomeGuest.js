@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Carousel, Container, Button } from 'react-bootstrap';
+import { Carousel, Container, Button, Card } from 'react-bootstrap';
 import styles from './HomeGuest.module.css';
 
 const sampleImages = [
@@ -76,15 +76,78 @@ const HomeGuest = () => {
         <Container className={styles.container}>
           <h1 className={styles.introduction}>SIMPLIFY YOUR CRAVINGS.</h1>
         </Container>
-        <hr />
-        <Container className={styles.buttonContainer}>
+        <div className={styles.buttonContainer}>
           <Button className={styles.button} variant="primary">
             Learn More
           </Button>
           <Button className={styles.buttonOutline} variant="outline-primary">
             Login
           </Button>
-        </Container>
+        </div>
+        <hr />
+        <div className={styles.cardContainer}>
+          <Card className={styles.card}>
+            <Card.Img
+              variant="top"
+              src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/hbx100119kitchenalicelane-013-copy-1567786355.jpg?resize=480:*"
+              className={styles.cardImg}
+            />
+            <Card.Body>
+              <Card.Title>Pantry</Card.Title>
+              <Card.Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Card.Text>
+              <Button
+                variant="outline-primary"
+                className={styles.buttonOutline}
+              >
+                Pantry
+              </Button>
+            </Card.Body>
+          </Card>
+          <Card className={styles.card}>
+            <Card.Img
+              variant="top"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU1Wuo0J-W1BVx5O7F-4zRRT7DZvU9Pz64vQ&usqp=CAU"
+              className={styles.cardImg}
+            />
+            <Card.Body>
+              <Card.Title>Shopping List</Card.Title>
+              <Card.Text>
+                Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur.
+              </Card.Text>
+              <Button
+                variant="outline-primary"
+                className={styles.buttonOutline}
+              >
+                Shopping List
+              </Button>
+            </Card.Body>
+          </Card>
+          <Card className={styles.card}>
+            <Card.Img
+              variant="top"
+              src="https://img.delicious.com.au/fVd1u6k7/w1200/del/2022/02/chicken-chickpea-curry-163942-1.jpg"
+              className={styles.cardImg}
+            />
+            <Card.Body>
+              <Card.Title>Recipes</Card.Title>
+              <Card.Text>
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat.
+              </Card.Text>
+              <Button
+                variant="outline-primary"
+                className={styles.buttonOutline}
+              >
+                Recipes
+              </Button>
+            </Card.Body>
+          </Card>
+        </div>
+        <hr />
       </Container>
     </div>
   );
