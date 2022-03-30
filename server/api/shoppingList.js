@@ -66,12 +66,10 @@ router.put('/', async (req, res, next) => {
     //Find the ingredient associated with the id we have
     const ingredientToUpdate = await Ingredient.findByPk(itemId)
     if (!quantity) {
-      console.log('quantity: ', shoppingList)
       if (shoppingList.hasIngredient(ingredientToUpdate)) {
         let initialAmount = 0
         shoppingList.ingredients.forEach(curr => {
           if (itemId === curr.id) {
-            console.log('here is the currrrr', curr)
             initialAmount += curr.shoppingListIngredient.sliQuantity
           }
         })
@@ -105,15 +103,11 @@ router.post('/', async (req, res, next) => {
       next({ status: 404, message: 'No shopping list found at this id' });
     }
     const { totalCost, pantryId } = req.body;
-    console.log(shoppingList.ingredients.forEach(ing => {
-      console.log('shopp ing: ', ing.shoppingListIngredient)
-    }))
     const currentPantry = await Pantry.findByPk(pantryId, { include: Ingredient })
 
     await shoppingList.ingredients.forEach(addMeToPantry => {
       const { id } = addMeToPantry
       const {sliQuantity, cost} = addMeToPantry.shoppingListIngredient
-      console.log('inside ', addMeToPantry)
       if (currentPantry.hasIngredient(addMeToPantry)) {
         let initialAmount = 0
         currentPantry.ingredients.forEach(curr => {
