@@ -25,7 +25,7 @@ return (
     <><tr>
         <td className={styles.enlarge} >{props.name}</td>
         <td><Form.Control type="text" name="quantity" value={newQuantity}  onChange={(e) => handleQuantityChange(e)} /></td>
-        <td><Button className={styles.removebutton} onClick={() => handleRemoveItem()}>X</Button></td>
+        <td className={styles.enlarge} ><Button className={styles.removebutton} onClick={() => handleRemoveItem()}>X</Button></td>
         </tr></>
 )
 }

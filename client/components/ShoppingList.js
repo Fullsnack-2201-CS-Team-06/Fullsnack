@@ -59,9 +59,9 @@ const ShoppingList = () => {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>List Item</th>
-                <th>Quantity</th>
-                <th>Remove from list</th>
+                <th className={styles.enlarge} >List Item</th>
+                <th className={styles.enlarge} >Quantity</th>
+                <th className={styles.enlarge} >Remove from list</th>
               </tr>
             </thead>
             <tbody>
@@ -93,7 +93,9 @@ const ShoppingList = () => {
       {selectedPantry < 0 ?
       <form method="GET" id="my_form">
         <Form.Control style={{width:'300px'}} type='text' placeholder='New pantry name' name='name' value={newPantry} onChange={(e) => setNewPantry(e.target.value)} />
+        <div className={styles.enlarge} >
         <Button className={styles.button} variant="primary" onClick={() => handleCreatePantry()}>Create New Pantry</Button>
+        </div>
       </form>
        :
       <form></form>}

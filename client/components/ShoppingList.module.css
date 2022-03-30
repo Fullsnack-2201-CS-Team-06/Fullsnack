@@ -17,6 +17,7 @@
 
 .enlarge {
   font-size: larger;
+  text-align: center;
 }
 
 .removebutton {
@@ -27,4 +28,5 @@
 .button {
   width: 180px;
   align-self: center;
+  justify-content: center;
 }

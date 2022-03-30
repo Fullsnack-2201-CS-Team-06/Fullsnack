@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import styles from './ShoppingList.module.css'
 import { ListGroup, Table, Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { fetchShoppingListHistory } from '../store/ShoppingList';
@@ -23,9 +24,9 @@ const ShoppingListHistoryAll = () => {
   <colgroup span="4"></colgroup>
   <tbody>
   <tr>
-    <th>List Name</th>
-    <th>Date Completed</th>
-    <th>Total Items:</th>
+    <th className={styles.enlarge} >List Name</th>
+    <th className={styles.enlarge} >Date Completed</th>
+    <th className={styles.enlarge} >Total Items:</th>
   </tr>
   { shoppingHistory ?
   shoppingHistory.map(list => {
