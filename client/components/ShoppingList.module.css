@@ -7,12 +7,40 @@
 .shopNav {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .list {
   display: flex;
   width: 400px;
+}
+
+.addToPantry {
+  display: flex;
+  justify-content: space-between;
+}
+
+.enlarge {
+  font-size: larger;
+  text-align: center;
+}
+
+.backToHistory {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.select {
+  text-align: center;
+  height: 40px;
+}
+
+.newPantry {
+  text-align: center;
+}
+
+.title {
+  text-align: center;
 }
 
 .removebutton {
