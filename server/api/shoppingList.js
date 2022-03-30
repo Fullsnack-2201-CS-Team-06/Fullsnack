@@ -134,7 +134,7 @@ router.post('/', async (req, res, next) => {
     await shoppingList.update({
       totalCost,
       status: 'closed',
-      checkoutDate: Date.now().toDateString(),
+      checkoutDate: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
     });
     const newShoppingList = await ShoppingList.create({
       name: 'new shopping list',

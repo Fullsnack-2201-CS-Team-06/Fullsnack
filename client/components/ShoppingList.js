@@ -74,9 +74,9 @@ const ShoppingList = () => {
         :
         <></>
       }
-      </div>
-    <div>
-    <Form.Select name="pantries" style={{width:'200px'}} onChange={(e) => setSelectedPantry(e.target.value)} >
+    </div>
+    <div className={styles.addToPantry} >
+    <Form.Select name="pantries" className={styles.select} style={{width:'200px'}} onChange={(e) => setSelectedPantry(e.target.value)} >
         <option value="1">{defaultName.name}</option>
         { otherPantries.length ?
         otherPantries.map((pantry) => (
@@ -86,20 +86,20 @@ const ShoppingList = () => {
         )) :
         <></>
         }
-        <option value={-1}>Create New Pantry</option>
       </Form.Select>
       <div>
-      {selectedPantry < 0 ?
+        {/* <div className={styles.enlarge} > */}
+      <Button className={styles.button} variant="primary" onClick={() => handleSubmit()}>Add items to Pantry</Button>
+        {/* </div> */}
+      <p>Total # of unique items: {length}</p>
+      </div>
+      <div className={styles.enlarge} >
       <form method="GET" id="my_form">
-        <Form.Control style={{width:'300px'}} type='text' placeholder='New pantry name' name='name' value={newPantry} onChange={(e) => setNewPantry(e.target.value)} />
-        <div className={styles.enlarge} >
+        <Form.Control style={{width:'300px'}} className={styles.newPantry} type='text' placeholder='New pantry name' name='name' value={newPantry} onChange={(e) => setNewPantry(e.target.value)} />
+        <div>
         <Button className={styles.button} variant="primary" onClick={() => handleCreatePantry()}>Create New Pantry</Button>
         </div>
       </form>
-       :
-      <form></form>}
-      <Button className={styles.button} variant="primary" onClick={() => handleSubmit()}>Add items to Pantry</Button>
-      <p>Total # of unique items: {length}</p>
       </div>
     </div>
   </div>

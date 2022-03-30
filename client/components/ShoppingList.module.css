@@ -15,6 +15,11 @@
   width: 400px;
 }
 
+.addToPantry {
+  display: flex;
+  justify-content: space-between;
+}
+
 .enlarge {
   font-size: larger;
   text-align: center;
@@ -23,6 +28,15 @@
 .backToHistory {
   display: flex;
   justify-content: flex-end;
+}
+
+.select {
+  text-align: center;
+  height: 40px;
+}
+
+.newPantry {
+  text-align: center;
 }
 
 .title {
