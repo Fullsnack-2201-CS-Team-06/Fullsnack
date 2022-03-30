@@ -1,9 +1,15 @@
 .container{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     padding: 10px;
 }
 
 .Button{
     width: 30px;
 }
+/* 
+.Button::hover{
+    background: #5c1a7c;
+    transition-delay: 0.25s;
+    transition: background 0.2s ease 0s;
+} */
