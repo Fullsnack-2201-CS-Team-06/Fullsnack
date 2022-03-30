@@ -30,15 +30,12 @@ const RecRecipes = () => {
   useEffect(() => {
     async function getMoreRecs() {
       //The base api url with which we request new recommendations.
+      // let apiRequest =
+      //   'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner';
       let apiRequest =
-        'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner';
+        'https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner';
       //Exclude the recipes that we already have.
-      recipes.forEach((recipe) => (apiRequest += `&excluded=${recipe.name}`));
-      //Exclude the recipes already in our recommendations.
-      recRecipes.forEach(
-        (recRecipe) => (apiRequest += `&excluded=${recRecipe.name}`)
-      );
-      if (cuisinePref !== '' && cuisinePref !== 'No Preference') {
+      if (cuisinePref && cuisinePref !== 'No Preference') {
         apiRequest += `&cuisineType=${cuisinePref}`;
       }
       if (diet) {
@@ -47,6 +44,16 @@ const RecRecipes = () => {
       if (health) {
         apiRequest += `&health=${health}`;
       }
+      recipes.forEach((recipe) => {
+        const recipeWords = recipe.name.split(' ').join('%20');
+        apiRequest += `&excluded=${recipeWords}`;
+      });
+      //Exclude the recipes already in our recommendations.
+      recRecipes.forEach((recRecipe) => {
+        const recipeWords = recRecipe.name.split(' ').join('%20');
+        apiRequest += `&excluded=${recipeWords}`;
+      });
+      console.log(apiRequest);
       const data = await fetch(apiRequest).then((response) => response.json());
       console.log('data: ', data);
 
