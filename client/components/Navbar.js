@@ -21,6 +21,9 @@ const Navbar = () => {
             <Container className={styles.signedInLinks}>
               {/* The navbar will show these links after you log in */}
               {/* <Link to="/home">Home</Link> */}
+              <Link to="/foods" className={styles.navBarLink}>
+                Foods
+              </Link>
               <Link to="/list" className={styles.navBarLink}>
                 Shopping List
               </Link>
@@ -29,9 +32,6 @@ const Navbar = () => {
               </Link>
               <Link to="/recipes" className={styles.navBarLink}>
                 Recipes
-              </Link>
-              <Link to="/foods" className={styles.navBarLink}>
-                Foods
               </Link>
               <NavDropdown
                 title={<FaUserCircle size={25} />}
