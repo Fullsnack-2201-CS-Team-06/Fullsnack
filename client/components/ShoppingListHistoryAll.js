@@ -19,7 +19,7 @@ const ShoppingListHistoryAll = () => {
 
   return (
   <div>
-   <p>Your Shopping Lists!</p>
+   <h2 className={styles.title} >Your Shopping List History!</h2>
 <Table>
   <colgroup span="4"></colgroup>
   <tbody>
@@ -35,9 +35,9 @@ const ShoppingListHistoryAll = () => {
     }, 0)
     return (
     <tr key={list.id}>
-      <td><Link to={`/list/${list.id}`}>{list.name}</Link></td>
-      <td>{(list.checkoutDate)}</td>
-      <td>{totalItems}</td>
+      <td className={styles.enlarge} ><Link to={`/list/${list.id}`}>{list.name}</Link></td>
+      <td className={styles.enlarge} >{(list.checkoutDate)}</td>
+      <td className={styles.enlarge} >{totalItems}</td>
     </tr>)
   }) :
   <tr></tr>

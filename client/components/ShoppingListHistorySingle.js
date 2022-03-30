@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Table } from 'react-bootstrap'
 import { setSingleHistoryView, editListThunk } from '../store/ShoppingList';
+import styles from './ShoppingList.module.css'
 
 const ShoppingListHistorySingle = ({match}) => {
   const { id } = useSelector((state) => state.auth);
@@ -21,16 +24,16 @@ const ShoppingListHistorySingle = ({match}) => {
   if (ingredients) length = ingredients.length
 
   return (
-  <div>
-   <p>Shopping List: {name}</p>
-   <p><Link to={'/list/history'} >Back to History</Link></p>
-<table>
+    <Container>
+  <div  >
+   <h4 className={styles.title} >Shopping List: {name}</h4>
+   <p className={styles.backToHistory} ><Link to={'/list/history'} >Back to History</Link></p>
+<Table>
   <colgroup span="4"></colgroup>
   <tbody>
   <tr>
     <td>List Items</td>
     <td>Quantity</td>
-    <td>Unit of Measure</td>
   </tr>
   { ingredients ?
   ingredients.map(item => {
@@ -38,18 +41,18 @@ const ShoppingListHistorySingle = ({match}) => {
       <tr key={item.id}>
         <td>{item.name}</td>
         <td>{item.shoppingListIngredient.sliQuantity}</td>
-        <td>{item.uom}</td>
       </tr>
     )
   }):
   <tr></tr>
   }
   </tbody>
-</table>
+</Table>
     <div>
       <p>Total # of unique items: {length}</p>
     </div>
   </div>
+  </Container>
   );
 };
 

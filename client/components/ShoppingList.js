@@ -50,11 +50,10 @@ const ShoppingList = () => {
     <Container >
   <div  >
     <div className={styles.shopNav} >
-      <h4 >Shopping List: {name}</h4>
+      <h4 className={styles.title} >Shopping List: {name}</h4>
       <Link to={'/list/history'} >View History</Link>
     </div>
     <div >
-      {/* <Form method="GET" id="my_form"></Form> */}
         { ingredients ? (
           <Table striped bordered hover>
             <thead>

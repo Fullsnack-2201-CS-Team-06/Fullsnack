@@ -20,6 +20,15 @@
   text-align: center;
 }
 
+.backToHistory {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.title {
+  text-align: center;
+}
+
 .removebutton {
   width: 80px;
   align-self: center;
@@ -28,5 +37,4 @@
 .button {
   width: 180px;
   align-self: center;
-  justify-content: center;
 }
