@@ -34,8 +34,6 @@ const VisualNutrition = () => {
       y: Number(food.caloriesPerUnit),
     }));
 
-  console.log('chart data: ', data);
-
   return didLoad ? (
     <div style={{ height: '650px' }}>
       <VictoryChart
