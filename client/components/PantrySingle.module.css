@@ -1,12 +1,9 @@
 .container{
     display: flex;
     justify-content: space-evenly;
+    padding: 30px;
 }
 
 .Button{
     width: 30px;
-}
-
-.column{
-    width: 300px;
 }

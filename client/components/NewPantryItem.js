@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addPantryItemThunk } from '../store/pantry';
+import styles from './NewPantryItem.module.css'
 
 const NewPantryItem = () => {
   const { userId } = useSelector((state) => state.auth);
@@ -81,14 +82,17 @@ const NewPantryItem = () => {
     <div>
       <br/>
       <br/>
-      <h1>Add Pantry Item</h1>
-
+      <div className={styles.newPantryItem}>
+      
+      <div className={styles.newPantryItemForm}>
+      <h3 className={styles.newPantry}>Add Pantry Item</h3>
       <form onSubmit={handleSubmit}><ul></ul>
         {inputFields.map((input, index) => {
           return (
             <div key={index}>
-              <label htmlFor='Item Name'>Item Name</label>
+              <label className={styles.label} htmlFor='Item Name'>Item Name</label>
               <input
+              className={styles.input}
                 name='name'
                 list='allFoods'
                 placeholder='Item Name'
@@ -103,12 +107,14 @@ const NewPantryItem = () => {
                 ))}
               </datalist>
 
+              <label className={styles.label} htmlFor='Category'>Category</label>
               <select
+              className={styles.input}
                 name='category'
                 value={input.category}
                 onChange={(e) => handleFormChange(index, e)}
               >
-                <label htmlFor='Category'>Category</label>
+        
                 <option value='' disabled selected>
                   Select Category
                 </option>
@@ -121,8 +127,9 @@ const NewPantryItem = () => {
                 <option value='miscellaneous'>Miscellaneous</option>
               </select>
 
-              <label htmlFor='Quantity'>Quantity</label>
+              <label className={styles.label} htmlFor='Quantity'>Quantity</label>
               <input
+              className={styles.input}
                 type='number'
                 name='quantity'
                 placeholder='Quantity'
@@ -143,7 +150,10 @@ const NewPantryItem = () => {
           Save
         </button>
       </form>
+      </div>
+      </div>
     </div>
+
   );
 };
 

@@ -28,7 +28,7 @@ const PantrySingle = ({ match }) => {
   return (
     <div>
       <Container className={styles.container}>
-        <Table striped>
+        <Table striped bordered hover size="sm">
           <thead>
             <tr>
               <th>Item</th>
@@ -63,9 +63,9 @@ const PantrySingle = ({ match }) => {
               </tr>
             )}
           </tbody>
-          <NewPantryItem />
         </Table>
       </Container>
+      <NewPantryItem />
     </div>
   );
 };

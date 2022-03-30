@@ -1,0 +1,25 @@
+.newPantryItem{
+    height: 100%;
+    /* padding-left: 200px; */
+}
+
+.newPantryItemForm{
+    display: flex;
+    flex-direction: row;
+    padding: 20px 0px;
+    border: 1px solid #80808098;
+    margin: 60px auto;
+}
+
+.newPantry{
+        padding: 30px 36px;
+}
+
+.label::after{
+    content: "*";
+    color: #012a36;
+}
+
+.input{
+    height: calc(1.5em + 0.75rem + 2px);
+}
