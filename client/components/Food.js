@@ -171,28 +171,6 @@ const Food = () => {
         </div>
         <div className={styles.allFoodsSetting}>
           <div className={styles.minmaxSetting}>
-            <label htmlFor="minCalories">Min Calories: </label>
-            <input
-              type="number"
-              name="minCalories"
-              min="0"
-              value={minCalories}
-              onChange={editNutritionRange}
-            />
-          </div>
-          <div className={styles.minmaxSetting}>
-            <label htmlFor="maxCalories">Max Calories: </label>
-            <input
-              type="number"
-              name="maxCalories"
-              min="0"
-              value={maxCalories}
-              onChange={editNutritionRange}
-            />
-          </div>
-        </div>
-        <div className={styles.allFoodsSetting}>
-          <div className={styles.minmaxSetting}>
             <label htmlFor="minProtein">Min Protein: </label>
             <input
               type="number"
