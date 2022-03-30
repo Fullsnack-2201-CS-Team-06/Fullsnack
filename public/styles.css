@@ -15,6 +15,7 @@ label {
 
 nav a {
   display: inline-block;
+  text-decoration: none;
   margin: 1em;
 }
 

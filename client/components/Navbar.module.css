@@ -19,12 +19,31 @@
   font-size: 18px;
 }
 
-.navBar a {
+.navBarLink {
   color: #f5f5f5;
   text-decoration: none;
   transition: 0.3s;
 }
 
+.dropdownItem {
+  color: #012a36;
+  text-decoration: none;
+}
+
 .navBar a:hover {
   color: #e85f5c;
+}
+
+.signedInLinks {
+  display: flex;
+  align-items: center;
+}
+
+#navdropdown {
+  color: #f5f5f5;
+}
+
+#navdropdown:hover {
+  color: #e85f5c;
+  transition: 0.3s;
 }
