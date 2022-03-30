@@ -10,7 +10,7 @@
 }
 
 .logo:hover {
-  color: #f5f5f5;
+  text-shadow: 0 0 5px #e54946;
 }
 
 .navBar {
