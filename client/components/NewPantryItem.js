@@ -83,7 +83,6 @@ const NewPantryItem = () => {
       <br/>
       <br/>
       <div className={styles.newPantryItem}>
-      
       <div className={styles.newPantryItemForm}>
       <h3 className={styles.newPantry}>Add Pantry Item</h3>
       <form onSubmit={handleSubmit}><ul></ul>
@@ -136,17 +135,17 @@ const NewPantryItem = () => {
                 value={input.quantity}
                 onChange={(e) => handleFormChange(index, e)}
               />
-              <button type='button' onClick={() => removeFields(index)}>
+              <button className={styles.button} type='button' onClick={() => removeFields(index)}>
                 Remove
               </button>
             </div>
           );
         })}
         <br />
-        <button type='button' onClick={() => addFields()}>
+        <button className={styles.button} type='button' onClick={() => addFields()}>
           Add More Ingredients
         </button>
-        <button type='submit' onClick={handleSubmit}>
+        <button className={styles.button} type='submit' onClick={handleSubmit}>
           Save
         </button>
       </form>
