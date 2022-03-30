@@ -60,14 +60,22 @@ const Ingredient = db.define('ingredient', {
 });
 
 Ingredient.beforeCreate(async (food) => {
-  const res = await axios.get(
-    `https://api.edamam.com/api/food-database/v2/parser?app_id=c0c8bb82&app_key=0ebd61fc31cc1482f29f566f8069878f&ingr=${food.name}&nutrition-type=cooking`
-  );
-  const { ENERC_KCAL, PROCNT, FAT, CHOCDF } = res.data.parsed[0].food.nutrients;
-  food.caloriesPerUnit = ENERC_KCAL;
-  food.proteinPerUnit = PROCNT;
-  food.fatsPerUnit = FAT;
-  food.carbsPerUnit = CHOCDF;
+  if (
+    food.caloriesPerUnit === 0 &&
+    food.proteinPerUnit === 0 &&
+    food.carbsPerUnit === 0 &&
+    food.fatsPerUnit === 0
+  ) {
+    const res = await axios.get(
+      `https://api.edamam.com/api/food-database/v2/parser?app_id=c0c8bb82&app_key=0ebd61fc31cc1482f29f566f8069878f&ingr=${food.name}&nutrition-type=cooking`
+    );
+    const { ENERC_KCAL, PROCNT, FAT, CHOCDF } =
+      res.data.parsed[0].food.nutrients;
+    food.caloriesPerUnit = ENERC_KCAL;
+    food.proteinPerUnit = PROCNT;
+    food.fatsPerUnit = FAT;
+    food.carbsPerUnit = CHOCDF;
+  }
 });
 
 module.exports = Ingredient;
