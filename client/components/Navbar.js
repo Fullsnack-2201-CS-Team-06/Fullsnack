@@ -37,17 +37,8 @@ const Navbar = () => {
                 title={<FaUserCircle size={25} />}
                 id={styles.navdropdown}
               >
-                <NavDropdown.Item
-                  href="/account"
-                  className={styles.dropdownItem}
-                >
-                  Account
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="#"
-                  onClick={() => dispatch(logout())}
-                  className={styles.dropdownItem}
-                >
+                <NavDropdown.Item href="/account">Account</NavDropdown.Item>
+                <NavDropdown.Item href="#" onClick={() => dispatch(logout())}>
                   Logout
                 </NavDropdown.Item>
               </NavDropdown>
