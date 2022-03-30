@@ -84,7 +84,7 @@ const NewPantryItem = () => {
       <br/>
       <div className={styles.newPantryItem}>
       <div className={styles.newPantryItemForm}>
-      <h3 className={styles.newPantry}>Add Pantry Item</h3>
+      <h3 className={styles.newPantry}>Add Items</h3>
       <form onSubmit={handleSubmit}><ul></ul>
         {inputFields.map((input, index) => {
           return (
@@ -142,12 +142,14 @@ const NewPantryItem = () => {
           );
         })}
         <br />
+        <div className={styles.bottom}>
         <button className={styles.button} type='button' onClick={() => addFields()}>
           Add More Ingredients
         </button>
         <button className={styles.button} type='submit' onClick={handleSubmit}>
           Save
         </button>
+        </div>
       </form>
       </div>
       </div>

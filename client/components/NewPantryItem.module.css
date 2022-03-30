@@ -13,6 +13,7 @@
 
 .newPantry{
         padding: 20px 36px;
+        color: #012a36;
 }
 
 .label::after{
@@ -31,4 +32,8 @@
 
 .button:hover{
     cursor: pointer;
+}
+
+.bottom{
+    padding: 30px;
 }
