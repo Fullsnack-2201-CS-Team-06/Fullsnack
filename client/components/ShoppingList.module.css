@@ -15,6 +15,10 @@
   width: 400px;
 }
 
+.enlarge {
+  font-size: larger;
+}
+
 .removebutton {
   width: 80px;
   align-self: center;

@@ -36,13 +36,13 @@ async function seed() {
       name: 'boozeRun',
       status: 'closed',
       totalCost: 72,
-      checkoutDate: Date.now(),
+      checkoutDate: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
     }),
     ShoppingList.create({
       name: 'needProduce',
       status: 'closed',
       totalCost: 20,
-      checkoutDate: Date.now(),
+      checkoutDate: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
     }),
   ]);
 

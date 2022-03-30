@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { editListThunk } from '../store/ShoppingList';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ListGroup, Table, Button } from 'react-bootstrap'
+import { ListGroup, Table, Button, Form } from 'react-bootstrap'
 import styles from './ShoppingList.module.css'
 
 const ShoppingListForm = ({props}) => {
@@ -19,10 +19,12 @@ const ShoppingListForm = ({props}) => {
     dispatch(editListThunk(props.id, id, 0))
   }
 
+  // style={{width:'200px'}}
+
 return (
     <><tr>
-        <td>{props.name}</td>
-        <td><input type="text" name="quantity" value={newQuantity}  onChange={(e) => handleQuantityChange(e)} /></td>
+        <td className={styles.enlarge} >{props.name}</td>
+        <td><Form.Control type="text" name="quantity" value={newQuantity}  onChange={(e) => handleQuantityChange(e)} /></td>
         <td><Button className={styles.removebutton} onClick={() => handleRemoveItem()}>X</Button></td>
         </tr></>
 )

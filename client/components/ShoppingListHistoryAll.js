@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { ListGroup, Table, Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { fetchShoppingListHistory } from '../store/ShoppingList';
 
@@ -17,7 +19,7 @@ const ShoppingListHistoryAll = () => {
   return (
   <div>
    <p>Your Shopping Lists!</p>
-<table>
+<Table>
   <colgroup span="4"></colgroup>
   <tbody>
   <tr>
@@ -33,14 +35,14 @@ const ShoppingListHistoryAll = () => {
     return (
     <tr key={list.id}>
       <td><Link to={`/list/${list.id}`}>{list.name}</Link></td>
-      <td>{list.checkoutDate}</td>
+      <td>{(list.checkoutDate)}</td>
       <td>{totalItems}</td>
     </tr>)
   }) :
   <tr></tr>
   }
   </tbody>
-</table>
+</Table>
   </div>
   );
 };
