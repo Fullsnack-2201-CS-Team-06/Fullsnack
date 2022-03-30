@@ -18,7 +18,6 @@ const PantrySingle = ({ match }) => {
 
 
   useEffect(() => {
-    console.log("use effect fired", id)
     dispatch(fetchSinglePantry(id));
   }, []);
 
@@ -27,7 +26,7 @@ const PantrySingle = ({ match }) => {
   }
 
   return (
-    <div className='PantrySingle'>
+    <div>
       <Container className={styles.container}>
         <Table striped>
           <thead>
@@ -48,9 +47,9 @@ const PantrySingle = ({ match }) => {
                 const quantity = item.pantryIngredient.pantryQty
                 return (
                   <tr key={item.id}>
-                    <td>{item.name}</td>
-                    <td>{item.category}</td>
-                    <td><Button className={styles.Button} onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
+                    <td className={styles.column}>{item.name}</td>
+                    <td className={styles.column}>{item.category}</td>
+                    <td className={styles.column}><Button className={styles.Button} onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
                     <Button className={styles.Button} onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td> 
                     <td>
                       <Button className={styles.Button} type="button" onClick={() => handleChange(item.id, id, 0)}>x</Button>

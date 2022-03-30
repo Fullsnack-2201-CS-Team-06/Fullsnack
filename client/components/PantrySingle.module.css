@@ -1,11 +1,12 @@
 .container{
     display: flex;
     justify-content: space-evenly;
-
-    text-align: center;
 }
 
 .Button{
     width: 30px;
 }
 
+.column{
+    width: 300px;
+}
