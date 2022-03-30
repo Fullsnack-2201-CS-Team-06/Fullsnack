@@ -46,8 +46,12 @@ const Navbar = () => {
           ) : (
             <div>
               {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
+              <Link to="/login" className={styles.navBarLink}>
+                Login
+              </Link>
+              <Link to="/signup" className={styles.navBarLink}>
+                Sign Up
+              </Link>
             </div>
           )}
         </nav>
