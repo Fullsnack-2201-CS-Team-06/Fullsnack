@@ -1,0 +1,71 @@
+.button {
+  background-color: #e85f5c;
+  border: none;
+  margin: 5px;
+}
+
+.button:hover {
+  background-color: #e54946;
+}
+
+.buttonOutline {
+  border-color: #e85f5c;
+  color: #e85f5c;
+  margin: 5px;
+}
+
+.buttonOutline:hover {
+  border-color: #e54946;
+  background-color: #e54946;
+}
+
+.editRecipeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.editRecipeCard {
+  width: 800px;
+  margin: 50px;
+}
+
+.editRecipeImg {
+  height: 56.25%;
+}
+
+.recipeInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ingredientRows {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: flex-end;
+}
+
+.removeIngredientBtn {
+  border-color: #e85f5c;
+  color: #e85f5c;
+  margin-bottom: 14px;
+  height: 40px;
+}
+
+.removeIngredientBtn:hover {
+  border-color: #e54946;
+  background-color: #e54946;
+}
+
+.addIngredientBtnContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 25px;
+}
+
+.formBtnsContainer {
+  margin: 25px;
+}

@@ -26,6 +26,8 @@
   background-color: #e85f5c;
   border: none;
   margin: 15px;
+  height: 50px;
+  width: 200px;
 }
 
 .button:hover {
@@ -38,6 +40,19 @@
 }
 
 .buttonOutline:hover {
+  border-color: #e54946;
+  background-color: #e54946;
+}
+
+.loginBtn {
+  border-color: #e85f5c;
+  color: #e85f5c;
+  margin: 15px;
+  height: 50px;
+  width: 200px;
+}
+
+.loginBtn:hover {
   border-color: #e54946;
   background-color: #e54946;
 }
