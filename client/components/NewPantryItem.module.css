@@ -1,15 +1,18 @@
 .newPantryItem{
     display: flex;
     height: 100%;
+
     /* padding-left: 200px; */
 }
 
 .newPantryItemForm{
     display: flex;
     flex-direction: row;
+    row-gap: 20px;
     padding: 20px 0px;
     border: 1px solid #80808098;
     margin: 60px auto;
+   
 }
 
 .newPantry{
@@ -36,5 +39,6 @@
 }
 
 .bottom{
-    padding: 30px;
+    display: flex;
+    gap: 5px;
 }

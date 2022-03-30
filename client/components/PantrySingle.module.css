@@ -8,6 +8,11 @@
     width: 30px;
 }
 /* 
+.container > th{
+    background-color: #012a36;
+} */
+
+/* 
 .Button::hover{
     background: #5c1a7c;
     transition-delay: 0.25s;
