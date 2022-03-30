@@ -18,7 +18,6 @@ const PantrySingle = ({ match }) => {
 
 
   useEffect(() => {
-    console.log("use effect fired", id)
     dispatch(fetchSinglePantry(id));
   }, []);
 
@@ -27,9 +26,9 @@ const PantrySingle = ({ match }) => {
   }
 
   return (
-    <div className='PantrySingle'>
+    <div>
       <Container className={styles.container}>
-        <Table striped>
+        <Table striped bordered hover size="sm">
           <thead>
             <tr>
               <th>Item</th>
@@ -47,13 +46,13 @@ const PantrySingle = ({ match }) => {
                }).map((item) => {
                 const quantity = item.pantryIngredient.pantryQty
                 return (
-                  <tr key={item.id}>
-                    <td>{item.name}</td>
-                    <td>{item.category}</td>
-                    <td><Button className={styles.Button} onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
-                    <Button className={styles.Button} onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td> 
+                  <tr className={styles.row} key={item.id}>
+                    <td className={styles.column}>{item.name}</td>
+                    <td className={styles.column}>{item.category}</td>
+                    <td className={styles.column}><Button className={styles.Button} variant="outline-primary"  onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
+                    <Button className={styles.Button} variant="outline-primary" onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td> 
                     <td>
-                      <Button className={styles.Button} type="button" onClick={() => handleChange(item.id, id, 0)}>x</Button>
+                      <Button className={styles.Button} variant="outline-primary" type="button" onClick={() => handleChange(item.id, id, 0)}>x</Button>
                     </td>
                   </tr>
                 );
@@ -64,9 +63,9 @@ const PantrySingle = ({ match }) => {
               </tr>
             )}
           </tbody>
-          <NewPantryItem />
         </Table>
       </Container>
+      <NewPantryItem />
     </div>
   );
 };

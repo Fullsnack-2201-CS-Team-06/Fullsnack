@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addPantryItemThunk } from '../store/pantry';
+import styles from './NewPantryItem.module.css';
 
 const NewPantryItem = () => {
   const { userId } = useSelector((state) => state.auth);
@@ -79,70 +80,97 @@ const NewPantryItem = () => {
 
   return (
     <div>
-      <br/>
-      <br/>
-      <h1>Add Pantry Item</h1>
+      <br />
+      <br />
+      <div className={styles.newPantryItem}>
+        <div className={styles.newPantryItemForm}>
+          <h3 className={styles.newPantry}>Add Items</h3>
+          <form onSubmit={handleSubmit}>
+            <ul></ul>
+            {inputFields.map((input, index) => {
+              return (
+                <div key={index}>
+                  <label className={styles.label} htmlFor='Item Name'>
+                    Item Name
+                  </label>
+                  <input
+                    className={styles.input}
+                    name='name'
+                    list='allFoods'
+                    placeholder='Item Name'
+                    value={input.name}
+                    onChange={(e) => handleFormChange(index, e)}
+                    autoComplete='on'
+                  />
 
-      <form onSubmit={handleSubmit}><ul></ul>
-        {inputFields.map((input, index) => {
-          return (
-            <div key={index}>
-              <label htmlFor='Item Name'>Item Name</label>
-              <input
-                name='name'
-                list='allFoods'
-                placeholder='Item Name'
-                value={input.name}
-                onChange={(e) => handleFormChange(index, e)}
-                autoComplete='on'
-              />
+                  <datalist id='allFoods'>
+                    {foods.map((food) => (
+                      <option key={food.id}>{food.name}</option>
+                    ))}
+                  </datalist>
 
-              <datalist id='allFoods'>
-                {foods.map((food) => (
-                  <option key={food.id}>{food.name}</option>
-                ))}
-              </datalist>
+                  <label className={styles.label} htmlFor='Category'>
+                    Category
+                  </label>
+                  <select
+                    className={styles.input}
+                    name='category'
+                    value={input.category}
+                    onChange={(e) => handleFormChange(index, e)}
+                  >
+                    <option value='' disabled selected>
+                      Select Category
+                    </option>
+                    <option value='produce'>Produce</option>
+                    <option value='meat'>Meat</option>
+                    <option value='dairy'>Dairy</option>
+                    <option value='dry goods'>Dry Goods</option>
+                    <option value='bakery'>Baked Goods</option>
+                    <option value='beverages'>Beverages</option>
+                    <option value='miscellaneous'>Miscellaneous</option>
+                  </select>
 
-              <select
-                name='category'
-                value={input.category}
-                onChange={(e) => handleFormChange(index, e)}
+                  <label className={styles.label} htmlFor='Quantity'>
+                    Quantity
+                  </label>
+                  <input
+                    className={styles.input}
+                    type='number'
+                    name='quantity'
+                    placeholder='Quantity'
+                    value={input.quantity}
+                    onChange={(e) => handleFormChange(index, e)}
+                  />
+                  <button
+                    className={styles.button}
+                    type='button'
+                    onClick={() => removeFields(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              );
+            })}
+            <br />
+            <div className={styles.bottom}>
+              <button
+                className={styles.button}
+                type='button'
+                onClick={() => addFields()}
               >
-                <label htmlFor='Category'>Category</label>
-                <option value='' disabled selected>
-                  Select Category
-                </option>
-                <option value='produce'>Produce</option>
-                <option value='meat'>Meat</option>
-                <option value='dairy'>Dairy</option>
-                <option value='dry goods'>Dry Goods</option>
-                <option value='bakery'>Baked Goods</option>
-                <option value='beverages'>Beverages</option>
-                <option value='miscellaneous'>Miscellaneous</option>
-              </select>
-
-              <label htmlFor='Quantity'>Quantity</label>
-              <input
-                type='number'
-                name='quantity'
-                placeholder='Quantity'
-                value={input.quantity}
-                onChange={(e) => handleFormChange(index, e)}
-              />
-              <button type='button' onClick={() => removeFields(index)}>
-                Remove
+                Add More Ingredients
+              </button>
+              <button
+                className={styles.button}
+                type='submit'
+                onClick={handleSubmit}
+              >
+                Save
               </button>
             </div>
-          );
-        })}
-        <br />
-        <button type='button' onClick={() => addFields()}>
-          Add More Ingredients
-        </button>
-        <button type='submit' onClick={handleSubmit}>
-          Save
-        </button>
-      </form>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
