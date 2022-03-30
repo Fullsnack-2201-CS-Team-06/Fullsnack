@@ -53,9 +53,7 @@ const RecRecipes = () => {
         const recipeWords = recRecipe.name.split(' ').join('%20');
         apiRequest += `&excluded=${recipeWords}`;
       });
-      console.log(apiRequest);
       const data = await fetch(apiRequest).then((response) => response.json());
-      console.log('data: ', data);
 
       //Add the ten received api rec recipes to our pool of rec recipes.
       for (let i = 0; i < data.hits.length; i++) {
