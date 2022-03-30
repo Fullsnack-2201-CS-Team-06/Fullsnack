@@ -29,18 +29,17 @@ const ShoppingListHistorySingle = ({match}) => {
    <h4 className={styles.title} >Shopping List: {name}</h4>
    <p className={styles.backToHistory} ><Link to={'/list/history'} >Back to History</Link></p>
 <Table>
-  <colgroup span="4"></colgroup>
   <tbody>
   <tr>
-    <td>List Items</td>
-    <td>Quantity</td>
+    <td className={styles.enlarge} >List Items</td>
+    <td className={styles.enlarge} >Quantity</td>
   </tr>
   { ingredients ?
   ingredients.map(item => {
     return (
       <tr key={item.id}>
-        <td>{item.name}</td>
-        <td>{item.shoppingListIngredient.sliQuantity}</td>
+        <td className={styles.enlarge} >{item.name}</td>
+        <td className={styles.enlarge} >{item.shoppingListIngredient.sliQuantity}</td>
       </tr>
     )
   }):
@@ -49,7 +48,7 @@ const ShoppingListHistorySingle = ({match}) => {
   </tbody>
 </Table>
     <div>
-      <p>Total # of unique items: {length}</p>
+      <h6 className={styles.title} >Total # of unique items: {length}</h6>
     </div>
   </div>
   </Container>
