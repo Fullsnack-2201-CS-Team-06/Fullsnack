@@ -1,0 +1,44 @@
+.newPantryItem{
+    display: flex;
+    height: 100%;
+
+    /* padding-left: 200px; */
+}
+
+.newPantryItemForm{
+    display: flex;
+    flex-direction: row;
+    row-gap: 20px;
+    padding: 20px 0px;
+    border: 1px solid #80808098;
+    margin: 60px auto;
+   
+}
+
+.newPantry{
+        padding: 20px 36px;
+        color: #012a36;
+}
+
+.label::after{
+    content: "*";
+    color: #012a36;
+}
+
+.input{
+    height: calc(1.5em + 0.75rem + 2px);
+}
+
+.button{
+    color: white;
+    background-color: #012a36;
+}
+
+.button:hover{
+    cursor: pointer;
+}
+
+.bottom{
+    display: flex;
+    gap: 5px;
+}

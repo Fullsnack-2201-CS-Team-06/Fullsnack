@@ -1,0 +1,57 @@
+.button {
+  background-color: #e85f5c;
+  border: none;
+  margin: 15px;
+}
+
+.button:hover {
+  background-color: #e54946;
+}
+
+.buttonOutline {
+  border-color: #e85f5c;
+  color: #e85f5c;
+}
+
+.buttonOutline:hover {
+  border-color: #e54946;
+  background-color: #e54946;
+}
+
+.singleRecipeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.recipeCard {
+  width: 800px;
+  margin: 50px;
+}
+
+.singleRecipeCardImg {
+  height: 56.25%;
+}
+
+.typeRatingContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.typeRatingInfo {
+  margin-right: 10px;
+  padding: 0;
+}
+
+.ingredientsContainer {
+  margin: 25px;
+}
+
+.descriptionContainer {
+  margin: 25px;
+}
+
+.nutritionalInfoContainer {
+  margin: 25px;
+}

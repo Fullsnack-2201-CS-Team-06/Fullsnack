@@ -4,6 +4,8 @@ import { fetchAllRecipes } from '../store/recipes';
 import { Link } from 'react-router-dom';
 import RecRecipes from './RecRecipes';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Card, Button } from 'react-bootstrap';
+import styles from './Recipes.module.css';
 
 const Recipes = () => {
   const { recipes, auth } = useSelector((state) => {
@@ -20,39 +22,49 @@ const Recipes = () => {
   }, []);
 
   return (
-    <div className="recipesPage">
-      <RecRecipes />
-      <div className="allRecipesContainer">
-        <div className="recipesHeader">
+    <Container className={styles.recipesPage}>
+      <Container>
+        <RecRecipes />
+      </Container>
+      <Container className={styles.allRecipesContainer}>
+        <Container className={styles.recipesHeader}>
           <h1>My Recipes</h1>
-        </div>
-        <div className="addRecipeBtnContainer">
+        </Container>
+        <Container className={styles.addRecipeBtnContainer}>
           <Link to="/recipes/add">
-            <button>Add Recipe</button>
+            <Button variant="primary" className={styles.button}>
+              Add Recipe
+            </Button>
           </Link>
-        </div>
-        <div className="recipeCardContainer">
+        </Container>
+        <Container className={styles.recipeCardContainer}>
           {recipes.map((recipe) => {
             return (
-              <div className="recipeCard" key={recipe.id}>
-                <h3>{recipe.name}</h3>
-                <img
-                  className="recipeImg"
+              <Card className={styles.recipeCard} key={recipe.id}>
+                <Card.Img
+                  variant="top"
+                  className={styles.recipeImg}
                   src={recipe.image}
                   style={{ height: '200px' }}
                 />
-                <br />
-                <br />
-                <Link to={`/recipes/${recipe.id}`}>
-                  <button>View</button>
-                </Link>
-                <h5>{recipe.rating} of 5 stars</h5>
-              </div>
+                <Card.Body>
+                  <Card.Title>{recipe.name}</Card.Title>
+                  <Card.Text>{recipe.rating} of 5 stars</Card.Text>
+                  <Link to={`/recipes/${recipe.id}`}>
+                    <Button
+                      variant="outline-primary"
+                      className={styles.buttonOutline}
+                    >
+                      View
+                    </Button>
+                  </Link>
+                </Card.Body>
+              </Card>
             );
           })}
-        </div>
-      </div>
-    </div>
+        </Container>
+      </Container>
+    </Container>
   );
 };
 

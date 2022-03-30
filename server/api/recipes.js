@@ -194,7 +194,9 @@ router.put('/recs/:id', async (req, res, next) => {
     //Assign each ingredient to the user's open shopping list.
     await Promise.all(
       recRecipe.ingredients.map(async (ingredient) => {
-        await ingredient.addShoppingList(shoppingList);
+        await ingredient.addShoppingList(shoppingList, {
+          through: { sliQuantity: 1 },
+        });
       })
     );
     const updatedRecipe = await Recipe.findByPk(recRecipeId);

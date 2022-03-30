@@ -1,0 +1,18 @@
+.pantryFilterContainer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: end;
+  padding-right: 80px;
+}
+
+.pantryFilterBox{
+    display: flex;
+}
+
+.pantryFilter{
+    padding-right: 15px;
+}
+
+.label {
+  color: #012a36;
+}

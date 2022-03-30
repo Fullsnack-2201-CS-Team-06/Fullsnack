@@ -5,7 +5,7 @@ import { fetchCurrentShoppingList, sendToPantry } from '../store/ShoppingList';
 import { fetchAllPantries, createNewPantry } from '../store/pantries'
 import ShoppingListForm from './ShoppingListForm'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ListGroup, Table, Button, Container, Dropdown } from 'react-bootstrap'
+import { ListGroup, Table, Button, Container, Form } from 'react-bootstrap'
 import styles from './ShoppingList.module.css'
 
 const ShoppingList = () => {
@@ -50,18 +50,18 @@ const ShoppingList = () => {
     <Container >
   <div  >
     <div className={styles.shopNav} >
-      <p>Shopping List: {name}</p>
+      <h4 className={styles.title} >Shopping List:</h4>
+      <h4 className={styles.title} >{name}</h4>
       <Link to={'/list/history'} >View History</Link>
     </div>
     <div >
-      <form method="GET" id="my_form"></form>
         { ingredients ? (
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>List Item</th>
-                <th>Quantity</th>
-                <th>Remove from list</th>
+                <th className={styles.enlarge} >List Item</th>
+                <th className={styles.enlarge} >Quantity</th>
+                <th className={styles.enlarge} >Remove from list</th>
               </tr>
             </thead>
             <tbody>
@@ -75,9 +75,9 @@ const ShoppingList = () => {
         :
         <></>
       }
-      </div>
-    <div>
-    <select name="pantries" onChange={(e) => setSelectedPantry(e.target.value)} >
+    </div>
+    <div className={styles.addToPantry} >
+    <Form.Select name="pantries" className={styles.select} style={{width:'200px'}} onChange={(e) => setSelectedPantry(e.target.value)} >
         <option value="1">{defaultName.name}</option>
         { otherPantries.length ?
         otherPantries.map((pantry) => (
@@ -87,17 +87,21 @@ const ShoppingList = () => {
         )) :
         <></>
         }
-        <option value={-1}>Create New Pantry</option>
-      </select>
-      {selectedPantry < 0 ?
-      <form method="GET" id="my_form">
-        <input type='text' placeholder='New pantry name' name='name' value={newPantry} onChange={(e) => setNewPantry(e.target.value)} />
-        <Button className={styles.button} variant="primary" onClick={() => handleCreatePantry()}>Create New Pantry</Button>
-      </form>
-       :
-      <form></form>}
-      <Button className={styles.button} variant="primary" onClick={() => handleSubmit()}>Send list to Pantry</Button>
+      </Form.Select>
+      <div>
+        {/* <div className={styles.enlarge} > */}
+      <Button className={styles.button} variant="primary" onClick={() => handleSubmit()}>Add items to Pantry</Button>
+        {/* </div> */}
       <p>Total # of unique items: {length}</p>
+      </div>
+      <div className={styles.enlarge} >
+      <form method="GET" id="my_form">
+        <Form.Control style={{width:'300px'}} className={styles.newPantry} type='text' placeholder='New pantry name' name='name' value={newPantry} onChange={(e) => setNewPantry(e.target.value)} />
+        <div>
+        <Button className={styles.button} variant="primary" onClick={() => handleCreatePantry()}>Create New Pantry</Button>
+        </div>
+      </form>
+      </div>
     </div>
   </div>
   </Container>

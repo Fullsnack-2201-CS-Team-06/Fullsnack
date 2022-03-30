@@ -19,11 +19,7 @@
 }
 
 .recRecipeCard {
-  display: flex;
-  flex-direction: column;
-  height: 400px;
-  width: 300px;
-  margin: 20px;
+  margin: 15px;
 }
 
 .expandedCard {
@@ -40,7 +36,17 @@
   justify-content: center;
 }
 
-Button {
-  width: 250px;
-  align-self: center;
+.buttonOutline {
+  border-color: #e85f5c;
+  color: #e85f5c;
+}
+
+.buttonOutline:hover {
+  border-color: #e54946;
+  background-color: #e54946;
+}
+
+.recipeImg {
+  height: 56.25%;
+  width: 18rem;
 }

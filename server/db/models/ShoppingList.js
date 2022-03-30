@@ -22,7 +22,7 @@ const ShoppingList = db.define('shoppingList', {
   },
 
   checkoutDate: {
-    type: Sequelize.DATE,
+    type: Sequelize.STRING,
   },
 });
 

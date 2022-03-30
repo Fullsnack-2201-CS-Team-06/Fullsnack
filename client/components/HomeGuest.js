@@ -78,9 +78,9 @@ const HomeGuest = () => {
         </Container>
         <div className={styles.buttonContainer}>
           <Button className={styles.button} variant="primary">
-            Learn More
+            Sign Up
           </Button>
-          <Button className={styles.buttonOutline} variant="outline-primary">
+          <Button className={styles.loginBtn} variant="outline-primary">
             Login
           </Button>
         </div>

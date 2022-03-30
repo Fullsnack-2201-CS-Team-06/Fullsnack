@@ -10,7 +10,7 @@
 }
 
 .logo:hover {
-  color: #f5f5f5;
+  text-shadow: 0 0 5px #eb7572;
 }
 
 .navBar {
@@ -19,12 +19,26 @@
   font-size: 18px;
 }
 
-.navBar a {
+.navBarLink {
   color: #f5f5f5;
   text-decoration: none;
   transition: 0.3s;
 }
 
-.navBar a:hover {
+.navBarLink:hover {
   color: #e85f5c;
+}
+
+.signedInLinks {
+  display: flex;
+  align-items: center;
+}
+
+#navdropdown {
+  color: #f5f5f5;
+}
+
+#navdropdown:hover {
+  color: #e85f5c;
+  transition: 0.3s;
 }

@@ -23,7 +23,7 @@ const AuthForm = ({ name, displayName }) => {
     <div className={styles.authPageContainer}>
       <div className={styles.authFormContainer}>
         <Form className={styles.authForm} onSubmit={handleSubmit} name={name}>
-          <h1 className={styles.formTitle}>Login</h1>
+          <h1 className={styles.formTitle}>{displayName}</h1>
           <Form.Group>
             <Form.Label htmlFor="username">Username</Form.Label>
             <Form.Control

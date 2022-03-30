@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import styles from './ShoppingList.module.css'
+import { ListGroup, Table, Button, Form, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { fetchShoppingListHistory } from '../store/ShoppingList';
 
@@ -15,33 +18,34 @@ const ShoppingListHistoryAll = () => {
   const { shoppingHistory } = shoppingList || []
 
   return (
-  <div>
-   <p>Your Shopping Lists!</p>
-<table>
-  <colgroup span="4"></colgroup>
-  <tbody>
-  <tr>
-    <th>List Name</th>
-    <th>Date Completed</th>
-    <th>Total Items:</th>
-  </tr>
-  { shoppingHistory ?
-  shoppingHistory.map(list => {
-    const totalItems = list.ingredients.reduce((acc, curr) => {
-      return acc + Number(curr.shoppingListIngredient.sliQuantity)
-    }, 0)
-    return (
-    <tr key={list.id}>
-      <td><Link to={`/list/${list.id}`}>{list.name}</Link></td>
-      <td>{list.checkoutDate}</td>
-      <td>{totalItems}</td>
-    </tr>)
-  }) :
-  <tr></tr>
-  }
-  </tbody>
-</table>
-  </div>
+    <Container>
+      <div>
+        <h2 className={styles.title} >Your Shopping List History!</h2>
+        <Table>
+          <tbody>
+            <tr>
+              <th className={styles.enlarge} >List Name</th>
+              <th className={styles.enlarge} >Date Completed</th>
+              <th className={styles.enlarge} >Total Items</th>
+            </tr>
+          { shoppingHistory ?
+      shoppingHistory.map(list => {
+        const totalItems = list.ingredients.reduce((acc, curr) => {
+          return acc + Number(curr.shoppingListIngredient.sliQuantity)
+        }, 0)
+        return (
+          <tr key={list.id}>
+            <td className={styles.enlarge} ><Link to={`/list/${list.id}`}>{list.name}</Link></td>
+            <td className={styles.enlarge} >{(list.checkoutDate)}</td>
+            <td className={styles.enlarge} >{totalItems}</td>
+          </tr>)
+        }) :
+            <tr></tr>
+          }
+          </tbody>
+        </Table>
+      </div>
+    </Container>
   );
 };
 

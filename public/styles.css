@@ -15,6 +15,7 @@ label {
 
 nav a {
   display: inline-block;
+  text-decoration: none;
   margin: 1em;
 }
 
@@ -40,48 +41,4 @@ thead,
 tfoot {
   background-color: #333;
   color: #fff;
-}
-
-.recipesPage {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.allRecipesContainer {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-}
-
-.addRecipeBtnContainer {
-  display: flex;
-  justify-content: center;
-  margin: 15px;
-}
-
-.recipesHeader {
-  display: flex;
-  justify-content: center;
-}
-
-.recipeCardContainer {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.recipeCard {
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
-  height: 400px;
-  width: 300px;
-}
-
-.recipeImg {
-  border: 1px solid black;
-  border-radius: 5px;
 }
