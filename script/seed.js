@@ -36,13 +36,23 @@ async function seed() {
       name: 'boozeRun',
       status: 'closed',
       totalCost: 72,
-      checkoutDate: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
+      checkoutDate: new Date().toLocaleDateString('en-us', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }),
     }),
     ShoppingList.create({
       name: 'needProduce',
       status: 'closed',
       totalCost: 20,
-      checkoutDate: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
+      checkoutDate: new Date().toLocaleDateString('en-us', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }),
     }),
   ]);
 
@@ -92,7 +102,7 @@ async function seed() {
     Ingredient.create({
       name: 'carrot',
       uom: 'lb',
-      type: 'produce',
+      category: 'produce',
       caloriesPerUnit: 200,
       proteinPerUnit: 0,
       carbsPerUnit: 21,
@@ -101,7 +111,7 @@ async function seed() {
     Ingredient.create({
       name: 'tofu',
       uom: 'oz',
-      type: 'meat',
+      category: 'meat',
       caloriesPerUnit: 50,
       proteinPerUnit: 50,
       carbsPerUnit: 0,
@@ -110,7 +120,7 @@ async function seed() {
     Ingredient.create({
       name: 'wine',
       uom: 'fl-oz.',
-      type: 'beverage',
+      category: 'beverage',
       caloriesPerUnit: 30,
       proteinPerUnit: 4000,
       carbsPerUnit: 22,
@@ -119,7 +129,7 @@ async function seed() {
     Ingredient.create({
       name: 'mochi',
       uom: 'oz',
-      type: 'produce',
+      category: 'produce',
       caloriesPerUnit: 500,
       proteinPerUnit: 20,
       carbsPerUnit: 0,
@@ -128,7 +138,7 @@ async function seed() {
     Ingredient.create({
       name: 'cereal',
       uom: 'oz',
-      type: 'dry goods',
+      category: 'dry goods',
       caloriesPerUnit: 40,
       proteinPerUnit: 0,
       carbsPerUnit: 0,
@@ -137,7 +147,7 @@ async function seed() {
     Ingredient.create({
       name: 'pasta',
       uom: 'oz',
-      type: 'dry goods',
+      category: 'dry goods',
       caloriesPerUnit: 1,
       proteinPerUnit: 20,
       carbsPerUnit: 0,
@@ -146,7 +156,7 @@ async function seed() {
     Ingredient.create({
       name: 'bourbon',
       uom: 'oz',
-      type: 'beverages',
+      category: 'beverages',
       caloriesPerUnit: 40,
       proteinPerUnit: 0,
       carbsPerUnit: 0,
@@ -156,7 +166,7 @@ async function seed() {
     Ingredient.create({
       name: 'ground beef',
       uom: 'oz',
-      type: 'meat',
+      category: 'meat',
       caloriesPerUnit: 40,
       proteinPerUnit: 50,
       carbsPerUnit: 0,
@@ -165,7 +175,7 @@ async function seed() {
     Ingredient.create({
       name: 'fish stock',
       uom: 'floz',
-      type: 'meat',
+      category: 'meat',
       caloriesPerUnit: 10,
       proteinPerUnit: 10,
       carbsPerUnit: 0,
@@ -174,7 +184,7 @@ async function seed() {
     Ingredient.create({
       name: 'eggs',
       uom: 'ea',
-      type: 'produce',
+      category: 'produce',
       caloriesPerUnit: 50,
       proteinPerUnit: 20,
       carbsPerUnit: 5,
@@ -183,7 +193,7 @@ async function seed() {
     Ingredient.create({
       name: 'breakfast sausage',
       uom: 'oz',
-      type: 'meat',
+      category: 'meat',
       caloriesPerUnit: 50,
       proteinPerUnit: 50,
       carbsPerUnit: 0,
@@ -192,8 +202,8 @@ async function seed() {
     Ingredient.create({
       name: 'leg of mutton',
       uom: 'lb',
-      type: 'meat',
-      caloriesPerUnit: 1000,
+      category: 'meat',
+      caloriesPerUnit: 400,
       proteinPerUnit: 600,
       carbsPerUnit: 0,
       fatsPerUnit: 500,
@@ -201,7 +211,7 @@ async function seed() {
     Ingredient.create({
       name: 'rosemary',
       uom: 'oz',
-      type: 'miscellaneous',
+      category: 'miscellaneous',
       caloriesPerUnit: 0,
       proteinPerUnit: 0,
       carbsPerUnit: 0,
@@ -210,7 +220,7 @@ async function seed() {
     Ingredient.create({
       name: 'eels',
       uom: 'lb',
-      type: 'meat',
+      category: 'meat',
       caloriesPerUnit: 600,
       proteinPerUnit: 250,
       carbsPerUnit: 0,
@@ -219,7 +229,7 @@ async function seed() {
     Ingredient.create({
       name: 'malt vinegar',
       uom: 'floz',
-      type: 'miscellaneous',
+      category: 'miscellaneous',
       caloriesPerUnit: 0,
       proteinPerUnit: 0,
       carbsPerUnit: 0,
@@ -230,7 +240,7 @@ async function seed() {
     Ingredient.create({
       name: 'olive oil',
       uom: 'cup',
-      type: 'miscellaneous',
+      category: 'miscellaneous',
       caloriesPerUnit: 1920,
       proteinPerUnit: 0,
       carbsPerUnit: 0,
@@ -239,7 +249,7 @@ async function seed() {
     Ingredient.create({
       name: 'garlic',
       uom: 'each',
-      type: 'produce',
+      category: 'produce',
       caloriesPerUnit: 5,
       proteinPerUnit: 0.2,
       carbsPerUnit: 1,
@@ -248,27 +258,27 @@ async function seed() {
     Ingredient.create({
       name: 'tomato sauce',
       uom: 'oz',
-      type: 'dry goods',
+      category: 'dry goods',
     }),
     Ingredient.create({
       name: 'chicken',
       uom: 'lb',
-      type: 'meat',
+      category: 'meat',
     }),
     Ingredient.create({
       name: 'milk',
       uom: 'fl oz',
-      type: 'dairy',
+      category: 'dairy',
     }),
     Ingredient.create({
       name: 'flour',
       uom: 'cup',
-      type: 'bakery',
+      category: 'bakery',
     }),
     Ingredient.create({
       name: 'pork',
       uom: 'lb',
-      type: 'meat',
+      category: 'meat',
     }),
     // --- ABOVE: Ingredients added by David 3/24/22 ---
   ]);
