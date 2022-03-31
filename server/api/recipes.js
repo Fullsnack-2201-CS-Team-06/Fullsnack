@@ -5,6 +5,7 @@ const Ingredient = require('../db/models/Ingredient');
 const User = require('../db/models/User');
 const ShoppingList = require('../db/models/ShoppingList');
 const { Op } = require('@sequelize/core');
+const axios = require('axios');
 
 // GET /api/recipes?userId=1
 router.get('/', async (req, res, next) => {
@@ -166,6 +167,21 @@ router.post('/recs', async (req, res, next) => {
     });
 
     res.send(newRecipe);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//POST /api/recipes/recs/new
+//Makes a request to the edamam api with the apiRequest url and sends the api response.
+router.post('/recs/new', async (req, res, next) => {
+  try {
+    const { apiRequest } = req.body;
+    const apiResponse = await axios.get(apiRequest);
+    const hits = apiResponse.data.hits;
+    if (hits) {
+      res.send(hits);
+    }
   } catch (error) {
     next(error);
   }
