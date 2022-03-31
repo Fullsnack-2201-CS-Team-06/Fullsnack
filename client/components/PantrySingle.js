@@ -14,11 +14,11 @@ const PantrySingle = ({ match }) => {
   const { id } = useSelector((state) => state.auth);
   const  pantry  = useSelector((state) => state.pantry);
   const { ingredients } = pantry || [];
-  const currentPantry = pantry.id
+  const currentPantry = pantry.id || 1
 
 
   useEffect(() => {
-    dispatch(fetchSinglePantry(id));
+    dispatch(fetchSinglePantry(currentPantry));
   }, []);
 
   async function handleChange(itemId, userId, quantity){

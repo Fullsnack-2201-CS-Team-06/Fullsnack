@@ -47,7 +47,7 @@ const ShoppingList = () => {
   }
 
   return (
-    <Container >
+    <Container className={styles.margin} >
   <div  >
     <div className={styles.shopNav} >
       <h4 className={styles.title} >Shopping List:</h4>

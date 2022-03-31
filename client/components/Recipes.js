@@ -4,7 +4,7 @@ import { fetchAllRecipes } from '../store/recipes';
 import { Link } from 'react-router-dom';
 import RecRecipes from './RecRecipes';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Card, Button } from 'react-bootstrap';
+import { Container, Card, Button, Carousel } from 'react-bootstrap';
 import styles from './Recipes.module.css';
 
 const Recipes = () => {
@@ -23,13 +23,24 @@ const Recipes = () => {
 
   return (
     <Container className={styles.recipesPage}>
-      <Container>
+      <h3
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}
+      >
+        Recommended
+      </h3>
+      <Container className={styles.carouselContainer}>
         <RecRecipes />
       </Container>
       <Container className={styles.allRecipesContainer}>
-        <Container className={styles.recipesHeader}>
-          <h1>My Recipes</h1>
-        </Container>
+        <h3
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '50px',
+          }}
+        >
+          My Recipes
+        </h3>
         <Container className={styles.addRecipeBtnContainer}>
           <Link to="/recipes/add">
             <Button variant="primary" className={styles.button}>

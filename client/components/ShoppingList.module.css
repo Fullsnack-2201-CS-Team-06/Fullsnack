@@ -4,6 +4,10 @@
   justify-content: space-evenly;
 }
 
+.margin {
+  margin-top: 40px;
+}
+
 .shopNav {
   display: flex;
   flex-direction: row;
