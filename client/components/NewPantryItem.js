@@ -63,16 +63,25 @@ const NewPantryItem = () => {
     var y = document.forms['NewPantryItem']['category'].value;
     var z = document.forms['NewPantryItem']['quantity'].value;
 
-    if (x === '' || y === '' || z === '') {
-      alert('Add recipe form incomplete');
-      return false;
+    console.log("here are my values", x, y, z)
+
+    if ((x.length) || (y.length) || (z.length)) {
+      return true;
     }
-    return true;
+    window.alert('Add recipe form incomplete');
+    return false;
   };
+
+/**
+ * Keep the if statement validate form
+ * just after the if statement put window.alert in an else
+
+
+ */
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    validateForm()
       dispatch(
         addPantryItemThunk({
           id,
@@ -89,7 +98,7 @@ const NewPantryItem = () => {
           measure: '',
         },
       ]);
-    }
+
   };
 
   return (
