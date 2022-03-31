@@ -5,8 +5,10 @@ import { fetchAllPantries } from '../store/pantries';
 import Visuals from './Visuals';
 import Visual2 from './Visual2';
 import VisualNutrition from './VisualNutrition';
+import VisualIngredientLineGraph from './VisualIngredientLineGraph';
 import styles from './Home.module.css';
 import { Card } from 'react-bootstrap';
+
 
 /**
  * COMPONENT
@@ -37,6 +39,7 @@ const Home = (props) => {
           </Card.Body>
         </Card>
         <Visual2 />
+      <VisualIngredientLineGraph />
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ const ShoppingListHistoryAll = () => {
   const { shoppingHistory } = shoppingList || []
 
   return (
-    <Container>
+    <Container className={styles.margin} >
       <div>
         <h2 className={styles.title} >Your Shopping List History!</h2>
         <Table>

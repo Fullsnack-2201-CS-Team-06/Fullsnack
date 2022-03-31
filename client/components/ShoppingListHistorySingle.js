@@ -24,7 +24,7 @@ const ShoppingListHistorySingle = ({match}) => {
   if (ingredients) length = ingredients.length
 
   return (
-    <Container>
+    <Container className={styles.margin} >
   <div  >
    <h4 className={styles.title} >Shopping List: {name}</h4>
    <p className={styles.backToHistory} ><Link to={'/list/history'} >Back to History</Link></p>
