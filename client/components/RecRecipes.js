@@ -11,6 +11,8 @@ import { getOurFoods } from '../store/pantriesFoods';
 import { addRecToMyRecipes } from '../store/recipes';
 import styles from './RecRecipes.module.css';
 import { Card, Button, Accordion, Container } from 'react-bootstrap';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 /* OBJECTIVE: Show a number of recipes as recommendations to the user. For now, search all the recipes that are not already associated with the user. Sort those such that the top results show recipes that require the least number of new ingredients. When we implement the API, we can obtain either the full list of rec recipes from there, or we could use the api to fill in a deficit of results once we filter the user's preferences.*/
 
@@ -19,6 +21,7 @@ const RecRecipes = () => {
   let { recRecipes, pantriesFoods, recipes } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [currentView, setCurrentView] = useState(null);
+  const [index, setIndex] = useState(0);
 
   //First, get the recommended recipes and the user's pantry ingredients.
   useEffect(() => {
@@ -114,61 +117,73 @@ const RecRecipes = () => {
   //Sort the rec recipes by those that need the least new ingredients.
   recRecipes = sortByAvailablility(recRecipes);
 
+  const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex);
+  };
+
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
+
   return (
-    <Container className={styles.container}>
-      <h1>Recommended Recipes</h1>
-      <Accordion defaultActiveKey="0">
-        <Container className={styles.recRecipes}>
-          {recRecipes.map((recipe, i) => (
-            <Card
-              key={i}
-              className={
-                recipe.id === currentView
-                  ? styles.expandedCard
-                  : styles.recRecipeCard
-              }
-            >
-              <Card.Img
-                variant="top"
-                className={styles.recipeImg}
-                src={recipe.image}
-              />
-              <Card.Body>
-                <Card.Title>
-                  {recipe.id === currentView
-                    ? recipe.name
-                    : recipe.name.slice(0, 20)}
-                  {recipe.id !== currentView && recipe.name.length > 20
-                    ? '...'
-                    : ''}
-                </Card.Title>
-                <Button
-                  variant="outline-primary"
-                  className={styles.buttonOutline}
-                  onClick={() => addToMyRecipes(recipe.id)}
-                >
-                  Add to My Recipes
-                </Button>
-                <Accordion.Item eventKey={i}>
-                  <Accordion.Header onClick={() => expandView(recipe.id)}>
-                    Read More
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <p>Calories: {recipe.caloriesPerRecipe}</p>
-                    <p>Protein: {recipe.proteinPerRecipe}</p>
-                    <p>Carbs: {recipe.carbsPerRecipe}</p>
-                    <p>Fat: {recipe.fatPerRecipe}</p>
-                    <a href={recipe.description}>
-                      <p>Read Full Recipe</p>
-                    </a>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Card.Body>
-            </Card>
-          ))}
+    <Carousel responsive={responsive} arrows showDots={false}>
+      {recRecipes.map((recipe, i) => (
+        <Container>
+          <Card
+            key={i}
+            className={
+              recipe.id === currentView
+                ? styles.expandedCard
+                : styles.recRecipeCard
+            }
+          >
+            <Card.Img
+              variant="top"
+              className={styles.recipeImg}
+              src={recipe.image}
+            />
+            <Card.Body>
+              <Card.Title>
+                {recipe.id === currentView
+                  ? recipe.name
+                  : recipe.name.slice(0, 20)}
+                {recipe.id !== currentView && recipe.name.length > 20
+                  ? '...'
+                  : ''}
+              </Card.Title>
+              <Button
+                variant="outline-primary"
+                className={styles.buttonOutline}
+              >
+                View
+              </Button>
+              <Button
+                variant="outline-primary"
+                className={styles.buttonOutline}
+                onClick={() => addToMyRecipes(recipe.id)}
+              >
+                Add to My Recipes
+              </Button>
+            </Card.Body>
+          </Card>
         </Container>
-      </Accordion>
-    </Container>
+      ))}
+    </Carousel>
   );
 };
 

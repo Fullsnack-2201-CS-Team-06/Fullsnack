@@ -20,6 +20,7 @@
 
 .recRecipeCard {
   margin: 15px;
+  width: 18rem;
 }
 
 .expandedCard {
@@ -39,6 +40,7 @@
 .buttonOutline {
   border-color: #e85f5c;
   color: #e85f5c;
+  margin-right: 10px;
 }
 
 .buttonOutline:hover {
@@ -48,5 +50,4 @@
 
 .recipeImg {
   height: 56.25%;
-  width: 18rem;
 }
