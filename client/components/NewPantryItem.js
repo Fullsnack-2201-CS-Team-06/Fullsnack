@@ -58,24 +58,38 @@ const NewPantryItem = () => {
     setInputFields(data);
   };
 
+  const validateForm = () => {
+    var x = document.forms['NewPantryItem']['name'].value;
+    var y = document.forms['NewPantryItem']['category'].value;
+    var z = document.forms['NewPantryItem']['quantity'].value;
+
+    if (x === '' || y === '' || z === '') {
+      alert('Add recipe form incomplete');
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      addPantryItemThunk({
-        id,
-        inputFields,
-      })
-    );
-    history.push(`/pantries/${id}`);
-    setInputFields([
-      {
-        name: '',
-        category: '',
-        quantity: '',
-        cost: '',
-        measure: '',
-      },
-    ]);
+    if (validateForm()) {
+      dispatch(
+        addPantryItemThunk({
+          id,
+          inputFields,
+        })
+      );
+      history.push(`/pantries/${id}`);
+      setInputFields([
+        {
+          name: '',
+          category: '',
+          quantity: '',
+          cost: '',
+          measure: '',
+        },
+      ]);
+    }
   };
 
   return (
@@ -85,7 +99,7 @@ const NewPantryItem = () => {
       <div className={styles.newPantryItem}>
         <div className={styles.newPantryItemForm}>
           <h3 className={styles.newPantry}>Add Items</h3>
-          <form onSubmit={handleSubmit}>
+          <form name='NewPantryItem' onSubmit={handleSubmit} required>
             <ul></ul>
             {inputFields.map((input, index) => {
               return (

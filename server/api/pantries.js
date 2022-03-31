@@ -38,7 +38,7 @@ router.get('/:pantryId', async (req, res, next) => {
 
 // POST /api/pantries
 router.post('/', async (req, res, next) => {
-  console.log('this is req.body', req.body)
+  
   try {
     const { name, id } = req.body;
     const newName = name[0].name;
@@ -60,10 +60,13 @@ router.post('/add', async (req, res, next) => {
     const { id, inputFields } = req.body;
     const [...foodInfo] = inputFields;
     const currentPantry = await Pantry.findByPk(id);
+  
 
     await Promise.all(
       foodInfo.map(async (item) => {
         const { name, quantity } = item;
+
+        if (name.length){
 
         const [newItem, wasCreated] = (newPantryItem =
           await Ingredient.findOrCreate({
@@ -73,6 +76,7 @@ router.post('/add', async (req, res, next) => {
         await currentPantry.addIngredient(newItem, {
           through: { pantryQty: quantity },
         });
+      }
       })
     );
 
