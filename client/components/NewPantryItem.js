@@ -60,22 +60,39 @@ const NewPantryItem = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      addPantryItemThunk({
-        id,
-        inputFields,
-      })
-    );
-    history.push(`/pantries/${id}`);
-    setInputFields([
-      {
-        name: '',
-        category: '',
-        quantity: '',
-        cost: '',
-        measure: '',
-      },
-    ]);
+
+    let filteredInputs = inputFields.filter((foodItem) => {
+      if (
+        foodItem.name.length &&
+        foodItem.category.length &&
+        foodItem.quantity.length
+      ) {
+        return foodItem;
+      }
+    }, []);
+
+    setInputFields(filteredInputs);
+
+    if (filteredInputs.length) {
+      dispatch(
+        addPantryItemThunk({
+          id,
+          inputFields,
+        })
+      );
+      history.push(`/pantries/${id}`);
+      setInputFields([
+        {
+          name: '',
+          category: '',
+          quantity: '',
+          cost: '',
+          measure: '',
+        },
+      ]);
+    } else {
+      window.alert('Please fill out the forms');
+    }
   };
 
   return (
@@ -85,7 +102,7 @@ const NewPantryItem = () => {
       <div className={styles.newPantryItem}>
         <div className={styles.newPantryItemForm}>
           <h3 className={styles.newPantry}>Add Items</h3>
-          <form onSubmit={handleSubmit}>
+          <form name='NewPantryItem' onSubmit={handleSubmit} required>
             <ul></ul>
             {inputFields.map((input, index) => {
               return (
