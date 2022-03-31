@@ -52,6 +52,40 @@ export const addRecRecipe = (recRecipe) => {
   };
 };
 
+export const getNewRecRecipes = (apiRequest) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post('api/recipes/recs/new', apiRequest);
+      for (let i = 0; i < data.hits.length; i++) {
+        const recipe = data.hits[i].recipe;
+        dispatch(
+          addRecRecipe({
+            name: recipe.label,
+            description: recipe.url,
+            image: recipe.image,
+            cuisineType: recipe.cuisineType[0],
+            caloriesPerRecipe: Math.floor(recipe.calories),
+            proteinPerRecipe: Math.floor(recipe.totalNutrients.PROCNT.quantity),
+            carbsPerRecipe: Math.floor(recipe.totalNutrients.CHOCDF.quantity),
+            fatPerRecipe: Math.floor(recipe.totalNutrients.FAT.quantity),
+            ingredients: recipe.ingredients.map((ingredient) => {
+              return {
+                name: ingredient.food,
+                uom: ingredient.measure,
+                category: ingredient.foodCategory,
+                image: ingredient.image,
+                quantity: ingredient.quantity,
+              };
+            }),
+          })
+        );
+      }
+    } catch (error) {
+      console.error('Failed to retrieve any rec recipes from the api', error);
+    }
+  };
+};
+
 const recRecipesReducer = (state = [], action) => {
   switch (action.type) {
     case SHOW_REC_RECIPES: {
