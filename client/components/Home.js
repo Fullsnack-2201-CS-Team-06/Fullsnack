@@ -5,6 +5,7 @@ import { fetchAllPantries } from '../store/pantries';
 import Visuals from './Visuals';
 import Visual2 from './Visual2';
 import VisualNutrition from './VisualNutrition';
+import VisualIngredientLineGraph from './VisualIngredientLineGraph';
 
 /**
  * COMPONENT
@@ -26,6 +27,7 @@ const Home = (props) => {
       <VisualNutrition />
       <Visuals />
       <Visual2 />
+      <VisualIngredientLineGraph />
     </div>
   );
 };

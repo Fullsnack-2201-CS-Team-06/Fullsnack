@@ -57,7 +57,7 @@ let finalData = []
           text='frequent items bought'
           x={225}
           y={30}
-          textAnchor="middle"
+          textAnchor="end"
         />
         <VictoryAxis
           axisLabelComponent={<VictoryLabel />}
@@ -65,6 +65,8 @@ let finalData = []
           crossAxis
           style={{
             tickLabels: {
+              textAnchor:"end",
+              padding: 2,
               angle: -45,
               fontSize: 5,
             },
@@ -74,7 +76,7 @@ let finalData = []
               fontWeight: 100,
               letterSpacing: '1px',
               fontSize: 6,
-              padding: 30,
+              padding: 40,
             },
           }}
         />
@@ -84,7 +86,7 @@ let finalData = []
           label={'Frequency'}
           tickFormat={(t) => (Number.isInteger(t) ? t : null)}
           style={{
-            tickLabels: { fontSize: 5 },
+            tickLabels: { fontSize: 5, textAnchor:"end" },
             axisLabel: {
               label: 'frequency',
               fontFamily: 'inherit',
