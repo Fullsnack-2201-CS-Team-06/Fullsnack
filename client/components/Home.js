@@ -23,15 +23,21 @@ const Home = (props) => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>Welcome, {username}</h3>
-      <Card className={styles.chartCard}>
-        <Card.Body>
-          <VisualNutrition />
-        </Card.Body>
-      </Card>
-      <Visuals />
-      <Visual2 />
+      <div className={styles.charts}>
+        <Card className={styles.chartCard}>
+          <Card.Body>
+            <VisualNutrition />
+          </Card.Body>
+        </Card>
+        <Card className={styles.chartCard}>
+          <Card.Body>
+            <Visuals />
+          </Card.Body>
+        </Card>
+        <Visual2 />
+      </div>
     </div>
   );
 };
