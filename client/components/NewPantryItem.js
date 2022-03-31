@@ -58,19 +58,22 @@ const NewPantryItem = () => {
     setInputFields(data);
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
-   
+
     let filteredInputs = inputFields.filter((foodItem) => {
-      if(foodItem.name.length && foodItem.category.length && foodItem.quantity.length){
-        return foodItem
+      if (
+        foodItem.name.length &&
+        foodItem.category.length &&
+        foodItem.quantity.length
+      ) {
+        return foodItem;
       }
-    }, [])
+    }, []);
 
     setInputFields(filteredInputs);
 
-    if(filteredInputs.length){
+    if (filteredInputs.length) {
       dispatch(
         addPantryItemThunk({
           id,
@@ -87,9 +90,8 @@ const NewPantryItem = () => {
           measure: '',
         },
       ]);
-    }
-    else{
-      window.alert("Please fill out the forms")
+    } else {
+      window.alert('Please fill out the forms');
     }
   };
 
