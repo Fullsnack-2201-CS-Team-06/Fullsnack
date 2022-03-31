@@ -5,6 +5,8 @@ import { fetchAllPantries } from '../store/pantries';
 import Visuals from './Visuals';
 import Visual2 from './Visual2';
 import VisualNutrition from './VisualNutrition';
+import styles from './Home.module.css';
+import { Card } from 'react-bootstrap';
 
 /**
  * COMPONENT
@@ -23,7 +25,11 @@ const Home = (props) => {
   return (
     <div>
       <h3>Welcome, {username}</h3>
-      <VisualNutrition />
+      <Card className={styles.chartCard}>
+        <Card.Body>
+          <VisualNutrition />
+        </Card.Body>
+      </Card>
       <Visuals />
       <Visual2 />
     </div>
