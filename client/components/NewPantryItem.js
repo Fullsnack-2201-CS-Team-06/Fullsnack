@@ -58,30 +58,19 @@ const NewPantryItem = () => {
     setInputFields(data);
   };
 
-  const validateForm = () => {
-    var x = document.forms['NewPantryItem']['name'].value;
-    var y = document.forms['NewPantryItem']['category'].value;
-    var z = document.forms['NewPantryItem']['quantity'].value;
-
-    console.log("here are my values", x, y, z)
-
-    if ((x.length) || (y.length) || (z.length)) {
-      return true;
-    }
-    window.alert('Add recipe form incomplete');
-    return false;
-  };
-
-/**
- * Keep the if statement validate form
- * just after the if statement put window.alert in an else
-
-
- */
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    validateForm()
+   
+    let filteredInputs = inputFields.filter((foodItem) => {
+      if(foodItem.name.length && foodItem.category.length && foodItem.quantity.length){
+        return foodItem
+      }
+    }, [])
+
+    setInputFields(filteredInputs);
+
+    if(filteredInputs.length){
       dispatch(
         addPantryItemThunk({
           id,
@@ -98,7 +87,10 @@ const NewPantryItem = () => {
           measure: '',
         },
       ]);
-
+    }
+    else{
+      window.alert("Please fill out the forms")
+    }
   };
 
   return (

@@ -23,7 +23,6 @@ router.get('/', async (req, res, next) => {
 //GET /api/pantries/:pantryId
 router.get('/:pantryId', async (req, res, next) => {
   try {
-    console.log('entered pantryID');
     const singlePantry = await Pantry.findByPk(req.params.pantryId, {
       include: Ingredient,
     });
@@ -66,7 +65,7 @@ router.post('/add', async (req, res, next) => {
       foodInfo.map(async (item) => {
         const { name, quantity } = item;
 
-        if (name.length){
+        if (name.length && quantity){
 
         const [newItem, wasCreated] = (newPantryItem =
           await Ingredient.findOrCreate({
