@@ -4,6 +4,7 @@ const Recipe = require('../db/models/Recipe');
 const Ingredient = require('../db/models/Ingredient');
 const User = require('../db/models/User');
 const ShoppingList = require('../db/models/ShoppingList');
+const ShoppingListIngredient = require('../db/models/ShoppingListIngredient');
 const { Op } = require('@sequelize/core');
 
 // GET /api/recipes?userId=1
@@ -189,14 +190,28 @@ router.put('/recs/:id', async (req, res, next) => {
         status: 'open',
         userId: userId,
       },
+      include: Ingredient,
     });
 
     //Assign each ingredient to the user's open shopping list.
     await Promise.all(
       recRecipe.ingredients.map(async (ingredient) => {
-        await ingredient.addShoppingList(shoppingList, {
-          through: { sliQuantity: 1 },
+        const slIngredient = await ShoppingListIngredient.findOne({
+          where: {
+            ingredientId: ingredient.id,
+            shoppingListId: shoppingList.id,
+          },
         });
+
+        if (slIngredient) {
+          await slIngredient.update({
+            sliQuantity: slIngredient.sliQuantity + 1,
+          });
+        } else {
+          await ingredient.addShoppingList(shoppingList, {
+            through: { sliQuantity: 1 },
+          });
+        }
       })
     );
     const updatedRecipe = await Recipe.findByPk(recRecipeId);
