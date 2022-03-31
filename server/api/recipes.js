@@ -5,6 +5,7 @@ const Ingredient = require('../db/models/Ingredient');
 const User = require('../db/models/User');
 const ShoppingList = require('../db/models/ShoppingList');
 const { Op } = require('@sequelize/core');
+const axios = require('axios');
 
 // GET /api/recipes?userId=1
 router.get('/', async (req, res, next) => {
@@ -176,9 +177,10 @@ router.post('/recs', async (req, res, next) => {
 router.post('/recs/new', async (req, res, next) => {
   try {
     const { apiRequest } = req.body;
-    const data = await fetch(apiRequest).then((res) => res.json());
-    if (data) {
-      res.send(data);
+    const apiResponse = await axios.get(apiRequest);
+    const hits = apiResponse.data.hits;
+    if (hits) {
+      res.send(hits);
     }
   } catch (error) {
     next(error);
