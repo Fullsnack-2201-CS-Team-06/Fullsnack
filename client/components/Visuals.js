@@ -16,7 +16,6 @@ const Visuals = () => {
   const [selectedPantry, setSelectedPantry] = useState('View All Pantries');
 
   const dispatch = useDispatch();
- 
 
   useEffect(() => {
     dispatch(fetchAllPantries(id));
@@ -36,7 +35,7 @@ const Visuals = () => {
     };
   });
 
-  console.log("Here's state", pantries)
+  console.log("Here's state", pantries);
 
   const selectPantry = (pantries, pantryName) => {
     const selectedPantry = pantries.filter(
@@ -63,6 +62,7 @@ const Visuals = () => {
 
   return (
     <div style={{ height: '650px' }}>
+      {/* <div> */}
       <select name="pantries" onChange={(e) => handlePantryChange(e)}>
         <option value="View All Pantries">View All Pantries</option>
         {pantries.map((pantry) => (
@@ -75,15 +75,16 @@ const Visuals = () => {
       <VictoryChart
         theme={VictoryTheme.material}
         domainPadding={{ x: 20 }}
-        height={200}
-        width={300}
+        height={500}
+        width={700}
         animate={{ duration: 500 }}
       >
         <VictoryLabel
           text={selectedPantry}
-          x={225}
+          x={350}
           y={30}
           textAnchor="middle"
+          style={{ fontSize: 25 }}
         />
         <VictoryAxis
           axisLabelComponent={<VictoryLabel />}
@@ -92,15 +93,17 @@ const Visuals = () => {
           style={{
             tickLabels: {
               angle: -45,
-              fontSize: 5,
+              fontSize: 12,
+              textAnchor: 'end',
+              padding: 2,
             },
             axisLabel: {
               label: 'My Food',
               fontFamily: 'inherit',
               fontWeight: 100,
               letterSpacing: '1px',
-              fontSize: 6,
-              padding: 30,
+              fontSize: 20,
+              padding: 50,
             },
           }}
         />
@@ -116,12 +119,17 @@ const Visuals = () => {
               fontFamily: 'inherit',
               fontWeight: 100,
               letterSpacing: '1px',
-              fontSize: 6,
+              fontSize: 20,
               padding: 30,
             },
           }}
         />
-        <VictoryBar data={data} x="item" y="pantryQty" />
+        <VictoryBar
+          barWidth={({ index }) => index * 2 + 12}
+          data={data}
+          x="item"
+          y="pantryQty"
+        />
       </VictoryChart>
     </div>
   );

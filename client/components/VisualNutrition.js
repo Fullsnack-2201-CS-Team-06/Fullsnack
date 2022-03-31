@@ -35,22 +35,23 @@ const VisualNutrition = () => {
     }));
 
   return didLoad ? (
-    <div style={{ height: '650px' }}>
+    // <div style={{ height: '700px' }}>
+    <>
       <VictoryChart
-        domainPadding={{ x: 50 }}
-        height={200}
-        width={300}
+        domainPadding={{ x: 20 }}
+        height={500}
+        width={700}
         animate={{
           duration: 2000,
-          onLoad: { duration: 1000 },
         }}
         // scale={{ x: 'category' }}
       >
         <VictoryLabel
           text="Calorie Range of Foods"
-          x={225}
+          x={350}
           y={30}
           textAnchor="middle"
+          style={{ fontSize: 25 }}
         />
         <VictoryAxis
           axisLabelComponent={<VictoryLabel />}
@@ -59,15 +60,17 @@ const VisualNutrition = () => {
           style={{
             tickLabels: {
               angle: -45,
-              fontSize: 3,
+              fontSize: 12,
+              textAnchor: 'end',
+              padding: 2,
             },
             axisLabel: {
               label: 'Food Categories',
               fontFamily: 'inherit',
               fontWeight: 100,
               letterSpacing: '1px',
-              fontSize: 6,
-              padding: 30,
+              fontSize: 20,
+              padding: 80,
             },
           }}
         />
@@ -83,14 +86,14 @@ const VisualNutrition = () => {
               fontFamily: 'inherit',
               fontWeight: 100,
               letterSpacing: '1px',
-              fontSize: 6,
+              fontSize: 20,
               padding: 30,
             },
           }}
         />
         <VictoryBoxPlot boxWidth={5} whiskerWidth={5} data={data} />
       </VictoryChart>
-    </div>
+    </>
   ) : (
     <div></div>
   );

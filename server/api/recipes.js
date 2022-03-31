@@ -4,7 +4,9 @@ const Recipe = require('../db/models/Recipe');
 const Ingredient = require('../db/models/Ingredient');
 const User = require('../db/models/User');
 const ShoppingList = require('../db/models/ShoppingList');
+const ShoppingListIngredient = require('../db/models/ShoppingListIngredient');
 const { Op } = require('@sequelize/core');
+const axios = require('axios');
 
 // GET /api/recipes?userId=1
 router.get('/', async (req, res, next) => {
@@ -171,6 +173,21 @@ router.post('/recs', async (req, res, next) => {
   }
 });
 
+//POST /api/recipes/recs/new
+//Makes a request to the edamam api with the apiRequest url and sends the api response.
+router.post('/recs/new', async (req, res, next) => {
+  try {
+    const { apiRequest } = req.body;
+    const apiResponse = await axios.get(apiRequest);
+    const hits = apiResponse.data.hits;
+    if (hits) {
+      res.send(hits);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 // PUT /api/recipes/recs/:id?userId=INT
 router.put('/recs/:id', async (req, res, next) => {
   try {
@@ -189,14 +206,28 @@ router.put('/recs/:id', async (req, res, next) => {
         status: 'open',
         userId: userId,
       },
+      include: Ingredient,
     });
 
     //Assign each ingredient to the user's open shopping list.
     await Promise.all(
       recRecipe.ingredients.map(async (ingredient) => {
-        await ingredient.addShoppingList(shoppingList, {
-          through: { sliQuantity: 1 },
+        const slIngredient = await ShoppingListIngredient.findOne({
+          where: {
+            ingredientId: ingredient.id,
+            shoppingListId: shoppingList.id,
+          },
         });
+
+        if (slIngredient) {
+          await slIngredient.update({
+            sliQuantity: slIngredient.sliQuantity + 1,
+          });
+        } else {
+          await ingredient.addShoppingList(shoppingList, {
+            through: { sliQuantity: 1 },
+          });
+        }
       })
     );
     const updatedRecipe = await Recipe.findByPk(recRecipeId);
