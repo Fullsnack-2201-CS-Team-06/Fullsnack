@@ -171,6 +171,20 @@ router.post('/recs', async (req, res, next) => {
   }
 });
 
+//POST /api/recipes/recs/new
+//Makes a request to the edamam api with the apiRequest url and sends the api response.
+router.post('/recs/new', async (req, res, next) => {
+  try {
+    const { apiRequest } = req.body;
+    const data = await fetch(apiRequest).then((res) => res.json());
+    if (data) {
+      res.send(data);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 // PUT /api/recipes/recs/:id?userId=INT
 router.put('/recs/:id', async (req, res, next) => {
   try {
