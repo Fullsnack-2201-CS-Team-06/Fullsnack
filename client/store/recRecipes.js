@@ -52,10 +52,10 @@ export const addRecRecipe = (recRecipe) => {
   };
 };
 
-export const getNewRecRecipes = (apiRequest) => {
+export const getNewRecRecipes = (apiParams) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('api/recipes/recs/new', { apiRequest });
+      const { data } = await axios.post('api/recipes/recs/new', { apiParams });
       for (let i = 0; i < data.length; i++) {
         const recipe = data[i].recipe;
         dispatch(

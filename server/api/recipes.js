@@ -177,7 +177,9 @@ router.post('/recs', async (req, res, next) => {
 //Makes a request to the edamam api with the apiRequest url and sends the api response.
 router.post('/recs/new', async (req, res, next) => {
   try {
-    const { apiRequest } = req.body;
+    let apiRequest = `https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=${process.env.REACT_APP_RECIPE_APP_ID}&app_key=${process.env.REACT_APP_RECIPE_KEY}&mealType=Dinner`;
+    const { apiParams } = req.body;
+    apiRequest += apiParams;
     const apiResponse = await axios.get(apiRequest);
     const hits = apiResponse.data.hits;
     if (hits) {

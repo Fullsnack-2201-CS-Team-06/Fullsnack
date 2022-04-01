@@ -3,9 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllPantries } from '../store/pantries';
 import { fetchSinglePantry } from '../store/pantry';
 import styles from './PantryRefactor.module.css';
-
 import PantrySingle from './PantrySingle';
 import NewPantryItem from './NewPantryItem';
+import PantryCreate from './PantryCreate';
+
+
+/* This page contains all the components for the Pantry tab.
+It also has the filter to switch between a users pantries. */
+
 
 const PantryRefactor = () => {
   const { id } = useSelector((state) => state.auth);
@@ -46,6 +51,8 @@ const PantryRefactor = () => {
         </div>
       </div>
       <PantrySingle />
+      <PantryCreate/>
+      <NewPantryItem />
     </div>
   );
 };
