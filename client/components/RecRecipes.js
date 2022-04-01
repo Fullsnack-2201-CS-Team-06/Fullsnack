@@ -36,8 +36,8 @@ const RecRecipes = () => {
       //The base api url with which we request new recommendations.
       // let apiRequest =
       //   'https://api.edamam.com/search?q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner';
-      let apiRequest =
-        'https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner';
+      let apiRequest = `https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=89f75d08&app_key=a50a2a8174970ec300397dea3db7f843&mealType=Dinner`;
+      console.log('apiRequest: ', apiRequest);
       //Exclude the recipes that we already have.
       if (cuisinePref && cuisinePref !== 'No Preference') {
         apiRequest += `&cuisineType=${cuisinePref}`;
