@@ -180,6 +180,7 @@ router.post('/recs/new', async (req, res, next) => {
     let apiRequest = `https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=${process.env.REACT_APP_RECIPE_APP_ID}&app_key=${process.env.REACT_APP_RECIPE_KEY}&mealType=Dinner`;
     const { apiParams } = req.body;
     apiRequest += apiParams;
+    console.log('apiRequest: ', apiRequest);
     const apiResponse = await axios.get(apiRequest);
     const hits = apiResponse.data.hits;
     if (hits) {

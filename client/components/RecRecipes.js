@@ -34,7 +34,6 @@ const RecRecipes = () => {
   useEffect(() => {
     async function getMoreRecs() {
       //The base api url with which we request new recommendations.
-
       let apiParams = '';
       //Exclude the recipes that we already have.
       if (cuisinePref && cuisinePref !== 'No Preference') {
@@ -46,15 +45,16 @@ const RecRecipes = () => {
       if (health) {
         apiParams += `&health=${health}`;
       }
-      recipes.forEach((recipe) => {
-        const recipeWords = recipe.name.split(' ').join('%20');
-        apiParams += `&excluded=${recipeWords}`;
-      });
-      //Exclude the recipes already in our recommendations.
-      recRecipes.forEach((recRecipe) => {
-        const recipeWords = recRecipe.name.split(' ').join('%20');
-        apiParams += `&excluded=${recipeWords}`;
-      });
+      apiParams += '&random=true';
+      // recipes.forEach((recipe) => {
+      //   const recipeWords = recipe.name.split(' ').join('%20');
+      //   apiParams += `&excluded=${recipeWords}`;
+      // });
+      // //Exclude the recipes already in our recommendations.
+      // recRecipes.forEach((recRecipe) => {
+      //   const recipeWords = recRecipe.name.split(' ').join('%20');
+      //   apiParams += `&excluded=${recipeWords}`;
+      // });
       dispatch(getNewRecRecipes(apiParams));
     }
 
