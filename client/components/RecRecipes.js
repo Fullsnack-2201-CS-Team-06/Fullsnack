@@ -46,15 +46,6 @@ const RecRecipes = () => {
         apiParams += `&health=${health}`;
       }
       apiParams += '&random=true';
-      // recipes.forEach((recipe) => {
-      //   const recipeWords = recipe.name.split(' ').join('%20');
-      //   apiParams += `&excluded=${recipeWords}`;
-      // });
-      // //Exclude the recipes already in our recommendations.
-      // recRecipes.forEach((recRecipe) => {
-      //   const recipeWords = recRecipe.name.split(' ').join('%20');
-      //   apiParams += `&excluded=${recipeWords}`;
-      // });
       dispatch(getNewRecRecipes(apiParams));
     }
 
