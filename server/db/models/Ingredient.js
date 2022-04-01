@@ -33,7 +33,7 @@ const Ingredient = db.define('ingredient', {
   },
 
   caloriesPerUnit: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL,
     defaultValue: 0,
   },
 
