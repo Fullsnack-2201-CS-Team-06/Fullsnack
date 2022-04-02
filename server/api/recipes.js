@@ -105,9 +105,11 @@ router.post('/', async (req, res, next) => {
         });
       }
 
-      await newRecipe.addIngredient(ingredientToAdd, {
-        through: { recipeQty: ingredient.recipeQty },
-      });
+      if (!newRecipe.hasIngredient(ingredientToAdd)) {
+        await newRecipe.addIngredient(ingredientToAdd, {
+          through: { recipeQty: ingredient.recipeQty },
+        });
+      }
     });
 
     res.send(newRecipe);
@@ -144,18 +146,24 @@ router.post('/recs', async (req, res, next) => {
 
     await Promise.all(
       ingredients.map(async (ingredient) => {
+        //Find an existing ingredient by the same name.
         let ingredientToAdd = await Ingredient.findOne({
           where: {
             name: ingredient.name,
           },
         });
 
+        // If none is found, create a new ingredient.
         if (!ingredientToAdd) {
           ingredientToAdd = await Ingredient.create(ingredient);
         }
-        await newRecipe.addIngredient(ingredientToAdd, {
-          through: { recipeQty: ingredient.quantity },
-        });
+
+        /* Recipes may have duplicate ingredients. If one is already found for the recipe, do not add.*/
+        if (!newRecipe.hasIngredient(ingredientToAdd)) {
+          await newRecipe.addIngredient(ingredientToAdd, {
+            through: { recipeQty: ingredient.quantity },
+          });
+        }
       })
     );
 
@@ -180,8 +188,9 @@ router.post('/recs/new', async (req, res, next) => {
     let apiRequest = `https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=${process.env.REACT_APP_RECIPE_APP_ID}&app_key=${process.env.REACT_APP_RECIPE_KEY}&mealType=Dinner`;
     const { apiParams } = req.body;
     apiRequest += apiParams;
-    const apiResponse = await axios.get(apiRequest);
+    const apiResponse = await axios.get(encodeURI(apiRequest));
     const hits = apiResponse.data.hits;
+    console.log('api hits: ', hits);
     if (hits) {
       res.send(hits);
     }

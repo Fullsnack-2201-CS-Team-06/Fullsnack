@@ -67,7 +67,9 @@ Ingredient.beforeCreate(async (food) => {
     food.fatsPerUnit === 0
   ) {
     const res = await axios.get(
-      `https://api.edamam.com/api/food-database/v2/parser?app_id=${process.env.REACT_APP_FOOD_APP_ID}&app_key=${process.env.REACT_APP_FOOD_KEY}&ingr=${food.name}&nutrition-type=cooking`
+      encodeURI(
+        `https://api.edamam.com/api/food-database/v2/parser?app_id=${process.env.REACT_APP_FOOD_APP_ID}&app_key=${process.env.REACT_APP_FOOD_KEY}&ingr=${food.name}&nutrition-type=cooking`
+      )
     );
     if (res.data.parsed.length > 0) {
       const { ENERC_KCAL, PROCNT, FAT, CHOCDF } =
