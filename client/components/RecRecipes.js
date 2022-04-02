@@ -32,7 +32,7 @@ const RecRecipes = () => {
   const didMount = useRef(false);
   //Get all the recommended recipes not associated with the current user.
   useEffect(() => {
-    async function getMoreRecs() {
+    function getMoreRecs() {
       //The base api url with which we request new recommendations.
       let apiParams = '';
       //Exclude the recipes that we already have.
