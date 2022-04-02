@@ -11,13 +11,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const foodCategories = [
   'vegetables',
-  'Condiments and sauces',
+  'condiments and sauces',
   'plant-based protein',
+  'fruit',
+  '100% juice',
+  'seafood',
   'meat',
   'dairy',
   'dry goods',
   'bakery',
   'beverages',
+  'coffee and tea',
   'miscellaneous',
 ];
 

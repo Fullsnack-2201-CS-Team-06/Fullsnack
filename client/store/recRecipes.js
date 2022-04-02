@@ -72,7 +72,9 @@ export const getNewRecRecipes = (apiParams) => {
               return {
                 name: ingredient.food,
                 uom: ingredient.measure,
-                category: ingredient.foodCategory.toLowerCase(),
+                category: ingredient.foodCategory
+                  ? ingredient.foodCategory.toLowerCase()
+                  : ingredient.foodCategory,
                 image: ingredient.image,
                 quantity: ingredient.quantity,
               };
