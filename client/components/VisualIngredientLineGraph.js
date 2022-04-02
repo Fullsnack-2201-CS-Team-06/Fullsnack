@@ -34,32 +34,32 @@ let tempData = []
 
 if (shoppingHistory) {
   shoppingHistory.forEach(list => {
-      list.ingredients.forEach(item => {
+      list.ingredients.forEach((item, idx) => {
         if (item.name === ingredient1) {
-          ingredient1Data.push({ item: item.name, quantity: item.shoppingListIngredient.sliQuantity})
+          ingredient1Data.push({ x: idx + 1, y: item.shoppingListIngredient.sliQuantity})
         }
         if (item.name === ingredient2) {
-          ingredient2Data.push({ item: item.name, quantity: item.shoppingListIngredient.sliQuantity})
+          ingredient2Data.push({ x: idx + 1, y: item.shoppingListIngredient.sliQuantity})
         }
         if (item.name === ingredient3) {
-          ingredient3Data.push({ item: item.name, quantity: item.shoppingListIngredient.sliQuantity})
+          ingredient3Data.push({ x: idx + 1, y: item.shoppingListIngredient.sliQuantity})
         }
         if (item.name === ingredient4) {
-          ingredient4Data.push({ item: item.name, quantity: item.shoppingListIngredient.sliQuantity})
+          ingredient4Data.push({ x: idx + 1, y: item.shoppingListIngredient.sliQuantity})
         }
         if (item.name === ingredient5) {
-          ingredient5Data.push({ item: item.name, quantity: item.shoppingListIngredient.sliQuantity})
+          ingredient5Data.push({ x: idx + 1, y: item.shoppingListIngredient.sliQuantity})
         }
         tempData.push(item.name)
       })
     })
   }
 
-  console.log(ingredient1Data)
+  console.log(ingredient1, ingredient1Data)
 
   return (
     <div style={{ height: '650px' }}>
-      <VictoryGroup offset={25} colorScale={["tomato", "orange", "gold"]} >
+      <VictoryGroup offset={25} colorScale={["tomato", "orange", "gold", 'blue', 'green']} >
         <VictoryChart
         theme={VictoryTheme.material}
         domainPadding={{ x: 20 }}
@@ -109,10 +109,10 @@ if (shoppingHistory) {
           }}
         />
           <VictoryLine data={ingredient1Data} />
-          {/* <VictoryLine data={ingredient2Data} />
+          <VictoryLine data={ingredient2Data} />
           <VictoryLine data={ingredient3Data} />
           <VictoryLine data={ingredient4Data} />
-          <VictoryLine data={ingredient5Data} /> */}
+          <VictoryLine data={ingredient5Data} />
         </VictoryChart>
       </VictoryGroup>
     </div>

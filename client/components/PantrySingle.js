@@ -49,8 +49,8 @@ const PantrySingle = ({ match }) => {
                   <tr className={styles.row} key={item.id}>
                     <td className={styles.column}>{item.name}</td>
                     <td className={styles.column}>{item.category}</td>
-                    <td className={styles.column}><Button className={styles.Button} variant="outline-primary"  onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity} 
-                    <Button className={styles.Button} variant="outline-primary" onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td> 
+                    <td className={styles.column}><Button className={styles.Button} variant="outline-primary"  onClick={() => handleChange(item.id, id, quantity-1)}>-</Button> {quantity}
+                    <Button className={styles.Button} variant="outline-primary" onClick={() => handleChange(item.id, id, quantity+1)}>+</Button></td>
                     <td>
                       <Button className={styles.Button} variant="outline-primary" type="button" onClick={() => handleChange(item.id, id, 0)}>x</Button>
                     </td>
