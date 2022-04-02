@@ -51,22 +51,24 @@ const RecRecipes = () => {
 
     //Only execute the api call after the 2nd render. Otherwise, the recipes needed will be inaccurate.
     if (didMount.current) {
+      console.log(
+        'Matching cuisine pref: ',
+        recRecipes.filter((recRecipe) => recRecipe.cuisineType === cuisinePref)
+      );
       //When the number of rec recipes falls below five, get ten from the api.
       if (recRecipes.length < 5) {
         getMoreRecs();
+      } else if (
+        recRecipes.length &&
+        !recRecipes.filter((recRecipe) => recRecipe.cuisineType === cuisinePref)
+          .length
+      ) {
+        getMoreRecs();
       }
-    } else if (
-      recRecipes.length &&
-      !recRecipes.filter((recRecipe) => recRecipe.cuisineType === cuisinePref)
-        .length
-    ) {
-      getMoreRecs();
     } else {
       didMount.current = true;
     }
   }, [recipes]);
-
-  console.log('recRecipes: ', recRecipes);
 
   const expandView = (id) => {
     if (id !== currentView) {
@@ -104,6 +106,20 @@ const RecRecipes = () => {
     return recipes;
   }
 
+  function sortByCuisinePref(recipes) {
+    let matches = [];
+    let nonMatches = [];
+    recipes.forEach((recipe) => {
+      if (recipe.cuisineType === cuisinePref) {
+        matches.push(recipe);
+      } else {
+        nonMatches.push(recipe);
+      }
+    });
+    const sortedResults = matches.concat(nonMatches);
+    return sortedResults;
+  }
+
   function addToMyRecipes(recipeId) {
     dispatch(addRecToMyRecipes(recipeId, id));
     dispatch(removeRecRecipe(recipeId));
@@ -111,6 +127,8 @@ const RecRecipes = () => {
 
   //Sort the rec recipes by those that need the least new ingredients.
   recRecipes = sortByAvailablility(recRecipes);
+  //Sort the rec recipes such that the user's cuisineType preference appears first.
+  recRecipes = sortByCuisinePref(recRecipes);
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
