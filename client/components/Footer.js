@@ -35,7 +35,9 @@ const Footer = () => {
           </div>
         </Container>
         <Container id={styles.footerLogoContainer}>
-          <h1 className={styles.logo}>FULLSNACK</h1>
+          <h1 className={styles.logo}>
+            <a id={styles.logoLink} href="/">FULLSNACK</a>
+          </h1>
           <p id={styles.copyright}>Copyright © 2022</p>
         </Container>
       </Container>
