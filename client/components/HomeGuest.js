@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
 import { Carousel, Container, Button, Card } from 'react-bootstrap';
 import styles from './HomeGuest.module.css';
 
@@ -42,31 +43,6 @@ function ControlledCarousel() {
   );
 }
 
-// function ControlledCarousel() {
-//   const [index, setIndex] = useState(0);
-
-//   const handleSelect = (selectedIndex, e) => {
-//     setIndex(selectedIndex);
-//   };
-
-//   return (
-//     <div>
-//       <h1>GUEST HOMEPAGE</h1>
-//       <Carousel activeIndex={index} onSelect={handleSelect}>
-//         {sampleImages.map((image, i) => {
-//           <Carousel.Item key={i}>
-//             <img className="d-block w-100" src={image} alt="First slide" />
-//             <Carousel.Caption>
-//               <h3>First slide label</h3>
-//               <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-//             </Carousel.Caption>
-//           </Carousel.Item>;
-//         })}
-//       </Carousel>
-//     </div>
-//   );
-// }
-
 const HomeGuest = () => {
   return (
     <div>
@@ -77,15 +53,37 @@ const HomeGuest = () => {
           <h1 className={styles.introduction}>SIMPLIFY YOUR CRAVINGS.</h1>
         </Container>
         <div className={styles.buttonContainer}>
-          <Button className={styles.button} variant="primary">
-            Sign Up
-          </Button>
-          <Button className={styles.loginBtn} variant="outline-primary">
-            Login
-          </Button>
+          <Link to="/signup">
+            <Button className={styles.button} variant="primary">
+              Sign Up
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button className={styles.loginBtn} variant="outline-primary">
+              Login
+            </Button>
+          </Link>
         </div>
         <hr />
+        <h2 style={{ fontWeight: 'bold', margin: '25px' }}>
+          Take control of your kitchen life.
+        </h2>
         <div className={styles.cardContainer}>
+          <Card className={styles.card}>
+            <Card.Img
+              variant="top"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU1Wuo0J-W1BVx5O7F-4zRRT7DZvU9Pz64vQ&usqp=CAU"
+              className={styles.cardImg}
+            />
+            <Card.Body>
+              <Card.Title>Shopping Lists</Card.Title>
+              <Card.Text>
+                Build your shopping lists from a comprehensive list of food
+                items.
+              </Card.Text>
+            </Card.Body>
+          </Card>
+
           <Card className={styles.card}>
             <Card.Img
               variant="top"
@@ -95,37 +93,11 @@ const HomeGuest = () => {
             <Card.Body>
               <Card.Title>Pantry</Card.Title>
               <Card.Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Easily receive items from your shopping list into your pantry.
               </Card.Text>
-              <Button
-                variant="outline-primary"
-                className={styles.buttonOutline}
-              >
-                Pantry
-              </Button>
             </Card.Body>
           </Card>
-          <Card className={styles.card}>
-            <Card.Img
-              variant="top"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU1Wuo0J-W1BVx5O7F-4zRRT7DZvU9Pz64vQ&usqp=CAU"
-              className={styles.cardImg}
-            />
-            <Card.Body>
-              <Card.Title>Shopping List</Card.Title>
-              <Card.Text>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur.
-              </Card.Text>
-              <Button
-                variant="outline-primary"
-                className={styles.buttonOutline}
-              >
-                Shopping List
-              </Button>
-            </Card.Body>
-          </Card>
+
           <Card className={styles.card}>
             <Card.Img
               variant="top"
@@ -135,15 +107,24 @@ const HomeGuest = () => {
             <Card.Body>
               <Card.Title>Recipes</Card.Title>
               <Card.Text>
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat.
+                Store your recipes, generate shopping lists and always know if
+                you have ingredients in stock.
               </Card.Text>
-              <Button
-                variant="outline-primary"
-                className={styles.buttonOutline}
-              >
-                Recipes
-              </Button>
+            </Card.Body>
+          </Card>
+
+          <Card className={styles.card}>
+            <Card.Img
+              variant="top"
+              src="https://desikhazana.in/wp-content/uploads/2020/10/chana-masala-fb809bc.jpg"
+              className={styles.cardImg}
+            />
+            <Card.Body>
+              <Card.Title>Recommendations</Card.Title>
+              <Card.Text>
+                Don't know what to cook? Try one of Fullstack's recommendations
+                based on your preferences.
+              </Card.Text>
             </Card.Body>
           </Card>
         </div>
