@@ -55,6 +55,12 @@ const RecRecipes = () => {
       if (recRecipes.length < 5) {
         getMoreRecs();
       }
+    } else if (
+      recRecipes.length &&
+      !recRecipes.filter((recRecipe) => recRecipe.cuisineType === cuisinePref)
+        .length
+    ) {
+      getMoreRecs();
     } else {
       didMount.current = true;
     }
