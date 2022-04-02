@@ -26,17 +26,32 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// GET /api/recipes/recs
+// GET /api/recipes/recs?cuisinePref=STRING
 router.get('/recs', async (req, res, next) => {
   try {
     // At this stage, we're just getting all the recipes not assigned to any user. With the api, this route will be entirely replaced.
-    const recRecipes = await Recipe.findAll({
+    let recRecipes = await Recipe.findAll({
       where: { userId: { [Op.is]: null } },
       include: Ingredient,
     });
     if (!recRecipes) {
       next({ status: 404, message: 'No recommended recipes found.' });
     }
+
+    if (req.query.cuisinePref) {
+      const { cuisinePref } = req.query;
+      let matches = [];
+      let nonMatches = [];
+      recRecipes.forEach((recipe) => {
+        if (recipe.cuisineType === cuisinePref) {
+          matches.push(recipe);
+        } else {
+          nonMatches.push(recipe);
+        }
+      });
+      recRecipes = matches.concat(nonMatches);
+    }
+
     res.send(recRecipes);
   } catch (error) {
     next(error);
@@ -92,17 +107,14 @@ router.post('/', async (req, res, next) => {
 
     // Associate recipe ingredients & qtys with recipe
     ingredients.map(async (ingredient) => {
-      const ingredientToAdd = await Ingredient.findOne({
+      let ingredientToAdd = await Ingredient.findOne({
         where: {
           name: ingredient.name,
         },
       });
 
       if (!ingredientToAdd) {
-        next({
-          status: 404,
-          message: `Ingredient ${ingredient.name} not found.`,
-        });
+        ingredientToAdd = await Ingredient.create(ingredient);
       }
 
       await newRecipe.addIngredient(ingredientToAdd, {
@@ -144,15 +156,18 @@ router.post('/recs', async (req, res, next) => {
 
     await Promise.all(
       ingredients.map(async (ingredient) => {
+        //Find an existing ingredient by the same name.
         let ingredientToAdd = await Ingredient.findOne({
           where: {
             name: ingredient.name,
           },
         });
 
+        // If none is found, create a new ingredient.
         if (!ingredientToAdd) {
           ingredientToAdd = await Ingredient.create(ingredient);
         }
+
         await newRecipe.addIngredient(ingredientToAdd, {
           through: { recipeQty: ingredient.quantity },
         });
@@ -180,8 +195,9 @@ router.post('/recs/new', async (req, res, next) => {
     let apiRequest = `https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=${process.env.REACT_APP_RECIPE_APP_ID}&app_key=${process.env.REACT_APP_RECIPE_KEY}&mealType=Dinner`;
     const { apiParams } = req.body;
     apiRequest += apiParams;
-    const apiResponse = await axios.get(apiRequest);
+    const apiResponse = await axios.get(encodeURI(apiRequest));
     const hits = apiResponse.data.hits;
+    console.log('api hits: ', hits);
     if (hits) {
       res.send(hits);
     }
@@ -268,17 +284,14 @@ router.put('/:id', async (req, res, next) => {
     // For each recipe, update associated recipe ingredient & its qty
     ingredients.map(async (ingredient) => {
       // Find ingredient to update
-      const ingredientToAdd = await Ingredient.findOne({
+      let ingredientToAdd = await Ingredient.findOne({
         where: {
           name: ingredient.name,
         },
       });
 
       if (!ingredientToAdd) {
-        next({
-          status: 404,
-          message: `Ingredient ${ingredient.name} not found.`,
-        });
+        ingredientToAdd = await Ingredient.create(ingredient);
       }
 
       // Add/updated qty

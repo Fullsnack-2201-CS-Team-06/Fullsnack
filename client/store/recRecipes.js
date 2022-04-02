@@ -30,10 +30,12 @@ export const removeRecRecipe = (recRecipeId) => {
 // THUNKS
 
 //NOTE: This just gets all the recipes not assigned to the user. When we link up the api, we will need to pass user preferences data to retrieve the right results.
-export const showRecRecipes = () => {
+export const showRecRecipes = (cuisinePref) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get('api/recipes/recs');
+      const { data } = await axios.get(
+        `api/recipes/recs?cuisinePref=${cuisinePref}`
+      );
       dispatch(_showRecRecipes(data));
     } catch (error) {
       console.error('Failed to retrieve the recipe recommendations', error);
@@ -72,7 +74,9 @@ export const getNewRecRecipes = (apiParams) => {
               return {
                 name: ingredient.food,
                 uom: ingredient.measure,
-                category: ingredient.foodCategory,
+                category: ingredient.foodCategory
+                  ? ingredient.foodCategory.toLowerCase()
+                  : ingredient.foodCategory,
                 image: ingredient.image,
                 quantity: ingredient.quantity,
               };
@@ -89,10 +93,14 @@ export const getNewRecRecipes = (apiParams) => {
 const recRecipesReducer = (state = [], action) => {
   switch (action.type) {
     case SHOW_REC_RECIPES: {
-      return action.recRecipes;
+      let newState = action.recRecipes;
+      if (newState.length > 40) {
+        newState = newState.slice(0, 40);
+      }
+      return newState;
     }
     case ADD_NEW_REC_RECIPE: {
-      return [...state, action.recRecipe];
+      return [action.recRecipe, ...state];
     }
     case REMOVE_REC_RECIPE: {
       return state.filter((recipe) => recipe.id !== action.recRecipeId);
