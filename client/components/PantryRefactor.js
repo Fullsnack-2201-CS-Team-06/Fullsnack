@@ -27,7 +27,7 @@ const PantryRefactor = () => {
   useEffect(() => {
     //If we navigate to the pantry page for the first time, view the Home pantry.
     //If the store does not already have a pantry set, set the home pantry.
-    console.log("second use effect ran")
+    
     if (!Object.keys(pantry).length && pantries.length) {
       const homePantry = pantries.filter((pantry) => pantry.name === 'Home')[0];
       dispatch(fetchSinglePantry(homePantry.id));
@@ -61,7 +61,7 @@ const PantryRefactor = () => {
         </div>
       </div>
       {Object.keys(pantry) ? (
-         <PantrySingle pantry={pantry} />
+         <PantrySingle />
       ) : (
         <div>Nothing here.</div>
       )}

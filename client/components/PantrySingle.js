@@ -6,14 +6,14 @@ import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
 import styles from './PantrySingle.module.css';
 
-const PantrySingle = (props) => {
+const PantrySingle = () => {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.auth);
   const { pantry } = useSelector((state) => state);
   const { ingredients } = pantry 
   let currentPantry = pantry.id 
 
-  
+
 
   async function handleChange(itemId, userId, quantity) {
     dispatch(editPantryThunk(itemId, userId, quantity, currentPantry));
