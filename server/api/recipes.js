@@ -26,17 +26,32 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// GET /api/recipes/recs
+// GET /api/recipes/recs?cuisinePref=STRING
 router.get('/recs', async (req, res, next) => {
   try {
     // At this stage, we're just getting all the recipes not assigned to any user. With the api, this route will be entirely replaced.
-    const recRecipes = await Recipe.findAll({
+    let recRecipes = await Recipe.findAll({
       where: { userId: { [Op.is]: null } },
       include: Ingredient,
     });
     if (!recRecipes) {
       next({ status: 404, message: 'No recommended recipes found.' });
     }
+
+    if (req.query.cuisinePref) {
+      const { cuisinePref } = req.query;
+      let matches = [];
+      let nonMatches = [];
+      recRecipes.forEach((recipe) => {
+        if (recipe.cuisineType === cuisinePref) {
+          matches.push(recipe);
+        } else {
+          nonMatches.push(recipe);
+        }
+      });
+      recRecipes = matches.concat(nonMatches);
+    }
+
     res.send(recRecipes);
   } catch (error) {
     next(error);

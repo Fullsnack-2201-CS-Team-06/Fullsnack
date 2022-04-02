@@ -25,7 +25,7 @@ const RecRecipes = () => {
 
   //First, get the recommended recipes and the user's pantry ingredients.
   useEffect(() => {
-    dispatch(showRecRecipes());
+    dispatch(showRecRecipes(cuisinePref));
     dispatch(getOurFoods(id)); //Get the ingredients associated with the user to sort results.
   }, []);
 
@@ -51,10 +51,6 @@ const RecRecipes = () => {
 
     //Only execute the api call after the 2nd render. Otherwise, the recipes needed will be inaccurate.
     if (didMount.current) {
-      console.log(
-        'Matching cuisine pref: ',
-        recRecipes.filter((recRecipe) => recRecipe.cuisineType === cuisinePref)
-      );
       //When the number of rec recipes falls below five, get ten from the api.
       if (recRecipes.length < 5) {
         getMoreRecs();
@@ -65,10 +61,9 @@ const RecRecipes = () => {
         !recRecipes.filter((recRecipe) => recRecipe.cuisineType === cuisinePref)
           .length
       ) {
-        getMoreRecs(recRecipes.length &&
-          !recRecipes.filter((recRecipe) => recRecipe.cuisineType === cuisinePref)
-            .length);
-      } else {
+        getMoreRecs();
+      }
+    } else {
       didMount.current = true;
     }
   }, [recipes]);
