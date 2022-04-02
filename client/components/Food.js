@@ -131,6 +131,9 @@ const Food = () => {
 
   return (
     <div>
+      <div className={styles.sectionHeader}>
+        <h1 className={styles.sectionTitle}>Foods</h1>
+      </div>
       <div className={styles.allfoodsbar}>
         <div className={styles.search}>
           <label htmlFor="search">Search Foods</label>
