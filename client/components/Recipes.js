@@ -22,7 +22,10 @@ const Recipes = () => {
   }, []);
 
   return (
-    <Container className={styles.recipesPage}>
+    <div className={styles.recipesPage}>
+      <div className={styles.sectionHeader}>
+        <h1 className={styles.sectionTitle}>Recipes</h1>
+      </div>
       <h3
         style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}
       >
@@ -75,7 +78,7 @@ const Recipes = () => {
           })}
         </Container>
       </Container>
-    </Container>
+    </div>
   );
 };
 

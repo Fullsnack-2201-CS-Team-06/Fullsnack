@@ -10,25 +10,35 @@ const Footer = () => {
         <Container id={styles.footerContentContainer}>
           <div id={styles.siteContainer}>
             <p>SITE</p>
-            <a href="https://github.com/Fullsnack-2201-CS-Team-06/Fullsnack">
+            <a
+              href="https://github.com/Fullsnack-2201-CS-Team-06/Fullsnack"
+              target="_blank"
+            >
+              <img src="/github.png" />
               GitHub Repo
             </a>
           </div>
           <div id={styles.creatorsContainer}>
             <p>CREATORS</p>
-            <a href="https://www.linkedin.com/in/evangarris">
+            <a href="https://www.linkedin.com/in/evangarris" target="_blank">
               <img src="/linkedin.png" />
               Evan Garris
             </a>
-            <a href="https://www.linkedin.com/in/david-w-dunham/">
+            <a
+              href="https://www.linkedin.com/in/david-w-dunham/"
+              target="_blank"
+            >
               <img src="/linkedin.png" />
               David Dunham
             </a>
-            <a href="https://www.linkedin.com/in/lynchharrison/">
+            <a
+              href="https://www.linkedin.com/in/lynchharrison/"
+              target="_blank"
+            >
               <img src="/linkedin.png" />
               Harrison Lynch
             </a>
-            <a href="https://www.linkedin.com/in/kvcodesnacts/">
+            <a href="https://www.linkedin.com/in/kvcodesnacts/" target="_blank">
               <img src="/linkedin.png" />
               Kevin Veloso
             </a>
@@ -36,7 +46,9 @@ const Footer = () => {
         </Container>
         <Container id={styles.footerLogoContainer}>
           <h1 className={styles.logo}>
-            <a id={styles.logoLink} href="/">FULLSNACK</a>
+            <a id={styles.logoLink} href="/">
+              FULLSNACK
+            </a>
           </h1>
           <p id={styles.copyright}>Copyright © 2022</p>
         </Container>

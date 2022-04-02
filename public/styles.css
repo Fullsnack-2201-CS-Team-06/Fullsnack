@@ -34,13 +34,13 @@ form div {
 
 table,
 td {
-  border: 1px solid #333;
+  border: 1px solid #012a36;
 }
 
 thead,
 tfoot {
-  background-color: #333;
-  color: #fff;
+  background-color: #012a36;
+  color: #f5f5f5;
 }
 
 #page-container {
