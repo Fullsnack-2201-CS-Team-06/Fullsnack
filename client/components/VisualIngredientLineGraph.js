@@ -31,10 +31,11 @@ let ingredient3Data = []
 let ingredient4Data = []
 let ingredient5Data = []
 let tempData = []
+let listOfIngredients = {}
 
 if (shoppingHistory) {
-  shoppingHistory.forEach(list => {
-      list.ingredients.forEach((item, idx) => {
+  shoppingHistory.forEach((list, idx) => {
+      list.ingredients.forEach((item) => {
         if (item.name === ingredient1) {
           ingredient1Data.push({ x: idx + 1, y: item.shoppingListIngredient.sliQuantity})
         }
@@ -50,12 +51,16 @@ if (shoppingHistory) {
         if (item.name === ingredient5) {
           ingredient5Data.push({ x: idx + 1, y: item.shoppingListIngredient.sliQuantity})
         }
-        tempData.push(item.name)
+        if (listOfIngredients[item.name]) {
+          return
+        } else {
+          listOfIngredients[item.name] = 1
+        }
       })
     })
   }
 
-  console.log(ingredient1, ingredient1Data)
+  console.log('its a list of ingredients', Object.keys(listOfIngredients))
 
   return (
     <div style={{ height: '650px' }}>
