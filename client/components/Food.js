@@ -10,7 +10,9 @@ import styles from './Food.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const foodCategories = [
-  'produce',
+  'vegetables',
+  'Condiments and sauces',
+  'plant-based protein',
   'meat',
   'dairy',
   'dry goods',
