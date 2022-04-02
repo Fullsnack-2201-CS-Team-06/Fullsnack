@@ -65,7 +65,7 @@ const HomeGuest = () => {
           </Link>
         </div>
         <hr />
-        <h2 style={{ fontWeight: 'bold', margin: '25px' }}>
+        <h2 style={{ margin: '25px', fontSize: '42px' }}>
           Take control of your kitchen life.
         </h2>
         <div className={styles.cardContainer}>
@@ -122,8 +122,8 @@ const HomeGuest = () => {
             <Card.Body>
               <Card.Title>Recommendations</Card.Title>
               <Card.Text>
-                Don't know what to cook? Try one of Fullstack's recommendations
-                based on your preferences.
+                Don't know what to cook? Try one of Fullsnack's recommended
+                recipes based on your preferences.
               </Card.Text>
             </Card.Body>
           </Card>
