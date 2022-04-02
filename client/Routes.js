@@ -17,7 +17,8 @@ import EditRecipe from './components/EditRecipe';
 import AddRecipe from './components/AddRecipe';
 import NewPantryItem from './components/NewPantryItem';
 import HomeGuest from './components/HomeGuest';
-import PantryRefactor from './components/PantryRefactor'
+import PantryRefactor from './components/PantryRefactor';
+import SingleRecRecipe from './components/SingleRecRecipe';
 
 /**
  * COMPONENT
@@ -54,6 +55,11 @@ const Routes = () => {
           <Route exact path="/recipes" component={Recipes} />
           <Route exact path="/recipes/add" component={AddRecipe} />
           <Route exact path="/recipes/:id" component={SingleRecipe} />
+          <Route
+            exact
+            path="/recipes/recommended/:id"
+            component={SingleRecipe}
+          />
           <Route exact path="/recipes/:id/edit" component={EditRecipe} />
           <Route path="/home" component={Home} />
           <Redirect to="/home" />

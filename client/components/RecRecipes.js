@@ -153,10 +153,10 @@ const RecRecipes = () => {
 
   return (
     <Carousel responsive={responsive} arrows showDots={false}>
-      {recRecipes.map((recipe, i) => (
+      {recRecipes.map((recipe) => (
         <Container>
           <Card
-            key={i}
+            key={recipe.id}
             className={
               recipe.id === currentView
                 ? styles.expandedCard
@@ -177,12 +177,14 @@ const RecRecipes = () => {
                   ? '...'
                   : ''}
               </Card.Title>
-              <Button
-                variant="outline-primary"
-                className={styles.buttonOutline}
-              >
-                View
-              </Button>
+              <Link to={`/recipes/recommended/${recipe.id}`}>
+                <Button
+                  variant="outline-primary"
+                  className={styles.buttonOutline}
+                >
+                  View
+                </Button>
+              </Link>
               <Button
                 variant="outline-primary"
                 className={styles.buttonOutline}
