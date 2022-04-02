@@ -18,7 +18,6 @@ import AddRecipe from './components/AddRecipe';
 import NewPantryItem from './components/NewPantryItem';
 import HomeGuest from './components/HomeGuest';
 import PantryRefactor from './components/PantryRefactor';
-import SingleRecRecipe from './components/SingleRecRecipe';
 
 /**
  * COMPONENT
