@@ -48,13 +48,28 @@
 }
 
 .removebutton {
-  width: 80px;
+  width: 50px;
   align-self: center;
+  border-color: #e85f5c;
+  background-color: #e85f5c;
+  color: #f5f5f5;
+}
+
+.removebutton:hover {
+  border-color: #e54946;
+  background-color: #e54946;
 }
 
 .button {
   width: 180px;
   align-self: center;
+  background-color: #e85f5c;
+  border: none;
+  margin: 15px;
+}
+
+.button:hover {
+  background-color: #e54946;
 }
 
 .sectionHeader {
