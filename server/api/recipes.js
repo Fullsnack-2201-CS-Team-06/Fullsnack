@@ -92,24 +92,19 @@ router.post('/', async (req, res, next) => {
 
     // Associate recipe ingredients & qtys with recipe
     ingredients.map(async (ingredient) => {
-      const ingredientToAdd = await Ingredient.findOne({
+      let ingredientToAdd = await Ingredient.findOne({
         where: {
           name: ingredient.name,
         },
       });
 
       if (!ingredientToAdd) {
-        next({
-          status: 404,
-          message: `Ingredient ${ingredient.name} not found.`,
-        });
+        ingredientToAdd = await Ingredient.create(ingredient);
       }
 
-      if (!newRecipe.hasIngredient(ingredientToAdd)) {
-        await newRecipe.addIngredient(ingredientToAdd, {
-          through: { recipeQty: ingredient.recipeQty },
-        });
-      }
+      await newRecipe.addIngredient(ingredientToAdd, {
+        through: { recipeQty: ingredient.recipeQty },
+      });
     });
 
     res.send(newRecipe);
@@ -158,12 +153,9 @@ router.post('/recs', async (req, res, next) => {
           ingredientToAdd = await Ingredient.create(ingredient);
         }
 
-        /* Recipes may have duplicate ingredients. If one is already found for the recipe, do not add.*/
-        if (!newRecipe.hasIngredient(ingredientToAdd)) {
-          await newRecipe.addIngredient(ingredientToAdd, {
-            through: { recipeQty: ingredient.quantity },
-          });
-        }
+        await newRecipe.addIngredient(ingredientToAdd, {
+          through: { recipeQty: ingredient.quantity },
+        });
       })
     );
 
@@ -277,17 +269,14 @@ router.put('/:id', async (req, res, next) => {
     // For each recipe, update associated recipe ingredient & its qty
     ingredients.map(async (ingredient) => {
       // Find ingredient to update
-      const ingredientToAdd = await Ingredient.findOne({
+      let ingredientToAdd = await Ingredient.findOne({
         where: {
           name: ingredient.name,
         },
       });
 
       if (!ingredientToAdd) {
-        next({
-          status: 404,
-          message: `Ingredient ${ingredient.name} not found.`,
-        });
+        ingredientToAdd = await Ingredient.create(ingredient);
       }
 
       // Add/updated qty
