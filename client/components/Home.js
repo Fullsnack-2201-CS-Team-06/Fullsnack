@@ -9,7 +9,6 @@ import VisualIngredientLineGraph from './VisualIngredientLineGraph';
 import styles from './Home.module.css';
 import { Card } from 'react-bootstrap';
 
-
 /**
  * COMPONENT
  */
@@ -26,7 +25,9 @@ const Home = (props) => {
 
   return (
     <div className={styles.container}>
-      <h3>Welcome, {username}</h3>
+      <div className={styles.sectionHeader}>
+        <h1 className={styles.sectionTitle}>Overview</h1>
+      </div>
       <div className={styles.charts}>
         <Card className={styles.chartCard}>
           <Card.Body>
@@ -38,8 +39,16 @@ const Home = (props) => {
             <Visuals />
           </Card.Body>
         </Card>
-        <Visual2 />
-      <VisualIngredientLineGraph />
+        <Card className={styles.chartCard}>
+          <Card.Body>
+            <Visual2 />
+          </Card.Body>
+        </Card>
+        <Card className={styles.chartCard}>
+          <Card.Body>
+            <VisualIngredientLineGraph />
+          </Card.Body>
+        </Card>
       </div>
     </div>
   );
