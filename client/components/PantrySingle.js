@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchSinglePantry, editPantryThunk } from '../store/pantry';
-import NewPantryItem from './NewPantryItem';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
@@ -14,7 +12,7 @@ const PantrySingle = ({ match }) => {
   const { id } = useSelector((state) => state.auth);
   const  pantry  = useSelector((state) => state.pantry);
   const { ingredients } = pantry || [];
-  const currentPantry = pantry.id || 1
+  const currentPantry = pantry.id || []
 
 
   useEffect(() => {
@@ -65,7 +63,6 @@ const PantrySingle = ({ match }) => {
           </tbody>
         </Table>
       </Container>
-      <NewPantryItem />
     </div>
   );
 };
