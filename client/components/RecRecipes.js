@@ -58,14 +58,17 @@ const RecRecipes = () => {
       //When the number of rec recipes falls below five, get ten from the api.
       if (recRecipes.length < 5) {
         getMoreRecs();
+
+        //If there are recipes present, but none match our cuisine preference (due to account update), search again.
       } else if (
         recRecipes.length &&
         !recRecipes.filter((recRecipe) => recRecipe.cuisineType === cuisinePref)
           .length
       ) {
-        getMoreRecs();
-      }
-    } else {
+        getMoreRecs(recRecipes.length &&
+          !recRecipes.filter((recRecipe) => recRecipe.cuisineType === cuisinePref)
+            .length);
+      } else {
       didMount.current = true;
     }
   }, [recipes]);
