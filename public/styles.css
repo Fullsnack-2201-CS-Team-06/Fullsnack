@@ -42,3 +42,12 @@ tfoot {
   background-color: #333;
   color: #fff;
 }
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 150px;
+}
