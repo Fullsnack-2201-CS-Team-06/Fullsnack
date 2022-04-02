@@ -25,14 +25,14 @@ const RecRecipes = () => {
 
   //First, get the recommended recipes and the user's pantry ingredients.
   useEffect(() => {
-    dispatch(showRecRecipes());
+    dispatch(showRecRecipes(cuisinePref));
     dispatch(getOurFoods(id)); //Get the ingredients associated with the user to sort results.
   }, []);
 
   const didMount = useRef(false);
   //Get all the recommended recipes not associated with the current user.
   useEffect(() => {
-    async function getMoreRecs() {
+    function getMoreRecs() {
       //The base api url with which we request new recommendations.
       let apiParams = '';
       //Exclude the recipes that we already have.
@@ -45,15 +45,7 @@ const RecRecipes = () => {
       if (health) {
         apiParams += `&health=${health}`;
       }
-      recipes.forEach((recipe) => {
-        const recipeWords = recipe.name.split(' ').join('%20');
-        apiParams += `&excluded=${recipeWords}`;
-      });
-      //Exclude the recipes already in our recommendations.
-      recRecipes.forEach((recRecipe) => {
-        const recipeWords = recRecipe.name.split(' ').join('%20');
-        apiParams += `&excluded=${recipeWords}`;
-      });
+      apiParams += '&random=true';
       dispatch(getNewRecRecipes(apiParams));
     }
 
@@ -62,13 +54,19 @@ const RecRecipes = () => {
       //When the number of rec recipes falls below five, get ten from the api.
       if (recRecipes.length < 5) {
         getMoreRecs();
+
+        //If there are recipes present, but none match our cuisine preference (due to account update), search again.
+      } else if (
+        recRecipes.length &&
+        !recRecipes.filter((recRecipe) => recRecipe.cuisineType === cuisinePref)
+          .length
+      ) {
+        getMoreRecs();
       }
     } else {
       didMount.current = true;
     }
   }, [recipes]);
-
-  console.log('recRecipes: ', recRecipes);
 
   const expandView = (id) => {
     if (id !== currentView) {
@@ -106,6 +104,20 @@ const RecRecipes = () => {
     return recipes;
   }
 
+  function sortByCuisinePref(recipes) {
+    let matches = [];
+    let nonMatches = [];
+    recipes.forEach((recipe) => {
+      if (recipe.cuisineType === cuisinePref) {
+        matches.push(recipe);
+      } else {
+        nonMatches.push(recipe);
+      }
+    });
+    const sortedResults = matches.concat(nonMatches);
+    return sortedResults;
+  }
+
   function addToMyRecipes(recipeId) {
     dispatch(addRecToMyRecipes(recipeId, id));
     dispatch(removeRecRecipe(recipeId));
@@ -113,6 +125,8 @@ const RecRecipes = () => {
 
   //Sort the rec recipes by those that need the least new ingredients.
   recRecipes = sortByAvailablility(recRecipes);
+  //Sort the rec recipes such that the user's cuisineType preference appears first.
+  recRecipes = sortByCuisinePref(recRecipes);
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
