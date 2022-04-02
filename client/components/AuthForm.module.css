@@ -1,7 +1,7 @@
 .authFormContainer {
-  margin-top: 150px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .authForm {
@@ -23,10 +23,14 @@
 .authPageContainer {
   display: flex;
   justify-content: space-evenly;
+  margin: 150px;
 }
 
-.authPageImg {
-  width: 30%;
+#authPageImg {
+  border-radius: 50%;
+  height: 450px;
+  width: 450px;
+  border: 4px solid #e85f5c;
 }
 
 .formTitle {
