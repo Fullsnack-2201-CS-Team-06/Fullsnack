@@ -7,10 +7,8 @@ import PantrySingle from './PantrySingle';
 import NewPantryItem from './NewPantryItem';
 import PantryCreate from './PantryCreate';
 
-
 /* This page contains all the components for the Pantry tab.
 It also has the filter to switch between a users pantries. */
-
 
 const PantryRefactor = () => {
   const { id } = useSelector((state) => state.auth);
@@ -21,9 +19,21 @@ const PantryRefactor = () => {
 
   const dispatch = useDispatch();
 
+
   useEffect(() => {
     dispatch(fetchAllPantries(id));
   }, []);
+
+  useEffect(() => {
+    //If we navigate to the pantry page for the first time, view the Home pantry.
+    //If the store does not already have a pantry set, set the home pantry.
+    
+    if (!Object.keys(pantry).length && pantries.length) {
+      const homePantry = pantries.filter((pantry) => pantry.name === 'Home')[0];
+      dispatch(fetchSinglePantry(homePantry.id));
+    }
+  }, [pantries]);
+
 
   const handlePantryChange = (e) => {
     setSelectedPantry(e);
@@ -35,23 +45,27 @@ const PantryRefactor = () => {
       <div className={styles.pantryFilterContainer}>
         <div className={styles.pantryFilterBox}>
           <div className={styles.pantryFilter}>
-          <label className={styles.label}>My Pantries:</label>
-          <br></br>
-          <select
-            name='pantries'
-            onChange={(e) => handlePantryChange(e.target.value)}
-          >
-            {pantries.map((pantry) => (
-              <option key={pantry.id} value={pantry.id}>
-                {pantry.name}
-              </option>
-            ))}
-          </select>
+            <label className={styles.label}>My Pantries:</label>
+            <br></br>
+            <select
+              name='pantries'
+              onChange={(e) => handlePantryChange(e.target.value)}
+            >
+              {pantries.map((pantry) => (
+                <option key={pantry.id} value={pantry.id}>
+                  {pantry.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
-      <PantrySingle />
-      <PantryCreate/>
+      {Object.keys(pantry) ? (
+         <PantrySingle />
+      ) : (
+        <div>Nothing here.</div>
+      )}
+      <PantryCreate />
       <NewPantryItem />
     </div>
   );
