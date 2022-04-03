@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
   margin-top: 15px;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .minmaxSetting > input {
-  width: 80px;
+  width: 100px;
 }
 
 .foodcards {
@@ -61,4 +61,14 @@
 
 .sectionTitle {
   font-size: 62px;
+}
+
+.basic {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.advanced {
+  display: flex;
+  justify-content: flex-start;
 }
