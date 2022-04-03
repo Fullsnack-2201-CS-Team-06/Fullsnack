@@ -21,6 +21,7 @@ const PantryRefactor = () => {
 
   useEffect(() => {
     dispatch(fetchAllPantries(id));
+    dispatch(fetchSinglePantry(pantry.id));
   }, []);
 
   useEffect(() => {
