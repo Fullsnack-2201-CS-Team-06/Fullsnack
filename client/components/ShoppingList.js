@@ -24,6 +24,8 @@ const ShoppingList = () => {
     if (selectedPantry === 'dave' && pantries.length) {
       setSelectedPantry(pantries[0].id);
       dispatch(fetchSinglePantry(pantries[0].id));
+    } else if (pantries.length) {
+      setSelectedPantry(pantries[pantries.length - 1].id);
     }
   }, [pantries]);
 
