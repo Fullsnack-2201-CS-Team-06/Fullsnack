@@ -92,7 +92,6 @@ export const sendToPantry = (userId, currentList, pantryId) => {
     } catch (error) {
       console.log(error);
     }
-    // history.push(`/pantries/${pantryId}`)
     history.push('/pantries');
   };
 };

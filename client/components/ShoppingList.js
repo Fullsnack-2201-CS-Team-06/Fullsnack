@@ -22,7 +22,8 @@ const ShoppingList = () => {
 
   useEffect(() => {
     if (selectedPantry === 'dave' && pantries.length) {
-      setSelectedPantry(pantries[0]);
+      setSelectedPantry(pantries[0].id);
+      dispatch(fetchSinglePantry(pantries[0].id));
     }
   }, [pantries]);
 
@@ -46,6 +47,7 @@ const ShoppingList = () => {
   async function handleSubmit() {
     if (typeof selectedPantry === 'string' && ingredients.length) {
       dispatch(sendToPantry(id, currentList, selectedPantry));
+      dispatch(fetchSinglePantry(selectedPantry));
     } else if (ingredients.length) {
       dispatch(sendToPantry(id, currentList, pantries[0].id));
       dispatch(fetchSinglePantry(selectedPantry));
@@ -54,7 +56,6 @@ const ShoppingList = () => {
     }
   }
 
-  console.log('selectedPantry: ', selectedPantry);
   return (
     <div>
       <div className={styles.sectionHeader}>
