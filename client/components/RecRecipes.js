@@ -73,7 +73,7 @@ const RecRecipes = () => {
     } else {
       didMount.current = true;
     }
-  }, [recipes]);
+  }, [recRecipes]);
 
   const expandView = (id) => {
     if (id !== currentView) {
