@@ -145,7 +145,7 @@ const Food = () => {
 
             <Form.Group className={styles.allFoodsSetting}>
               <Form.Label htmlFor="category-filter">
-                Filter Categories:{' '}
+                Filter Categories
               </Form.Label>
               <Form.Select
                 name="category-filter"

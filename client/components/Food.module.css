@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   margin-top: 15px;
 }
 
 .search {
-  margin-left: 15px;
+  margin-right: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -19,11 +19,13 @@
 .allFoodsSetting {
   display: flex;
   flex-direction: column;
+  margin-right: 10px;
 }
 
 .minmaxSetting {
   display: flex;
   flex-direction: row;
+  margin: 3px;
 }
 
 .minmaxSetting > input {
@@ -66,6 +68,7 @@
 .basic {
   display: flex;
   justify-content: flex-start;
+  margin: 20px;
 }
 
 .advanced {
