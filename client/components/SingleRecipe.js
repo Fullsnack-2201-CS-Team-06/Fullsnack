@@ -4,12 +4,14 @@ import { useParams, useHistory } from 'react-router-dom';
 import { fetchSingleRecipe } from '../store/singleRecipe';
 import { Link } from 'react-router-dom';
 import { Container, Button, Card } from 'react-bootstrap';
+import { addRecToMyRecipes } from '../store/recipes';
 import styles from './SingleRecipe.module.css';
 
 const SingleRecipe = () => {
-  const { singleRecipe } = useSelector((state) => {
+  const { singleRecipe, userId } = useSelector((state) => {
     return {
       singleRecipe: state.singleRecipe,
+      userId: state.auth.id,
     };
   });
 
@@ -75,6 +77,13 @@ const SingleRecipe = () => {
               onClick={() => history.push('/recipes')}
             >
               Back
+            </Button>
+            <Button
+              variant="outline-primary"
+              className={styles.buttonOutline}
+              onClick={() => dispatch(addRecToMyRecipes(id, userId))}
+            >
+              Add to Shopping List
             </Button>
             <Link to={`/recipes/${id}/edit`}>
               <Button

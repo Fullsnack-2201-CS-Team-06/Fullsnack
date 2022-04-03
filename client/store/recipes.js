@@ -73,7 +73,7 @@ export const addRecToMyRecipes = (recRecipeId, userId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(
-        `api/recipes/recs/${recRecipeId}?userId=${userId}`
+        `/api/recipes/recs/${recRecipeId}?userId=${userId}`
       );
       dispatch(_addRecRecipe(data));
     } catch (error) {
