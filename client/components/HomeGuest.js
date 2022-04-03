@@ -54,12 +54,20 @@ const HomeGuest = () => {
         </Container>
         <div className={styles.buttonContainer}>
           <Link to="/signup">
-            <Button className={styles.button} variant="primary">
+            <Button
+              className={styles.button}
+              variant="primary"
+              style={{ fontSize: '20px' }}
+            >
               Sign Up
             </Button>
           </Link>
           <Link to="/login">
-            <Button className={styles.loginBtn} variant="outline-primary">
+            <Button
+              className={styles.loginBtn}
+              variant="outline-primary"
+              style={{ fontSize: '20px' }}
+            >
               Login
             </Button>
           </Link>
