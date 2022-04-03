@@ -20,6 +20,10 @@ const ShoppingList = () => {
   const { ingredients } = currentList || [];
 
   useEffect(() => {
+    setSelectedPantry(pantries[0]);
+  }, [pantries]);
+
+  useEffect(() => {
     dispatch(fetchCurrentShoppingList(id));
     dispatch(fetchAllPantries(id));
   }, []);
