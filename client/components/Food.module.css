@@ -1,13 +1,13 @@
 .allfoodsbar {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: 15px;
 }
 
 .search {
-  margin-left: 15px;
+  margin-right: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -19,22 +19,26 @@
 .allFoodsSetting {
   display: flex;
   flex-direction: column;
+  margin-right: 10px;
 }
 
 .minmaxSetting {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  margin: 3px;
 }
 
 .minmaxSetting > input {
-  width: 80px;
+  width: 100px;
+  margin: 2px;
 }
 
 .foodcards {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
+  margin-top: 30px;
 }
 
 .foodcards > * {
@@ -48,8 +52,8 @@
 }
 
 .sectionHeader {
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url(https://envato-shoebox-0.imgix.net/7207/244b-7205-498a-ac42-be724c0cc864/Grilled+meat_1_banner.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=0733ee80d4d4d56268984666018bd1e5);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url(https://envato-shoebox-0.imgix.net/7207/244b-7205-498a-ac42-be724c0cc864/Grilled+meat_1_banner.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=0733ee80d4d4d56268984666018bd1e5);
   background-size: cover;
   background-position: center;
   padding: 100px 0;
@@ -61,4 +65,15 @@
 
 .sectionTitle {
   font-size: 62px;
+}
+
+.basic {
+  display: flex;
+  justify-content: flex-start;
+  margin: 20px;
+}
+
+.advanced {
+  display: flex;
+  justify-content: flex-start;
 }

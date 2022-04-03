@@ -6,3 +6,14 @@
 .button {
   margin-top: 10px;
 }
+
+.buttonOutline {
+  border-color: #e85f5c;
+  color: #e85f5c;
+  margin-top: 25px;
+}
+
+.buttonOutline:hover {
+  border-color: #e54946;
+  background-color: #e54946;
+}

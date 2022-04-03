@@ -57,7 +57,11 @@ const SingleFood = (props) => {
             )
           }
         >
-          <Button className={styles.button} onClick={handleSubmit}>
+          <Button
+            variant="outline-primary"
+            className={styles.buttonOutline}
+            onClick={handleSubmit}
+          >
             Add to Shopping List
           </Button>
         </OverlayTrigger>
