@@ -32,14 +32,14 @@ const Food = () => {
   const dispatch = useDispatch();
   const [searchCriteria, setSearchCriteria] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
-  const [minCalories, setMinCalories] = useState(0);
-  const [maxCalories, setMaxCalories] = useState(100000);
-  const [minProtein, setMinProtein] = useState(0);
-  const [maxProtein, setMaxProtein] = useState(100000);
-  const [minCarbs, setMinCarbs] = useState(0);
-  const [maxCarbs, setMaxCarbs] = useState(100000);
-  const [minFat, setMinFat] = useState(0);
-  const [maxFat, setMaxFat] = useState(100000);
+  const [minCalories, setMinCalories] = useState('');
+  const [maxCalories, setMaxCalories] = useState('');
+  const [minProtein, setMinProtein] = useState('');
+  const [maxProtein, setMaxProtein] = useState('');
+  const [minCarbs, setMinCarbs] = useState('');
+  const [maxCarbs, setMaxCarbs] = useState('');
+  const [minFat, setMinFat] = useState('');
+  const [maxFat, setMaxFat] = useState('');
   //Get all foods associated with that user's pantries, recipes, and shopping lists.
   useEffect(() => {
     dispatch(getFoods());
@@ -83,48 +83,48 @@ const Food = () => {
   }
 
   //Filter for those above the minimum calories.
-  if (minCalories !== 0) {
+  if (minCalories !== '') {
     foods = foods.filter((food) => food.caloriesPerUnit >= minCalories);
   }
 
   //Filter for those below the maximum calories.
-  if (maxCalories !== 0) {
+  if (maxCalories !== '') {
     foods = foods.filter(
       (food) => food.caloriesPerUnit <= maxCalories || !food.caloriesPerUnit
     );
   }
 
   //Filter for the protein range.
-  if (minProtein !== 0) {
+  if (minProtein !== '') {
     foods = foods.filter(
       (food) => food.proteinPerUnit >= minProtein || !food.proteinPerUnit
     );
   }
-  if (maxProtein !== 0) {
+  if (maxProtein !== '') {
     foods = foods.filter(
       (food) => food.proteinPerUnit <= maxProtein || !food.proteinPerUnit
     );
   }
 
   //Filter for the carbs range.
-  if (minCarbs !== 0) {
+  if (minCarbs !== '') {
     foods = foods.filter(
       (food) => food.carbsPerUnit >= minCarbs || !food.carbsPerUnit
     );
   }
-  if (maxCarbs !== 0) {
+  if (maxCarbs !== '') {
     foods = foods.filter(
       (food) => food.carbsPerUnit <= maxCarbs || !food.carbsPerUnit
     );
   }
 
   //Filter for the fats range.
-  if (minFat !== 0) {
+  if (minFat !== '') {
     foods = foods.filter(
       (food) => food.fatsPerUnit >= minFat || !food.fatsPerUnit
     );
   }
-  if (maxFat !== 0) {
+  if (maxFat !== '') {
     foods = foods.filter(
       (food) => food.fatsPerUnit <= maxFat || !food.fatsPerUnit
     );
@@ -166,22 +166,22 @@ const Food = () => {
           <div className={styles.advanced}>
             <div className={styles.allFoodsSetting}>
               <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="minCalories">Min Calories: </Form.Label>
+                <Form.Label htmlFor="minCalories">Calories </Form.Label>
                 <Form.Control
                   type="number"
                   name="minCalories"
                   min="0"
+                  max="100000"
                   value={minCalories}
+                  placeholder="Min"
                   onChange={editNutritionRange}
                 />
-              </div>
-
-              <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="maxCalories">Max Calories: </Form.Label>
                 <Form.Control
                   type="number"
                   name="maxCalories"
                   min="0"
+                  max="100000"
+                  placeholder="Max"
                   value={maxCalories}
                   onChange={editNutritionRange}
                 />
@@ -190,22 +190,20 @@ const Food = () => {
 
             <div className={styles.allFoodsSetting}>
               <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="minProtein">Min Protein: </Form.Label>
+                <Form.Label htmlFor="minProtein">Protein </Form.Label>
                 <Form.Control
                   type="number"
                   name="minProtein"
                   min="0"
+                  placeholder="Min"
                   value={minProtein}
                   onChange={editNutritionRange}
                 />
-              </div>
-
-              <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="maxProtein">Max Protein: </Form.Label>
                 <Form.Control
                   type="number"
                   name="maxProtein"
                   min="0"
+                  placeholder="Max"
                   value={maxProtein}
                   onChange={editNutritionRange}
                 />
@@ -214,21 +212,20 @@ const Food = () => {
 
             <div className={styles.allFoodsSetting}>
               <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="minCarbs">Min Carbs: </Form.Label>
+                <Form.Label htmlFor="minCarbs">Carbs</Form.Label>
                 <Form.Control
                   type="number"
                   name="minCarbs"
                   min="0"
+                  placeholder="Min"
                   value={minCarbs}
                   onChange={editNutritionRange}
                 />
-              </div>
-              <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="maxCarbs">Max Carbs: </Form.Label>
                 <Form.Control
                   type="number"
                   name="maxCarbs"
                   min="0"
+                  placeholder="Max"
                   value={maxCarbs}
                   onChange={editNutritionRange}
                 />
@@ -237,21 +234,20 @@ const Food = () => {
 
             <div className={styles.allFoodsSetting}>
               <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="minFat">Min Fat: </Form.Label>
+                <Form.Label htmlFor="minFat">Fat </Form.Label>
                 <Form.Control
                   type="number"
                   name="minFat"
                   min="0"
+                  placeholder="Min"
                   value={minFat}
                   onChange={editNutritionRange}
                 />
-              </div>
-              <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="maxFat">Max Fat: </Form.Label>
                 <Form.Control
                   type="number"
                   name="maxFat"
                   min="0"
+                  placeholder="Max"
                   value={maxFat}
                   onChange={editNutritionRange}
                 />
