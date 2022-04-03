@@ -7,6 +7,7 @@ import {
   VictoryLabel,
   VictoryGroup,
   VictoryLine,
+  VictoryScatter,
 } from 'victory';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchShoppingListHistory } from '../store/ShoppingList';
@@ -29,6 +30,16 @@ const VisualIngredientLineGraph = () => {
   useEffect(() => {
     dispatch(fetchShoppingListHistory(id))
   }, [])
+
+  useEffect(() => {
+    if (Object.keys(listOfIngredients).length) {
+      setIngredient1(Object.keys(listOfIngredients)[0])
+      setIngredient2(Object.keys(listOfIngredients)[1])
+      setIngredient3(Object.keys(listOfIngredients)[2])
+      setIngredient4(Object.keys(listOfIngredients)[3])
+      setIngredient5(Object.keys(listOfIngredients)[4])
+    }
+  })
 
 let ingredient1Data = []
 let ingredient2Data = []
@@ -162,7 +173,7 @@ if (shoppingHistory) {
         />
         <VictoryAxis
           axisLabelComponent={<VictoryLabel />}
-          label={'My Food'}
+          label={'List History'}
           crossAxis
           style={{
             tickLabels: {
@@ -170,7 +181,7 @@ if (shoppingHistory) {
               fontSize: 5,
             },
             axisLabel: {
-              label: 'My Food',
+              label: 'List History',
               fontFamily: 'inherit',
               fontWeight: 100,
               letterSpacing: '1px',
@@ -182,12 +193,12 @@ if (shoppingHistory) {
         <VictoryAxis
           dependentAxis
           axisLabelComponent={<VictoryLabel />}
-          label={'Frequency'}
+          label={'Quantity'}
           tickFormat={(t) => (Number.isInteger(t) ? t : null)}
           style={{
             tickLabels: { fontSize: 5 },
             axisLabel: {
-              label: 'frequency',
+              label: 'quantity',
               fontFamily: 'inherit',
               fontWeight: 100,
               letterSpacing: '1px',
@@ -196,11 +207,31 @@ if (shoppingHistory) {
             },
           }}
         />
-          <VictoryLine data={data1} />
-          <VictoryLine data={data2} />
-          <VictoryLine data={data3} />
-          <VictoryLine data={data4} />
-          <VictoryLine data={data5} />
+          <VictoryScatter
+          style={{ data: { fill: "#c43a31" }, labels: { fill: "white", fontSize: 10}}} labels={({ datum }) => datum.y}
+          labelComponent={<VictoryLabel dy={8}/>}
+          size={8} data={data1}
+          />
+          <VictoryScatter
+          style={{ data: { fill: "#094f94" }, labels: { fill: "white", fontSize: 10}}} labels={({ datum }) => datum.y}
+          labelComponent={<VictoryLabel dy={8}/>}
+          size={8} data={data2}
+          />
+          <VictoryScatter
+          style={{ data: { fill: "#ffb600" }, labels: { fill: "white", fontSize: 10}}} labels={({ datum }) => datum.y}
+          labelComponent={<VictoryLabel dy={8}/>}
+          size={8} data={data3}
+          />
+          <VictoryScatter
+          style={{ data: { fill: "#2f4f4f" }, labels: { fill: "white", fontSize: 10}}} labels={({ datum }) => datum.y}
+          labelComponent={<VictoryLabel dy={8}/>}
+          size={8} data={data4}
+          />
+          <VictoryScatter
+          style={{ data: { fill: "#480607" }, labels: { fill: "white", fontSize: 10}}} labels={({ datum }) => datum.y}
+          labelComponent={<VictoryLabel dy={8}/>}
+          size={8} data={data5}
+          />
         </VictoryChart>
       </VictoryGroup>
     </div>
