@@ -30,6 +30,7 @@
 
 .minmaxSetting > input {
   width: 100px;
+  margin: 2px;
 }
 
 .foodcards {
