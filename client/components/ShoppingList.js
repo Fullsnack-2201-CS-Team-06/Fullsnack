@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchCurrentShoppingList, sendToPantry } from '../store/ShoppingList';
 import { fetchAllPantries, createNewPantry } from '../store/pantries';
+import { fetchSinglePantry } from '../store/pantry';
 import ShoppingListForm from './ShoppingListForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ListGroup, Table, Button, Container, Form } from 'react-bootstrap';
@@ -20,7 +21,9 @@ const ShoppingList = () => {
   const { ingredients } = currentList || [];
 
   useEffect(() => {
-    setSelectedPantry(pantries[0]);
+    if (selectedPantry === 'dave' && pantries.length) {
+      setSelectedPantry(pantries[0]);
+    }
   }, [pantries]);
 
   useEffect(() => {
@@ -45,11 +48,13 @@ const ShoppingList = () => {
       dispatch(sendToPantry(id, currentList, selectedPantry));
     } else if (ingredients.length) {
       dispatch(sendToPantry(id, currentList, pantries[0].id));
+      dispatch(fetchSinglePantry(selectedPantry));
     } else {
       window.alert('There are no items to add to your pantry!');
     }
   }
 
+  console.log('selectedPantry: ', selectedPantry);
   return (
     <div>
       <div className={styles.sectionHeader}>
@@ -87,6 +92,7 @@ const ShoppingList = () => {
               name="pantries"
               className={styles.select}
               style={{ width: '200px' }}
+              value={selectedPantry}
               onChange={(e) => setSelectedPantry(e.target.value)}
             >
               <option value="1">{defaultName.name}</option>
