@@ -11,6 +11,7 @@
 .buttonOutline {
   border-color: #e85f5c;
   color: #e85f5c;
+  margin-right: 15px;
 }
 
 .buttonOutline:hover {

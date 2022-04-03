@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { fetchSingleRecipe } from '../store/singleRecipe';
 import { Link } from 'react-router-dom';
 import { Container, Button, Card } from 'react-bootstrap';
+import { addRecToMyRecipes } from '../store/recipes';
 import styles from './SingleRecipe.module.css';
 
 const SingleRecipe = () => {
-  const { singleRecipe } = useSelector((state) => {
+  const [addedToList, setAddedToList] = useState(false);
+
+  const { singleRecipe, userId } = useSelector((state) => {
     return {
       singleRecipe: state.singleRecipe,
+      userId: state.auth.id,
     };
   });
 
@@ -22,6 +26,11 @@ const SingleRecipe = () => {
   useEffect(() => {
     dispatch(fetchSingleRecipe(id));
   }, []);
+
+  const addToShoppingList = (recipeId, userId) => {
+    dispatch(addRecToMyRecipes(id, userId));
+    setAddedToList(true);
+  };
 
   return (
     <Container className={styles.singleRecipeContainer}>
@@ -76,6 +85,23 @@ const SingleRecipe = () => {
             >
               Back
             </Button>
+            {addedToList ? (
+              <Button
+                variant="outline-primary"
+                className={styles.buttonOutline}
+                onClick={() => setAddedToList(false)}
+              >
+                Added!
+              </Button>
+            ) : (
+              <Button
+                variant="outline-primary"
+                className={styles.buttonOutline}
+                onClick={() => addToShoppingList(id, userId)}
+              >
+                Add to Shopping List
+              </Button>
+            )}
             <Link to={`/recipes/${id}/edit`}>
               <Button
                 variant="outline-primary"
