@@ -27,26 +27,27 @@ const VisualIngredientLineGraph = () => {
   const [ingredient5, setIngredient5] = useState('')
   const [data5, setData5] = useState([])
 
+  let ingredient1Data = []
+  let ingredient2Data = []
+  let ingredient3Data = []
+  let ingredient4Data = []
+  let ingredient5Data = []
+  let listOfIngredients = {}
+
   useEffect(() => {
     dispatch(fetchShoppingListHistory(id))
   }, [])
 
   useEffect(() => {
-    if (Object.keys(listOfIngredients).length) {
+    console.log('listOfIngredients')
+    if (Object.keys(listOfIngredients).length && ingredient1 === '') {
       setIngredient1(Object.keys(listOfIngredients)[0])
       setIngredient2(Object.keys(listOfIngredients)[1])
       setIngredient3(Object.keys(listOfIngredients)[2])
       setIngredient4(Object.keys(listOfIngredients)[3])
       setIngredient5(Object.keys(listOfIngredients)[4])
     }
-  })
-
-let ingredient1Data = []
-let ingredient2Data = []
-let ingredient3Data = []
-let ingredient4Data = []
-let ingredient5Data = []
-let listOfIngredients = {}
+  }, [listOfIngredients])
 
 if (shoppingHistory) {
   shoppingHistory.forEach(list => {
@@ -158,7 +159,6 @@ if (shoppingHistory) {
           </option>
         ))}
       </select>
-      <VictoryGroup offset={25} colorScale={["tomato", "orange", "gold", 'blue', 'green']} >
         <VictoryChart
         theme={VictoryTheme.material}
         domainPadding={{ x: 20 }}
@@ -166,20 +166,18 @@ if (shoppingHistory) {
         width={300}
         animate={{ duration: 500 }} >
         <VictoryLabel
-          text='items bought over time on shopping lists'
+          text="An item's quantity per Shopping List"
           x={225}
           y={30}
-          textAnchor="middle"
+          textAnchor="end"
         />
+        <VictoryGroup offset={45} >
         <VictoryAxis
           axisLabelComponent={<VictoryLabel />}
           label={'List History'}
           crossAxis
           style={{
-            tickLabels: {
-              angle: -45,
-              fontSize: 5,
-            },
+            tickLabels: { fontSize: 5 },
             axisLabel: {
               label: 'List History',
               fontFamily: 'inherit',
@@ -232,8 +230,8 @@ if (shoppingHistory) {
           labelComponent={<VictoryLabel dy={8}/>}
           size={8} data={data5}
           />
+          </VictoryGroup>
         </VictoryChart>
-      </VictoryGroup>
     </div>
   )
 }
