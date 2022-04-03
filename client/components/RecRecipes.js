@@ -60,9 +60,14 @@ const RecRecipes = () => {
       } else if (
         recRecipes.length &&
         cuisinePref &&
-        !recRecipes.filter((recRecipe) => recRecipe.cuisineType === cuisinePref)
-          .length
+        !recRecipes.filter(
+          (recRecipe) =>
+            recRecipe.cuisineType.toLowerCase() === cuisinePref.toLowerCase()
+        ).length
       ) {
+        console.log(
+          'Not enough recs to meet your cuisine preference. Getting more!'
+        );
         getMoreRecs();
       }
     } else {
