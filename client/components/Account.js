@@ -29,27 +29,33 @@ const Account = () => {
     <div className={styles.page}>
       <div className={styles.container}>
         <AccountUpdate />
-        <Button variant="secondary" onClick={toggleStatus}>
+        <Button
+          className={styles.buttonOutline}
+          variant="outline-primary"
+          onClick={toggleStatus}
+        >
           Cancel
         </Button>
       </div>
-      <img
-        className={styles.image}
-        src="https://media.istockphoto.com/photos/fresh-kale-picture-id899247492?b=1&k=20&m=899247492&s=170667a&w=0&h=1C-yhVk9dP1-J0DZeWAmrW1WQhles4tpq7rUx4EQfO4="
-      />
+      <div>
+        <img className={styles.image} src="/salmon.jpg" />
+      </div>
     </div>
   ) : (
     <div className={styles.page}>
       <div className={styles.container}>
         <AccountDisplay />
-        <Button variant="primary" onClick={toggleStatus}>
+        <Button
+          className={styles.button}
+          variant="primary"
+          onClick={toggleStatus}
+        >
           Update
         </Button>
       </div>
-      <img
-        className={styles.image}
-        src="https://media.istockphoto.com/photos/fresh-kale-picture-id899247492?b=1&k=20&m=899247492&s=170667a&w=0&h=1C-yhVk9dP1-J0DZeWAmrW1WQhles4tpq7rUx4EQfO4="
-      />
+      <div>
+        <img className={styles.image} src="/salmon.jpg" />
+      </div>
     </div>
   );
 };

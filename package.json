@@ -1,7 +1,7 @@
 {
   "name": "fullsnack",
   "version": "2.0.0",
-  "description": "Make some recipes from the items already in your kitchen!",
+  "description": "Simplify your cravings.",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
