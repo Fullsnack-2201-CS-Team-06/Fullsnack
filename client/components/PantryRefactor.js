@@ -41,6 +41,9 @@ const PantryRefactor = () => {
 
   return (
     <div>
+      <div className={styles.sectionHeader}>
+        <h1 className={styles.sectionTitle}>Pantry</h1>
+      </div>
       <div className={styles.pantryFilterContainer}>
         <div className={styles.pantryFilterBox}>
           <div className={styles.pantryFilter}>
