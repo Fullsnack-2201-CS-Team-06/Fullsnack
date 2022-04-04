@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchCurrentShoppingList, sendToPantry } from '../store/ShoppingList';
 import { fetchAllPantries, createNewPantry } from '../store/pantries';
+import { fetchSinglePantry } from '../store/pantry';
 import ShoppingListForm from './ShoppingListForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ListGroup, Table, Button, Container, Form } from 'react-bootstrap';
@@ -18,6 +19,17 @@ const ShoppingList = () => {
   const [newPantry, setNewPantry] = useState('');
   const { name } = currentList || '';
   const { ingredients } = currentList || [];
+  const didMount = useRef(false);
+
+  useEffect(() => {
+    if (selectedPantry === 'dave' && pantries.length) {
+      setSelectedPantry(pantries[0].id);
+      dispatch(fetchSinglePantry(pantries[0].id));
+      didMount.current = true;
+    } else if (didMount.current && pantries.length) {
+      setSelectedPantry(pantries[pantries.length - 1].id);
+    }
+  }, [pantries]);
 
   useEffect(() => {
     dispatch(fetchCurrentShoppingList(id));
@@ -39,8 +51,10 @@ const ShoppingList = () => {
   async function handleSubmit() {
     if (typeof selectedPantry === 'string' && ingredients.length) {
       dispatch(sendToPantry(id, currentList, selectedPantry));
+      dispatch(fetchSinglePantry(selectedPantry));
     } else if (ingredients.length) {
       dispatch(sendToPantry(id, currentList, pantries[0].id));
+      dispatch(fetchSinglePantry(selectedPantry));
     } else {
       window.alert('There are no items to add to your pantry!');
     }
@@ -83,6 +97,7 @@ const ShoppingList = () => {
               name="pantries"
               className={styles.select}
               style={{ width: '200px' }}
+              value={selectedPantry}
               onChange={(e) => setSelectedPantry(e.target.value)}
             >
               <option value="1">{defaultName.name}</option>
