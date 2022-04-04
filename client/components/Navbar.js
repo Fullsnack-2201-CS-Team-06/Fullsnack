@@ -20,14 +20,17 @@ const Navbar = () => {
   const { recipes } = useSelector((state) => state);
   const [prevRecipes, setPrevRecipes] = useState(0);
   const [newRecipes, setNewRecipes] = useState(false);
+  const [renderCount, setRenderCount] = useState(0);
   const didMount = useRef(false);
 
-  // let renderCount = 0;
   useEffect(() => {
     if (didMount.current) {
       //If there are more recipes than before, a recipe was added to My Recipes.
       //If so, set the state to show a popover indicating ingredients were added to the list.
-      if (recipes.length > prevRecipes) {
+      //We must wait until the next render to activate. Otherwise, if we refresh and there are existing recipes, it will think that new ones were just added, since it compares that number of recipes to the previous state (prevRecipes) of zero, before the recipes were loaded onto state.
+      if (renderCount < 1) {
+        setRenderCount(renderCount + 1);
+      } else if (recipes.length > prevRecipes) {
         setNewRecipes(true);
         //Set back to false, or else we won't know if multiple additions happened consecutively.
         setTimeout(() => {
