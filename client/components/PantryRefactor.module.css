@@ -54,3 +54,13 @@
   border-color: #e54946;
   background-color: #e54946;
 }
+
+.buttonLink {
+  color: #e85f5c;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.buttonLink:hover {
+  color: #e54946;
+}

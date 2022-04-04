@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchAllPantries, createNewPantry } from '../store/pantries';
+import { Button, Form } from 'react-bootstrap';
 import styles from './PantryCreate.module.css';
 
 const PantryCreate = () => {
@@ -28,27 +29,24 @@ const PantryCreate = () => {
   };
 
   return (
-    <div>
-      <div className={styles.pantryCreationContainer}>
-        <div className={styles.pantryCreationBox}>
-          <form onSubmit={handleSubmit}>
-            {inputField.map((input, index) => {
-              return (
-                <div key={index}>
-                  <input
-                    name='name'
-                    placeholder='Create Pantry'
-                    value={input.name}
-                    onChange={(e) => handleFormChange(index, e)}
-                  />
-                </div>
-              );
-            })}
-            <button className={styles.button} onClick={handleSubmit}>Create Pantry</button>
-          </form>
-        </div>
-      </div>
-    </div>
+    <Form className={styles.pantryForm} onSubmit={handleSubmit}>
+      {inputField.map((input, index) => {
+        return (
+          <div key={index}>
+            <Form.Control
+              name="name"
+              type="text"
+              placeholder="Create Pantry"
+              value={input.name}
+              onChange={(e) => handleFormChange(index, e)}
+            />
+          </div>
+        );
+      })}
+      <Button className={styles.button} onClick={handleSubmit}>
+        Create Pantry
+      </Button>
+    </Form>
   );
 };
 

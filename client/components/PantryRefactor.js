@@ -17,6 +17,7 @@ const PantryRefactor = () => {
   const pantry = useSelector((state) => state.pantry);
   const [selectedPantry, setSelectedPantry] = useState(pantry ? pantry.id : 0);
   const { ingredients } = pantry || [];
+  const [hidden, setHidden] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -51,9 +52,22 @@ const PantryRefactor = () => {
             <Button className={styles.button} variant="primary">
               Add Items
             </Button>
-            <Button className={styles.buttonOutline} variant="outline-primary">
-              Create New Pantry
-            </Button>
+            {hidden ? (
+              <Button
+                className={styles.buttonOutline}
+                variant="outline-primary"
+                onClick={() => setHidden(false)}
+              >
+                Create New Pantry
+              </Button>
+            ) : (
+              <div style={{display: 'inline'}}>
+                <PantryCreate />
+                <Button className={styles.buttonLink} variant="link" onClick={() => setHidden(true)}>
+                  Hide
+                </Button>
+              </div>
+            )}
           </div>
           <div className={styles.pantryFilterBox}>
             <div>
@@ -74,7 +88,7 @@ const PantryRefactor = () => {
         </div>
       </Container>
       {Object.keys(pantry) ? <PantrySingle /> : <div>Nothing here.</div>}
-      <PantryCreate />
+
       <NewPantryItem />
     </div>
   );
