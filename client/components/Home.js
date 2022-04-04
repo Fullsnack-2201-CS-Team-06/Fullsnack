@@ -6,6 +6,7 @@ import Visuals from './Visuals';
 import Visual2 from './Visual2';
 import VisualNutrition from './VisualNutrition';
 import VisualIngredientLineGraph from './VisualIngredientLineGraph';
+import VisualRecipeNutrition from './VisualRecipeNutrition';
 import styles from './Home.module.css';
 import { Card } from 'react-bootstrap';
 
@@ -47,6 +48,11 @@ const Home = (props) => {
         <Card className={styles.chartCard}>
           <Card.Body>
             <VisualIngredientLineGraph />
+          </Card.Body>
+        </Card>
+        <Card className={styles.chartCard}>
+          <Card.Body>
+            <VisualRecipeNutrition />
           </Card.Body>
         </Card>
       </div>

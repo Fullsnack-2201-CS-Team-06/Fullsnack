@@ -39,7 +39,7 @@ const VisualIngredientLineGraph = () => {
   }, [])
 
   useEffect(() => {
-    console.log('listOfIngredients')
+    // console.log('listOfIngredients')
     if (Object.keys(listOfIngredients).length && ingredient1 === '') {
       setIngredient1(Object.keys(listOfIngredients)[0])
       setIngredient2(Object.keys(listOfIngredients)[1])
