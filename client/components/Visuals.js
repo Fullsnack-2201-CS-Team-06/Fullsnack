@@ -73,18 +73,17 @@ const Visuals = () => {
       }
     });
     categoricalData = Object.keys(categoricalData).map((key) => ({
-      // [key]: categoricalData[key],
       category: key,
       quantity: categoricalData[key],
     }));
     return categoricalData;
   }
 
-  console.log('categorical data: ', groupByCategory(data));
   const categoricalData = groupByCategory(data);
 
   return (
-    <div style={{ height: '650px' }}>
+    // <div style={{ height: '650px' }}>
+    <>
       {/* <div> */}
       <select name="pantries" onChange={(e) => handlePantryChange(e)}>
         <option value="View All Pantries">View All Pantries</option>
@@ -120,7 +119,7 @@ const Visuals = () => {
           style={{
             tickLabels: {
               angle: -45,
-              fontSize: 12,
+              fontSize: 10,
               textAnchor: 'end',
               padding: 2,
             },
@@ -130,7 +129,7 @@ const Visuals = () => {
               fontWeight: 100,
               letterSpacing: '1px',
               fontSize: 20,
-              padding: 50,
+              padding: 80,
             },
           }}
         />
@@ -158,7 +157,7 @@ const Visuals = () => {
           y="quantity"
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
