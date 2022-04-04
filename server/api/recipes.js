@@ -330,9 +330,9 @@ router.delete('/:id', async (req, res, next) => {
       next({ status: 404, message: `Recipe no. ${req.params.id} not found.` });
     }
 
-    await recipe.destroy();
+    const result = await recipe.destroy();
 
-    if (recipe !== 1) {
+    if (result.length) {
       next({
         status: 404,
         message: `Failed to destroy recipe no. ${req.params.id}`,
