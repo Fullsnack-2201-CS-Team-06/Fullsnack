@@ -1,18 +1,66 @@
 .pantryFilterContainer {
-  margin-top: 40px;
+  margin-top: 50px;
+  margin-bottom: 20px;
   display: flex;
-  justify-content: end;
-  padding-right: 80px;
+  justify-content: space-between;
 }
 
 .pantryFilterBox{
     display: flex;
 }
 
-.pantryFilter{
-    padding-right: 15px;
-}
-
 .label {
   color: #012a36;
+}
+
+.sectionHeader {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url(https://envato-shoebox-0.imgix.net/7207/244b-7205-498a-ac42-be724c0cc864/Grilled+meat_1_banner.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=0733ee80d4d4d56268984666018bd1e5);
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  color: #f5f5f5;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.sectionTitle {
+  font-size: 62px;
+}
+
+.buttonGroup {
+  padding-top: 30px;
+}
+
+.button {
+  align-self: center;
+  background-color: #e85f5c;
+  border: none;
+  margin-right: 15px;
+}
+
+.button:hover {
+  background-color: #e54946;
+}
+
+.buttonOutline {
+  border-color: #e85f5c;
+  color: #e85f5c;
+  margin-right: 10px;
+}
+
+.buttonOutline:hover {
+  border-color: #e54946;
+  background-color: #e54946;
+}
+
+.buttonLink {
+  color: #e85f5c;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.buttonLink:hover {
+  color: #e54946;
 }

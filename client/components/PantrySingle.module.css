@@ -1,20 +1,21 @@
-.container{
-    display: flex;
-    justify-content: center;
-    padding: 10px;
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 }
 
-.Button{
-    width: 30px;
+.Button {
+  width: 30px;
 }
-/* 
-.container > th{
-    background-color: #012a36;
-} */
 
-/* 
-.Button::hover{
-    background: #5c1a7c;
-    transition-delay: 0.25s;
-    transition: background 0.2s ease 0s;
-} */
+.qtyButton {
+  margin-left: 15px;
+  margin-right: 15px;
+  background-color: #e85f5c;
+  border: none;
+}
+
+.enlarge {
+  font-size: larger;
+  text-align: center;
+}
