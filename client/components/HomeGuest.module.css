@@ -36,6 +36,18 @@
   background-color: #e54946;
 }
 
+.buttonRed {
+  background-color: #e85f5c;
+  border: none;
+  margin: 15px;
+  height: 50px;
+  width: 200px;
+}
+
+.buttonRed:hover {
+  background-color: #e54946;
+}
+
 .buttonOutline {
   border-color: #e85f5c;
   color: #e85f5c;

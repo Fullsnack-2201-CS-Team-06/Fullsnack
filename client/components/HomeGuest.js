@@ -137,6 +137,17 @@ const HomeGuest = () => {
           </Card>
         </div>
         <hr />
+        <h2 style={{ margin: '25px', fontSize: '42px' }}>See it in action.</h2>
+        <Link to="/">
+          <Button
+            className={styles.buttonRed}
+            variant="primary"
+            style={{ fontSize: '20px', margin: '35px'}}
+          >
+            Watch Demo
+          </Button>
+        </Link>
+        <hr />
       </Container>
     </div>
   );
