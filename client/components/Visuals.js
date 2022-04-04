@@ -80,7 +80,11 @@ const Visuals = () => {
         animate={{ duration: 500 }}
       >
         <VictoryLabel
-          text={selectedPantry}
+          text={
+            selectedPantry === 'View All Pantries'
+              ? 'Quantities of Foods in All Your Pantries'
+              : `Quantities of Foods in Your ${selectedPantry} Pantry`
+          }
           x={350}
           y={30}
           textAnchor="middle"
