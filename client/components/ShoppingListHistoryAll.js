@@ -25,6 +25,19 @@ const ShoppingListHistoryAll = () => {
       <Container className={styles.shoppingListContainer}>
         <div className={styles.margin}>
           <h2 className={styles.title}>History</h2>
+          <Link
+            to={'/list'}
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              textDecoration: 'none',
+              marginBottom: '5px',
+            }}
+          >
+            <Button variant="outline-primary" className={styles.buttonOutline}>
+              Back to Shopping List
+            </Button>
+          </Link>
           <Table striped bordered>
             <thead>
               <tr>
