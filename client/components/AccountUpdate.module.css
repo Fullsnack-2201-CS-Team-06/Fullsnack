@@ -8,7 +8,12 @@
   padding: 15px;
 }
 
-.button {
-  width: 180px;
+.cardContents button {
+  background-color: #e85f5c;
+  border: none;
   margin: 15px;
+}
+
+.cardContents button:hover {
+  background-color: #e54946;
 }

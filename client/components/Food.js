@@ -4,6 +4,7 @@ import { getFoods } from '../store/foods';
 import SingleFood from './SingleFood';
 import NewFood from './NewFood';
 import styles from './Food.module.css';
+import { Container, Form } from 'react-bootstrap';
 
 /* This page shows all the ingredients that could exist in a user's pantry and exist as parts of a recipe. Their main purpose is to store general nutritional information and cost per unit of measurement. In a user's view, ingredients can be created manually, but they can also be created automatically whenever new foods are added to recipes, shopping lists, or pantries of the user. Users can access the complete list of ingredients associated with their profile, even for recipes that no longer exist. There, they can manually set or update the nutritional info and cost associated with that ingredient. */
 
@@ -31,14 +32,14 @@ const Food = () => {
   const dispatch = useDispatch();
   const [searchCriteria, setSearchCriteria] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
-  const [minCalories, setMinCalories] = useState(0);
-  const [maxCalories, setMaxCalories] = useState(100000);
-  const [minProtein, setMinProtein] = useState(0);
-  const [maxProtein, setMaxProtein] = useState(100000);
-  const [minCarbs, setMinCarbs] = useState(0);
-  const [maxCarbs, setMaxCarbs] = useState(100000);
-  const [minFat, setMinFat] = useState(0);
-  const [maxFat, setMaxFat] = useState(100000);
+  const [minCalories, setMinCalories] = useState('');
+  const [maxCalories, setMaxCalories] = useState('');
+  const [minProtein, setMinProtein] = useState('');
+  const [maxProtein, setMaxProtein] = useState('');
+  const [minCarbs, setMinCarbs] = useState('');
+  const [maxCarbs, setMaxCarbs] = useState('');
+  const [minFat, setMinFat] = useState('');
+  const [maxFat, setMaxFat] = useState('');
   //Get all foods associated with that user's pantries, recipes, and shopping lists.
   useEffect(() => {
     dispatch(getFoods());
@@ -82,48 +83,48 @@ const Food = () => {
   }
 
   //Filter for those above the minimum calories.
-  if (minCalories !== 0) {
+  if (minCalories !== '') {
     foods = foods.filter((food) => food.caloriesPerUnit >= minCalories);
   }
 
   //Filter for those below the maximum calories.
-  if (maxCalories !== 0) {
+  if (maxCalories !== '') {
     foods = foods.filter(
       (food) => food.caloriesPerUnit <= maxCalories || !food.caloriesPerUnit
     );
   }
 
   //Filter for the protein range.
-  if (minProtein !== 0) {
+  if (minProtein !== '') {
     foods = foods.filter(
       (food) => food.proteinPerUnit >= minProtein || !food.proteinPerUnit
     );
   }
-  if (maxProtein !== 0) {
+  if (maxProtein !== '') {
     foods = foods.filter(
       (food) => food.proteinPerUnit <= maxProtein || !food.proteinPerUnit
     );
   }
 
   //Filter for the carbs range.
-  if (minCarbs !== 0) {
+  if (minCarbs !== '') {
     foods = foods.filter(
       (food) => food.carbsPerUnit >= minCarbs || !food.carbsPerUnit
     );
   }
-  if (maxCarbs !== 0) {
+  if (maxCarbs !== '') {
     foods = foods.filter(
       (food) => food.carbsPerUnit <= maxCarbs || !food.carbsPerUnit
     );
   }
 
   //Filter for the fats range.
-  if (minFat !== 0) {
+  if (minFat !== '') {
     foods = foods.filter(
       (food) => food.fatsPerUnit >= minFat || !food.fatsPerUnit
     );
   }
-  if (maxFat !== 0) {
+  if (maxFat !== '') {
     foods = foods.filter(
       (food) => food.fatsPerUnit <= maxFat || !food.fatsPerUnit
     );
@@ -134,123 +135,133 @@ const Food = () => {
       <div className={styles.sectionHeader}>
         <h1 className={styles.sectionTitle}>Foods</h1>
       </div>
-      <div className={styles.allfoodsbar}>
-        <div className={styles.search}>
-          <label htmlFor="search">Search Foods</label>
-          <input name="search" type="text" onChange={editSearch} />
+      <Container>
+        <div className={styles.allfoodsbar}>
+          <div className={styles.basic}>
+            <Form.Group className={styles.search}>
+              <Form.Label htmlFor="search">Search Foods</Form.Label>
+              <Form.Control name="search" type="text" onChange={editSearch} />
+            </Form.Group>
+
+            <Form.Group className={styles.allFoodsSetting}>
+              <Form.Label htmlFor="category-filter">
+                Filter Categories
+              </Form.Label>
+              <Form.Select
+                name="category-filter"
+                value={categoryFilter}
+                onChange={editCategoryFilter}
+              >
+                {' '}
+                <option value="">See All</option>
+                {foodCategories.map((food, i) => (
+                  <option key={i} value={food}>
+                    {food}
+                  </option>
+                ))}
+                <option value="other">other</option>
+              </Form.Select>
+            </Form.Group>
+          </div>
+          <div className={styles.advanced}>
+            <div className={styles.allFoodsSetting}>
+              <div className={styles.minmaxSetting}>
+                <Form.Label htmlFor="minCalories">Calories </Form.Label>
+                <Form.Control
+                  type="number"
+                  name="minCalories"
+                  min="0"
+                  max="100000"
+                  value={minCalories}
+                  placeholder="Min"
+                  onChange={editNutritionRange}
+                />
+                <Form.Control
+                  type="number"
+                  name="maxCalories"
+                  min="0"
+                  max="100000"
+                  placeholder="Max"
+                  value={maxCalories}
+                  onChange={editNutritionRange}
+                />
+              </div>
+            </div>
+
+            <div className={styles.allFoodsSetting}>
+              <div className={styles.minmaxSetting}>
+                <Form.Label htmlFor="minProtein">Protein </Form.Label>
+                <Form.Control
+                  type="number"
+                  name="minProtein"
+                  min="0"
+                  placeholder="Min"
+                  value={minProtein}
+                  onChange={editNutritionRange}
+                />
+                <Form.Control
+                  type="number"
+                  name="maxProtein"
+                  min="0"
+                  placeholder="Max"
+                  value={maxProtein}
+                  onChange={editNutritionRange}
+                />
+              </div>
+            </div>
+
+            <div className={styles.allFoodsSetting}>
+              <div className={styles.minmaxSetting}>
+                <Form.Label htmlFor="minCarbs">Carbs</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="minCarbs"
+                  min="0"
+                  placeholder="Min"
+                  value={minCarbs}
+                  onChange={editNutritionRange}
+                />
+                <Form.Control
+                  type="number"
+                  name="maxCarbs"
+                  min="0"
+                  placeholder="Max"
+                  value={maxCarbs}
+                  onChange={editNutritionRange}
+                />
+              </div>
+            </div>
+
+            <div className={styles.allFoodsSetting}>
+              <div className={styles.minmaxSetting}>
+                <Form.Label htmlFor="minFat">Fat </Form.Label>
+                <Form.Control
+                  type="number"
+                  name="minFat"
+                  min="0"
+                  placeholder="Min"
+                  value={minFat}
+                  onChange={editNutritionRange}
+                />
+                <Form.Control
+                  type="number"
+                  name="maxFat"
+                  min="0"
+                  placeholder="Max"
+                  value={maxFat}
+                  onChange={editNutritionRange}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className={styles.allFoodsSetting}>
-          <label htmlFor="category-filter">Filter Categories: </label>
-          <select
-            name="category-filter"
-            value={categoryFilter}
-            onChange={editCategoryFilter}
-          >
-            {' '}
-            <option value="">See All</option>
-            {foodCategories.map((food, i) => (
-              <option key={i} value={food}>
-                {food}
-              </option>
-            ))}
-            <option value="other">other</option>
-          </select>
+        <div className={styles.foodcards}>
+          {/* <NewFood /> */}
+          {foods.map((food, i) => (
+            <SingleFood key={i} food={food} />
+          ))}
         </div>
-        <div className={styles.allFoodsSetting}>
-          <div className={styles.minmaxSetting}>
-            <label htmlFor="minCalories">Min Calories: </label>
-            <input
-              type="number"
-              name="minCalories"
-              min="0"
-              value={minCalories}
-              onChange={editNutritionRange}
-            />
-          </div>
-          <div className={styles.minmaxSetting}>
-            <label htmlFor="maxCalories">Max Calories: </label>
-            <input
-              type="number"
-              name="maxCalories"
-              min="0"
-              value={maxCalories}
-              onChange={editNutritionRange}
-            />
-          </div>
-        </div>
-        <div className={styles.allFoodsSetting}>
-          <div className={styles.minmaxSetting}>
-            <label htmlFor="minProtein">Min Protein: </label>
-            <input
-              type="number"
-              name="minProtein"
-              min="0"
-              value={minProtein}
-              onChange={editNutritionRange}
-            />
-          </div>
-          <div className={styles.minmaxSetting}>
-            <label htmlFor="maxProtein">Max Protein: </label>
-            <input
-              type="number"
-              name="maxProtein"
-              min="0"
-              value={maxProtein}
-              onChange={editNutritionRange}
-            />
-          </div>
-        </div>
-        <div className={styles.allFoodsSetting}>
-          <div className={styles.minmaxSetting}>
-            <label htmlFor="minCarbs">Min Carbs: </label>
-            <input
-              type="number"
-              name="minCarbs"
-              min="0"
-              value={minCarbs}
-              onChange={editNutritionRange}
-            />
-          </div>
-          <div className={styles.minmaxSetting}>
-            <label htmlFor="maxCarbs">Max Carbs: </label>
-            <input
-              type="number"
-              name="maxCarbs"
-              min="0"
-              value={maxCarbs}
-              onChange={editNutritionRange}
-            />
-          </div>
-        </div>
-        <div className={styles.allFoodsSetting}>
-          <div className={styles.minmaxSetting}>
-            <label htmlFor="minFat">Min Fat: </label>
-            <input
-              type="number"
-              name="minFat"
-              min="0"
-              value={minFat}
-              onChange={editNutritionRange}
-            />
-          </div>
-          <div className={styles.minmaxSetting}>
-            <label htmlFor="maxFat">Max Fat: </label>
-            <input
-              type="number"
-              name="maxFat"
-              min="0"
-              value={maxFat}
-              onChange={editNutritionRange}
-            />
-          </div>
-        </div>
-      </div>
-      <div className={styles.foodcards}>
-        {/* <NewFood /> */}
-        {foods.map((food, i) => (
-          <SingleFood key={i} food={food} />
-        ))}
-      </div>
+      </Container>
     </div>
   );
 };
