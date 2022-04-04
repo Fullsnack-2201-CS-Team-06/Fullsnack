@@ -26,6 +26,7 @@ const Visuals = () => {
       return {
         item: ingredient.name,
         pantryQty: ingredient.pantryIngredient.pantryQty,
+        category: ingredient.category,
       };
     });
 
@@ -59,6 +60,28 @@ const Visuals = () => {
   const handlePantryChange = (e) => {
     setSelectedPantry(e.target.value);
   };
+
+  // console.log('Bar chart data: ', data);
+
+  function groupByCategory(data) {
+    let categoricalData = {};
+    data.map((item) => {
+      if (categoricalData[item.category]) {
+        categoricalData[item.category] += item.pantryQty;
+      } else {
+        categoricalData[item.category] = item.pantryQty;
+      }
+    });
+    categoricalData = Object.keys(categoricalData).map((key) => ({
+      // [key]: categoricalData[key],
+      category: key,
+      quantity: categoricalData[key],
+    }));
+    return categoricalData;
+  }
+
+  console.log('categorical data: ', groupByCategory(data));
+  const categoricalData = groupByCategory(data);
 
   return (
     <div style={{ height: '650px' }}>
@@ -130,9 +153,9 @@ const Visuals = () => {
         />
         <VictoryBar
           barWidth={({ index }) => index * 2 + 12}
-          data={data}
-          x="item"
-          y="pantryQty"
+          data={categoricalData}
+          x="category"
+          y="quantity"
         />
       </VictoryChart>
     </div>
