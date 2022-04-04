@@ -6,6 +6,7 @@ import styles from './PantryRefactor.module.css';
 import PantrySingle from './PantrySingle';
 import NewPantryItem from './NewPantryItem';
 import PantryCreate from './PantryCreate';
+import { Form, Container } from 'react-bootstrap';
 
 /* This page contains all the components for the Pantry tab.
 It also has the filter to switch between a users pantries. */
@@ -44,25 +45,26 @@ const PantryRefactor = () => {
       <div className={styles.sectionHeader}>
         <h1 className={styles.sectionTitle}>Pantry</h1>
       </div>
-      <div className={styles.pantryFilterContainer}>
-        <div className={styles.pantryFilterBox}>
-          <div className={styles.pantryFilter}>
-            <label className={styles.label}>My Pantries:</label>
-            <br></br>
-            <select
-              name="pantries"
-              onChange={(e) => handlePantryChange(e.target.value)}
-              value={selectedPantry}
-            >
-              {pantries.map((pantry) => (
-                <option key={pantry.id} value={pantry.id}>
-                  {pantry.name}
-                </option>
-              ))}
-            </select>
+      <Container>
+        <div className={styles.pantryFilterContainer}>
+          <div className={styles.pantryFilterBox}>
+            <div className={styles.pantryFilter}>
+              <Form.Label className={styles.label}>Select Pantry</Form.Label>
+              <Form.Select
+                name="pantries"
+                onChange={(e) => handlePantryChange(e.target.value)}
+                value={selectedPantry}
+              >
+                {pantries.map((pantry) => (
+                  <option key={pantry.id} value={pantry.id}>
+                    {pantry.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </div>
           </div>
         </div>
-      </div>
+      </Container>
       {Object.keys(pantry) ? <PantrySingle /> : <div>Nothing here.</div>}
       <PantryCreate />
       <NewPantryItem />
