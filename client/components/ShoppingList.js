@@ -60,6 +60,8 @@ const ShoppingList = () => {
     }
   }
 
+  console.log('Ingredients: ', ingredients);
+
   return (
     <div>
       <div className={styles.sectionHeader}>
@@ -68,12 +70,17 @@ const ShoppingList = () => {
       <Container className={styles.shoppingListContainer}>
         <div className={styles.margin}>
           <div className={styles.shopNav}>
-            <h4 className={styles.title}>Shopping List:</h4>
-            <h4 className={styles.title}>{name}</h4>
-            <Link to={'/list/history'}>View History</Link>
+            <Link to={'/list/history'}>
+              <Button
+                variant="outline-primary"
+                className={styles.buttonOutline}
+              >
+                Shopping History
+              </Button>
+            </Link>
           </div>
           <div>
-            {ingredients ? (
+            {ingredients && ingredients.length > 0 ? (
               <Table striped bordered hover>
                 <thead>
                   <tr>
@@ -89,7 +96,18 @@ const ShoppingList = () => {
                 </tbody>
               </Table>
             ) : (
-              <></>
+              <div className={styles.tableNoIngredients}>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th className={styles.enlarge}>List Item</th>
+                      <th className={styles.enlarge}>Quantity</th>
+                      <th className={styles.enlarge}>Remove from list</th>
+                    </tr>
+                  </thead>
+                </Table>
+                <h4>No items on shopping list.</h4>
+              </div>
             )}
           </div>
           <div className={styles.addToPantry}>

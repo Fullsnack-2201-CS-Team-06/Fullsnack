@@ -11,7 +11,8 @@
 .shopNav {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-end;
+  margin-bottom: 15px;
 }
 
 .list {
@@ -86,4 +87,26 @@
 
 .sectionTitle {
   font-size: 62px;
+}
+
+.buttonOutline {
+  border-color: #e85f5c;
+  color: #e85f5c;
+  margin: 5px;
+}
+
+.buttonOutline:hover {
+  border-color: #e54946;
+  background-color: #e54946;
+}
+
+.tableNoIngredients {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tableNoIngredients h4 {
+  margin: 15px;
 }
