@@ -14,26 +14,25 @@ const PantryRefactor = () => {
   const { id } = useSelector((state) => state.auth);
   const { pantries } = useSelector((state) => state);
   const pantry = useSelector((state) => state.pantry);
-  const [selectedPantry, setSelectedPantry] = useState(0);
+  const [selectedPantry, setSelectedPantry] = useState(pantry ? pantry.id : 0);
   const { ingredients } = pantry || [];
 
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     dispatch(fetchAllPantries(id));
+    dispatch(fetchSinglePantry(pantry.id));
   }, []);
 
   useEffect(() => {
     //If we navigate to the pantry page for the first time, view the Home pantry.
     //If the store does not already have a pantry set, set the home pantry.
-    
+
     if (!Object.keys(pantry).length && pantries.length) {
       const homePantry = pantries.filter((pantry) => pantry.name === 'Home')[0];
       dispatch(fetchSinglePantry(homePantry.id));
     }
   }, [pantries]);
-
 
   const handlePantryChange = (e) => {
     setSelectedPantry(e);
@@ -48,8 +47,9 @@ const PantryRefactor = () => {
             <label className={styles.label}>My Pantries:</label>
             <br></br>
             <select
-              name='pantries'
+              name="pantries"
               onChange={(e) => handlePantryChange(e.target.value)}
+              value={selectedPantry}
             >
               {pantries.map((pantry) => (
                 <option key={pantry.id} value={pantry.id}>
@@ -60,11 +60,7 @@ const PantryRefactor = () => {
           </div>
         </div>
       </div>
-      {Object.keys(pantry) ? (
-         <PantrySingle />
-      ) : (
-        <div>Nothing here.</div>
-      )}
+      {Object.keys(pantry) ? <PantrySingle /> : <div>Nothing here.</div>}
       <PantryCreate />
       <NewPantryItem />
     </div>
