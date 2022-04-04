@@ -1,14 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
+import { fetchCurrentShoppingList } from '../store/ShoppingList';
 import styles from './Navbar.module.css';
-import { Navbar as Nav, Container, NavDropdown } from 'react-bootstrap';
+import {
+  Navbar as Nav,
+  Container,
+  NavDropdown,
+  OverlayTrigger,
+  Popover,
+} from 'react-bootstrap';
 import { FaUserCircle } from 'react-icons/fa';
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const dispatch = useDispatch();
+  const [showListUpdate, setShowListUpdate] = useState(false);
+  const { recipes } = useSelector((state) => state);
+  const [prevRecipes, setPrevRecipes] = useState(0);
+  const [newRecipes, setNewRecipes] = useState(false);
+  const [renderCount, setRenderCount] = useState(0);
+  const didMount = useRef(false);
+
+  useEffect(() => {
+    if (didMount.current) {
+      //If there are more recipes than before, a recipe was added to My Recipes.
+      //If so, set the state to show a popover indicating ingredients were added to the list.
+      //We must wait until the next render to activate. Otherwise, if we refresh and there are existing recipes, it will think that new ones were just added, since it compares that number of recipes to the previous state (prevRecipes) of zero, before the recipes were loaded onto state.
+      if (renderCount < 1) {
+        setRenderCount(renderCount + 1);
+      } else if (recipes.length > prevRecipes) {
+        setNewRecipes(true);
+        //Set back to false, or else we won't know if multiple additions happened consecutively.
+        setTimeout(() => {
+          setNewRecipes(false);
+        }, 1000);
+      } else {
+        setNewRecipes(false);
+      }
+      setPrevRecipes(recipes.length);
+    } else {
+      didMount.current = true;
+      setPrevRecipes(recipes.length);
+    }
+  }, [recipes.length]);
+
+  useEffect(() => {
+    //If there are new recipes in My Recipes, show the popover for 5 seconds.
+    if (didMount.current && newRecipes === true) {
+      setShowListUpdate(true);
+      setTimeout(() => {
+        setShowListUpdate(false);
+      }, 5000);
+    } else {
+      didMount.current = true;
+    }
+  }, [newRecipes]);
+
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Body>
+        Some new ingredients are added to your shopping list!
+      </Popover.Body>
+    </Popover>
+  );
 
   return (
     <Nav fixed="top" className={styles.navBar}>
@@ -24,9 +80,15 @@ const Navbar = () => {
               <Link to="/foods" className={styles.navBarLink}>
                 Foods
               </Link>
-              <Link to="/list" className={styles.navBarLink}>
-                Shopping List
-              </Link>
+              <OverlayTrigger
+                overlay={popover}
+                placement="bottom"
+                show={showListUpdate}
+              >
+                <Link to="/list" className={styles.navBarLink}>
+                  Shopping List
+                </Link>
+              </OverlayTrigger>
               <Link to="/pantries" className={styles.navBarLink}>
                 Pantry
               </Link>
