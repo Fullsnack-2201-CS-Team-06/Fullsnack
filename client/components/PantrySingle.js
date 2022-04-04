@@ -21,19 +21,19 @@ const PantrySingle = () => {
 
   return (
     <div>
-      <Container className={styles.container}>
-        <Table striped bordered hover size="sm">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Category</th>
-              <th>Quantity</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {ingredients ? (
-              ingredients
+      <Container>
+        {ingredients && ingredients.length > 0 ? (
+          <Table striped bordered>
+            <thead>
+              <tr>
+                <th className={styles.enlarge}>Item</th>
+                <th className={styles.enlarge}>Category</th>
+                <th className={styles.enlarge}>Quantity</th>
+                <th className={styles.enlarge}>Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ingredients
                 .sort(function (a, b) {
                   if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
                   if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
@@ -43,12 +43,12 @@ const PantrySingle = () => {
                   const quantity = item.pantryIngredient.pantryQty;
                   return (
                     <tr className={styles.row} key={item.id}>
-                      <td className={styles.column}>{item.name}</td>
-                      <td className={styles.column}>{item.category}</td>
-                      <td className={styles.column}>
+                      <td className={styles.enlarge}>{item.name}</td>
+                      <td className={styles.enlarge}>{item.category}</td>
+                      <td className={styles.enlarge}>
                         <Button
-                          className={styles.Button}
-                          variant="outline-primary"
+                          className={styles.qtyButton}
+                          variant="primary"
                           onClick={() =>
                             handleChange(item.id, id, quantity - 1)
                           }
@@ -57,8 +57,8 @@ const PantrySingle = () => {
                         </Button>{' '}
                         {quantity}
                         <Button
-                          className={styles.Button}
-                          variant="outline-primary"
+                          className={styles.qtyButton}
+                          variant="primary"
                           onClick={() =>
                             handleChange(item.id, id, quantity + 1)
                           }
@@ -66,10 +66,10 @@ const PantrySingle = () => {
                           +
                         </Button>
                       </td>
-                      <td>
+                      <td className={styles.enlarge}>
                         <Button
-                          className={styles.Button}
-                          variant="outline-primary"
+                          className={styles.qtyButton}
+                          variant="primary"
                           type="button"
                           onClick={() => handleChange(item.id, id, 0)}
                         >
@@ -78,14 +78,31 @@ const PantrySingle = () => {
                       </td>
                     </tr>
                   );
-                })
-            ) : (
-              <tr>
-                <td>Nothing to see here.</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+                })}
+            </tbody>
+          </Table>
+        ) : (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Table striped bordered>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Category</th>
+                  <th>Quantity</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+            </Table>
+            <h4 style={{margin: '30px'}}>No items in pantry.</h4>
+          </div>
+        )}
       </Container>
     </div>
   );

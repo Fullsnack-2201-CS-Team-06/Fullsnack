@@ -1,19 +1,14 @@
-.pantryCreationContainer {
-    margin-top: 40px;
-    display: flex;
-    justify-content: end;
-    padding-right: 120px;
-  }
-
-  .pantryCreationBox {
-      display: flex;
-  }
-
-  .button{
-    color: white;
-    background-color: #012a36;
+.button {
+  align-self: center;
+  background-color: #e85f5c;
+  border: none;
+  margin-right: 15px;
 }
 
-.button:hover{
-    cursor: pointer;
+.button:hover {
+  background-color: #e54946;
+}
+
+.pantryForm {
+  display: inline;
 }
