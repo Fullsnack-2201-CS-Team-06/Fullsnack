@@ -99,7 +99,9 @@ export const deleteRecipe = (id, history) => {
     try {
       const { data } = await axios.delete(`/api/recipes/${id}`);
       dispatch(_deleteRecipe(data));
-      history.push('/recipes');
+      if (history) {
+        history.push('/recipes');
+      }
     } catch (error) {
       console.error('Error in deleteRecipe thunk!!\n\n', error);
     }

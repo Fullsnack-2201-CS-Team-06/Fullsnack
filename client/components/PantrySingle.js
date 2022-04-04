@@ -10,10 +10,10 @@ const PantrySingle = () => {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.auth);
   const { pantry } = useSelector((state) => state);
-  const { ingredients } = pantry
-  let currentPantry = pantry.id
+  const { ingredients } = pantry;
+  let currentPantry = pantry.id;
 
-
+  console.log('pantry: ', pantry);
 
   async function handleChange(itemId, userId, quantity) {
     dispatch(editPantryThunk(itemId, userId, quantity, currentPantry));
@@ -22,7 +22,7 @@ const PantrySingle = () => {
   return (
     <div>
       <Container className={styles.container}>
-        <Table striped bordered hover size='sm'>
+        <Table striped bordered hover size="sm">
           <thead>
             <tr>
               <th>Item</th>
@@ -48,7 +48,7 @@ const PantrySingle = () => {
                       <td className={styles.column}>
                         <Button
                           className={styles.Button}
-                          variant='outline-primary'
+                          variant="outline-primary"
                           onClick={() =>
                             handleChange(item.id, id, quantity - 1)
                           }
@@ -58,7 +58,7 @@ const PantrySingle = () => {
                         {quantity}
                         <Button
                           className={styles.Button}
-                          variant='outline-primary'
+                          variant="outline-primary"
                           onClick={() =>
                             handleChange(item.id, id, quantity + 1)
                           }
@@ -69,8 +69,8 @@ const PantrySingle = () => {
                       <td>
                         <Button
                           className={styles.Button}
-                          variant='outline-primary'
-                          type='button'
+                          variant="outline-primary"
+                          type="button"
                           onClick={() => handleChange(item.id, id, 0)}
                         >
                           x
