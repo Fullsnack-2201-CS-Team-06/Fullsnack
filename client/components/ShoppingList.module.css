@@ -22,7 +22,10 @@
 
 .addToPantry {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 40px;
 }
 
 .enlarge {
@@ -62,7 +65,6 @@
 }
 
 .button {
-  width: 180px;
   align-self: center;
   background-color: #e85f5c;
   border: none;
@@ -71,6 +73,16 @@
 
 .button:hover {
   background-color: #e54946;
+}
+
+.buttonLink {
+  color: #e85f5c;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.buttonLink:hover {
+  color: #e54946;
 }
 
 .sectionHeader {
@@ -109,4 +121,22 @@
 
 .tableNoIngredients h4 {
   margin: 15px;
+}
+
+.optionsContainer {
+  margin-top: 30px;
+}
+
+.itemCount {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.addToPantryGroup {
+  display: flex;
+  justify-content: flex-start;
+}
+
+#buttonDiv {
+  padding-top: 19px;
 }
