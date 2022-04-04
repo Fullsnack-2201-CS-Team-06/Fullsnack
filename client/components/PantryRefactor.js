@@ -6,7 +6,7 @@ import styles from './PantryRefactor.module.css';
 import PantrySingle from './PantrySingle';
 import NewPantryItem from './NewPantryItem';
 import PantryCreate from './PantryCreate';
-import { Form, Container } from 'react-bootstrap';
+import { Form, Container, Button } from 'react-bootstrap';
 
 /* This page contains all the components for the Pantry tab.
 It also has the filter to switch between a users pantries. */
@@ -47,8 +47,16 @@ const PantryRefactor = () => {
       </div>
       <Container>
         <div className={styles.pantryFilterContainer}>
+          <div className={styles.buttonGroup}>
+            <Button className={styles.button} variant="primary">
+              Add Items
+            </Button>
+            <Button className={styles.buttonOutline} variant="outline-primary">
+              Create New Pantry
+            </Button>
+          </div>
           <div className={styles.pantryFilterBox}>
-            <div className={styles.pantryFilter}>
+            <div>
               <Form.Label className={styles.label}>Select Pantry</Form.Label>
               <Form.Select
                 name="pantries"

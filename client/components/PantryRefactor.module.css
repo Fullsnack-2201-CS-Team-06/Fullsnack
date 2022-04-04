@@ -1,16 +1,12 @@
 .pantryFilterContainer {
   margin-top: 50px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
 }
 
 .pantryFilterBox{
     display: flex;
-}
-
-.pantryFilter{
-    padding-right: 15px;
 }
 
 .label {
@@ -31,4 +27,30 @@
 
 .sectionTitle {
   font-size: 62px;
+}
+
+.buttonGroup {
+  padding-top: 30px;
+}
+
+.button {
+  align-self: center;
+  background-color: #e85f5c;
+  border: none;
+  margin-right: 15px;
+}
+
+.button:hover {
+  background-color: #e54946;
+}
+
+.buttonOutline {
+  border-color: #e85f5c;
+  color: #e85f5c;
+  margin-right: 10px;
+}
+
+.buttonOutline:hover {
+  border-color: #e54946;
+  background-color: #e54946;
 }
