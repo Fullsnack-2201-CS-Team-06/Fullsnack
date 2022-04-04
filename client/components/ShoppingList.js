@@ -82,7 +82,7 @@ const ShoppingList = () => {
           </div>
           <div>
             {ingredients && ingredients.length > 0 ? (
-              <Table striped bordered hover>
+              <Table striped bordered>
                 <thead>
                   <tr>
                     <th className={styles.enlarge}>Item</th>

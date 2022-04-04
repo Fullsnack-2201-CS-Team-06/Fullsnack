@@ -36,6 +36,11 @@
 .backToHistory {
   display: flex;
   justify-content: flex-end;
+  color: #e85f5c;
+}
+
+.backToHistory:hover {
+  color: #e54946;
 }
 
 .select {
@@ -49,6 +54,7 @@
 
 .title {
   text-align: center;
+  margin-bottom: 35px;
 }
 
 .removebutton {
@@ -139,4 +145,12 @@
 
 #buttonDiv {
   padding-top: 19px;
+}
+
+.historyLink {
+  color: #012a36;
+}
+
+.historyLink:hover {
+  color: #e85f5c;
 }
