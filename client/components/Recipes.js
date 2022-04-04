@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchAllRecipes } from '../store/recipes';
-import { Link } from 'react-router-dom';
+import { fetchAllRecipes, deleteRecipe } from '../store/recipes';
+import { Link, useHistory } from 'react-router-dom';
 import RecRecipes from './RecRecipes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Card, Button, Carousel } from 'react-bootstrap';
 import styles from './Recipes.module.css';
 
 const Recipes = () => {
+  const history = useHistory();
   const { recipes, auth } = useSelector((state) => {
     return {
       recipes: state.recipes,
@@ -72,6 +73,13 @@ const Recipes = () => {
                       View
                     </Button>
                   </Link>
+                  <Button
+                    variant="outline-primary"
+                    className={styles.buttonOutline}
+                    onClick={() => dispatch(deleteRecipe(recipe.id))}
+                  >
+                    Delete
+                  </Button>
                 </Card.Body>
               </Card>
             );
