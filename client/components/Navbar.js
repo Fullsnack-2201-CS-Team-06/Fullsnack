@@ -44,7 +44,7 @@ const Navbar = () => {
       didMount.current = true;
       setPrevRecipes(recipes.length);
     }
-  }, [recipes.length]);
+  }, [recipes]);
 
   useEffect(() => {
     //If there are new recipes in My Recipes, show the popover for 5 seconds.
