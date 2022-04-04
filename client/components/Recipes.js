@@ -64,7 +64,9 @@ const Recipes = () => {
                 />
                 <Card.Body>
                   <Card.Title>{recipe.name}</Card.Title>
-                  <Card.Text>{recipe.rating} of 5 stars</Card.Text>
+                  <Card.Text>
+                    {recipe.rating ? `${recipe.rating} of 5 stars` : ''}
+                  </Card.Text>
                   <Link to={`/recipes/${recipe.id}`}>
                     <Button
                       variant="outline-primary"
