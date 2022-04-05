@@ -72,6 +72,9 @@ const AddRecipe = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const SubmittedIngredients = ingredients.filter(
+      (ingredient) => ingredient.name.length > 0
+    );
     dispatch(
       addNewRecipe({
         name,
@@ -80,7 +83,7 @@ const AddRecipe = () => {
         cuisineType,
         image,
         userId,
-        ingredients,
+        ingredients: SubmittedIngredients,
       })
     );
     history.push('/recipes');
