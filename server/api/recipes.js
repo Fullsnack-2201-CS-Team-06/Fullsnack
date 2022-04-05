@@ -95,9 +95,13 @@ router.post('/', async (req, res, next) => {
       name,
       description,
       rating,
-      image,
       cuisineType,
     });
+
+    //If there is no image, we want it to get the default value.
+    if (image) {
+      await newRecipe.update({ image });
+    }
 
     // Find user creating recipe
     const user = await User.findByPk(userId);

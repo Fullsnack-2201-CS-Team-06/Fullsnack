@@ -7,6 +7,7 @@ import PantrySingle from './PantrySingle';
 import NewPantryItem from './NewPantryItem';
 import PantryCreate from './PantryCreate';
 import { Form, Container, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 /* This page contains all the components for the Pantry tab.
 It also has the filter to switch between a users pantries. */
@@ -49,9 +50,11 @@ const PantryRefactor = () => {
       <Container>
         <div className={styles.pantryFilterContainer}>
           <div className={styles.buttonGroup}>
-            <Button className={styles.button} variant="primary">
-              Add Items
-            </Button>
+            <Link to="/pantries/add">
+              <Button className={styles.button} variant="primary">
+                Add Items
+              </Button>
+            </Link>
             {hidden ? (
               <Button
                 className={styles.buttonOutline}
@@ -61,9 +64,13 @@ const PantryRefactor = () => {
                 Create New Pantry
               </Button>
             ) : (
-              <div style={{display: 'inline'}}>
+              <div style={{ display: 'inline' }}>
                 <PantryCreate />
-                <Button className={styles.buttonLink} variant="link" onClick={() => setHidden(true)}>
+                <Button
+                  className={styles.buttonLink}
+                  variant="link"
+                  onClick={() => setHidden(true)}
+                >
                   Hide
                 </Button>
               </div>
@@ -88,8 +95,6 @@ const PantryRefactor = () => {
         </div>
       </Container>
       {Object.keys(pantry) ? <PantrySingle /> : <div>Nothing here.</div>}
-
-      <NewPantryItem />
     </div>
   );
 };
