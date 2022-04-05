@@ -38,7 +38,7 @@ const ShoppingListForm = ({ props }) => {
             className={styles.removebutton}
             onClick={() => handleRemoveItem()}
           >
-            X
+            x
           </Button>
         </td>
       </tr>

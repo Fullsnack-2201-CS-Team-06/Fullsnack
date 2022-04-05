@@ -26,6 +26,7 @@ const Visuals = () => {
       return {
         item: ingredient.name,
         pantryQty: ingredient.pantryIngredient.pantryQty,
+        category: ingredient.category,
       };
     });
 
@@ -60,8 +61,29 @@ const Visuals = () => {
     setSelectedPantry(e.target.value);
   };
 
+  // console.log('Bar chart data: ', data);
+
+  function groupByCategory(data) {
+    let categoricalData = {};
+    data.map((item) => {
+      if (categoricalData[item.category]) {
+        categoricalData[item.category] += item.pantryQty;
+      } else {
+        categoricalData[item.category] = item.pantryQty;
+      }
+    });
+    categoricalData = Object.keys(categoricalData).map((key) => ({
+      category: key,
+      quantity: categoricalData[key],
+    }));
+    return categoricalData;
+  }
+
+  const categoricalData = groupByCategory(data);
+
   return (
-    <div style={{ height: '650px' }}>
+    // <div style={{ height: '650px' }}>
+    <>
       {/* <div> */}
       <select name="pantries" onChange={(e) => handlePantryChange(e)}>
         <option value="View All Pantries">View All Pantries</option>
@@ -80,7 +102,11 @@ const Visuals = () => {
         animate={{ duration: 500 }}
       >
         <VictoryLabel
-          text={selectedPantry}
+          text={
+            selectedPantry === 'View All Pantries'
+              ? 'Quantities of Foods in All Your Pantries'
+              : `Quantities of Foods in Your ${selectedPantry} Pantry`
+          }
           x={350}
           y={30}
           textAnchor="middle"
@@ -93,7 +119,7 @@ const Visuals = () => {
           style={{
             tickLabels: {
               angle: -45,
-              fontSize: 12,
+              fontSize: 10,
               textAnchor: 'end',
               padding: 2,
             },
@@ -103,7 +129,7 @@ const Visuals = () => {
               fontWeight: 100,
               letterSpacing: '1px',
               fontSize: 20,
-              padding: 50,
+              padding: 80,
             },
           }}
         />
@@ -126,12 +152,12 @@ const Visuals = () => {
         />
         <VictoryBar
           barWidth={({ index }) => index * 2 + 12}
-          data={data}
-          x="item"
-          y="pantryQty"
+          data={categoricalData}
+          x="category"
+          y="quantity"
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 

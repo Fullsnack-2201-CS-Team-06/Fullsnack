@@ -11,7 +11,8 @@
 .shopNav {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-end;
+  margin-bottom: 15px;
 }
 
 .list {
@@ -21,7 +22,10 @@
 
 .addToPantry {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 40px;
 }
 
 .enlarge {
@@ -32,6 +36,11 @@
 .backToHistory {
   display: flex;
   justify-content: flex-end;
+  color: #e85f5c;
+}
+
+.backToHistory:hover {
+  color: #e54946;
 }
 
 .select {
@@ -45,6 +54,7 @@
 
 .title {
   text-align: center;
+  margin-bottom: 35px;
 }
 
 .removebutton {
@@ -61,7 +71,6 @@
 }
 
 .button {
-  width: 180px;
   align-self: center;
   background-color: #e85f5c;
   border: none;
@@ -70,6 +79,16 @@
 
 .button:hover {
   background-color: #e54946;
+}
+
+.buttonLink {
+  color: #e85f5c;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.buttonLink:hover {
+  color: #e54946;
 }
 
 .sectionHeader {
@@ -86,4 +105,52 @@
 
 .sectionTitle {
   font-size: 62px;
+}
+
+.buttonOutline {
+  border-color: #e85f5c;
+  color: #e85f5c;
+  margin: 5px;
+}
+
+.buttonOutline:hover {
+  border-color: #e54946;
+  background-color: #e54946;
+}
+
+.tableNoIngredients {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tableNoIngredients h4 {
+  margin: 15px;
+}
+
+.optionsContainer {
+  margin-top: 30px;
+}
+
+.itemCount {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.addToPantryGroup {
+  display: flex;
+  justify-content: flex-start;
+}
+
+#buttonDiv {
+  padding-top: 19px;
+}
+
+.historyLink {
+  color: #012a36;
+}
+
+.historyLink:hover {
+  color: #e85f5c;
 }

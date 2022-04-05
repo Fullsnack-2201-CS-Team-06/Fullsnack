@@ -17,6 +17,20 @@ const Footer = () => {
               <img src="/github.png" />
               GitHub Repo
             </a>
+            <a
+              href="https://www.edamam.com/"
+              target="_blank"
+            >
+              <img src="/edamam_logo.jpg" />
+              Edamam API
+            </a>
+            <a
+              href="https://formidable.com/open-source/victory/"
+              target="_blank"
+            >
+              <img src="/victory_logo.png" />
+              Victory
+            </a>
           </div>
           <div id={styles.creatorsContainer}>
             <p>CREATORS</p>
