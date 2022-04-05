@@ -23,12 +23,16 @@ const ShoppingList = () => {
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
+    //If this is after the first render and we get pantries, set the selectedPantry as the first in the pantries.
     if (selectedPantry === 'dave' && pantries.length) {
       setSelectedPantry(pantries[0].id);
       dispatch(fetchSinglePantry(pantries[0].id));
-      didMount.current = true;
+      //If we are after the first two renders, a pantry is added from creation on this page. If so, set it to that one (end of pantries array).
     } else if (didMount.current && pantries.length) {
       setSelectedPantry(pantries[pantries.length - 1].id);
+      //First render: Set to didMount to true.
+    } else {
+      didMount.current = true;
     }
   }, [pantries]);
 
@@ -36,6 +40,7 @@ const ShoppingList = () => {
     dispatch(fetchCurrentShoppingList(id));
     dispatch(fetchAllPantries(id));
   }, []);
+
   let otherPantries = [];
   let length = 0;
   if (ingredients) {
