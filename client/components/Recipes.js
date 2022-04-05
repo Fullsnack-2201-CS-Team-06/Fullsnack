@@ -48,7 +48,7 @@ const Recipes = () => {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            marginTop: '50px',
+            marginTop: '25px',
             fontWeight: 'bold',
           }}
         >
