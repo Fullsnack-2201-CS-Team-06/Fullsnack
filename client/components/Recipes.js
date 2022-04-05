@@ -35,6 +35,9 @@ const Recipes = () => {
       <Container className={styles.carouselContainer}>
         <RecRecipes />
       </Container>
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <hr />
+      </div>
       <Container className={styles.allRecipesContainer}>
         <h3
           style={{
