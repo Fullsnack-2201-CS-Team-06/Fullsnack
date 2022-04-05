@@ -46,6 +46,7 @@ const ShoppingList = () => {
   }
 
   async function handleCreatePantry() {
+    setSelectedPantry(id);
     dispatch(createNewPantry([{ name: newPantry }], id));
   }
 
