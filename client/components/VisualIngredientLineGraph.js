@@ -118,7 +118,8 @@ if (shoppingHistory) {
   }
 
   return (
-    <div style={{ height: '650px' }}>
+    // <div style={{ height: '650px' }}>
+    <>
       <select name="ingredient1" onChange={(e) => handleIngredient1Change(e)}>
         <option value="View All Pantries">Select First Ingredient</option>
         {Object.keys(listOfIngredients).map((ingredient, idx) => (
@@ -232,7 +233,8 @@ if (shoppingHistory) {
           />
           </VictoryGroup>
         </VictoryChart>
-    </div>
+    {/* </div> */}
+    </>
   )
 }
 
