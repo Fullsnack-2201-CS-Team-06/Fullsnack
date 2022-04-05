@@ -46,7 +46,7 @@ export const addPantryItemThunk = (itemUpdate) => {
     } catch (error) {
       console.log(error);
     }
-    history.push(`/pantries/${id}`);
+    history.push(`/pantries`);
   };
 };
 
