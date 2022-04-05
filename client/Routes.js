@@ -8,7 +8,6 @@ import Account from './components/Account';
 import ShoppingList from './components/ShoppingList';
 import ShoppingListHistoryAll from './components/ShoppingListHistoryAll';
 import ShoppingListHistorySingle from './components/ShoppingListHistorySingle';
-import PantryCreate from './components/PantryCreate';
 import Food from './components/Food';
 import PantrySingle from './components/PantrySingle';
 import Recipes from './components/Recipes';
@@ -47,9 +46,9 @@ const Routes = () => {
             path="/list/:listId"
             component={ShoppingListHistorySingle}
           />
-          <Route path="/pantries" component={PantryRefactor} />
-          <Route path="/pantries/add" component={NewPantryItem} />
-          <Route path="/pantries/:id" component={PantrySingle} />
+          <Route exact path="/pantries" component={PantryRefactor} />
+          <Route exact path="/pantries/add" component={NewPantryItem} />
+          <Route exact path="/pantries/:id" component={PantrySingle} />
           <Route path="/foods" component={Food} />
           <Route exact path="/recipes" component={Recipes} />
           <Route exact path="/recipes/add" component={AddRecipe} />
