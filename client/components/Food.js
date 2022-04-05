@@ -4,7 +4,7 @@ import { getFoods } from '../store/foods';
 import SingleFood from './SingleFood';
 import NewFood from './NewFood';
 import styles from './Food.module.css';
-import { Container, Form } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 
 /* This page shows all the ingredients that could exist in a user's pantry and exist as parts of a recipe. Their main purpose is to store general nutritional information and cost per unit of measurement. In a user's view, ingredients can be created manually, but they can also be created automatically whenever new foods are added to recipes, shopping lists, or pantries of the user. Users can access the complete list of ingredients associated with their profile, even for recipes that no longer exist. There, they can manually set or update the nutritional info and cost associated with that ingredient. */
 
@@ -40,6 +40,7 @@ const Food = () => {
   const [maxCarbs, setMaxCarbs] = useState('');
   const [minFat, setMinFat] = useState('');
   const [maxFat, setMaxFat] = useState('');
+  const [hidden, setHidden] = useState(true);
   //Get all foods associated with that user's pantries, recipes, and shopping lists.
   useEffect(() => {
     dispatch(getFoods());
@@ -163,97 +164,115 @@ const Food = () => {
               </Form.Select>
             </Form.Group>
           </div>
-          <div className={styles.advanced}>
-            <div className={styles.allFoodsSetting}>
-              <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="minCalories">Calories </Form.Label>
-                <Form.Control
-                  type="number"
-                  name="minCalories"
-                  min="0"
-                  max="100000"
-                  value={minCalories}
-                  placeholder="Min"
-                  onChange={editNutritionRange}
-                />
-                <Form.Control
-                  type="number"
-                  name="maxCalories"
-                  min="0"
-                  max="100000"
-                  placeholder="Max"
-                  value={maxCalories}
-                  onChange={editNutritionRange}
-                />
+          {hidden ? (
+            <Button
+              className={styles.buttonLink}
+              variant="link"
+              onClick={() => setHidden(false)}
+            >
+              Advanced Filters
+            </Button>
+          ) : (
+            <div className={styles.advanced}>
+              <div className={styles.allFoodsSetting}>
+                <div className={styles.minmaxSetting}>
+                  <Form.Label htmlFor="minCalories">Calories </Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="minCalories"
+                    min="0"
+                    max="100000"
+                    value={minCalories}
+                    placeholder="Min"
+                    onChange={editNutritionRange}
+                  />
+                  <Form.Control
+                    type="number"
+                    name="maxCalories"
+                    min="0"
+                    max="100000"
+                    placeholder="Max"
+                    value={maxCalories}
+                    onChange={editNutritionRange}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className={styles.allFoodsSetting}>
-              <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="minProtein">Protein </Form.Label>
-                <Form.Control
-                  type="number"
-                  name="minProtein"
-                  min="0"
-                  placeholder="Min"
-                  value={minProtein}
-                  onChange={editNutritionRange}
-                />
-                <Form.Control
-                  type="number"
-                  name="maxProtein"
-                  min="0"
-                  placeholder="Max"
-                  value={maxProtein}
-                  onChange={editNutritionRange}
-                />
+              <div className={styles.allFoodsSetting}>
+                <div className={styles.minmaxSetting}>
+                  <Form.Label htmlFor="minProtein">Protein </Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="minProtein"
+                    min="0"
+                    placeholder="Min"
+                    value={minProtein}
+                    onChange={editNutritionRange}
+                  />
+                  <Form.Control
+                    type="number"
+                    name="maxProtein"
+                    min="0"
+                    placeholder="Max"
+                    value={maxProtein}
+                    onChange={editNutritionRange}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className={styles.allFoodsSetting}>
-              <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="minCarbs">Carbs</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="minCarbs"
-                  min="0"
-                  placeholder="Min"
-                  value={minCarbs}
-                  onChange={editNutritionRange}
-                />
-                <Form.Control
-                  type="number"
-                  name="maxCarbs"
-                  min="0"
-                  placeholder="Max"
-                  value={maxCarbs}
-                  onChange={editNutritionRange}
-                />
+              <div className={styles.allFoodsSetting}>
+                <div className={styles.minmaxSetting}>
+                  <Form.Label htmlFor="minCarbs">Carbs</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="minCarbs"
+                    min="0"
+                    placeholder="Min"
+                    value={minCarbs}
+                    onChange={editNutritionRange}
+                  />
+                  <Form.Control
+                    type="number"
+                    name="maxCarbs"
+                    min="0"
+                    placeholder="Max"
+                    value={maxCarbs}
+                    onChange={editNutritionRange}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className={styles.allFoodsSetting}>
-              <div className={styles.minmaxSetting}>
-                <Form.Label htmlFor="minFat">Fat </Form.Label>
-                <Form.Control
-                  type="number"
-                  name="minFat"
-                  min="0"
-                  placeholder="Min"
-                  value={minFat}
-                  onChange={editNutritionRange}
-                />
-                <Form.Control
-                  type="number"
-                  name="maxFat"
-                  min="0"
-                  placeholder="Max"
-                  value={maxFat}
-                  onChange={editNutritionRange}
-                />
+              <div className={styles.allFoodsSetting}>
+                <div className={styles.minmaxSetting}>
+                  <Form.Label htmlFor="minFat">Fat </Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="minFat"
+                    min="0"
+                    placeholder="Min"
+                    value={minFat}
+                    onChange={editNutritionRange}
+                  />
+                  <Form.Control
+                    type="number"
+                    name="maxFat"
+                    min="0"
+                    placeholder="Max"
+                    value={maxFat}
+                    onChange={editNutritionRange}
+                  />
+                </div>
               </div>
+
+              <Button
+                className={styles.buttonLink}
+                variant="link"
+                onClick={() => setHidden(true)}
+              >
+                Hide
+              </Button>
             </div>
-          </div>
+          )}
         </div>
         <div className={styles.foodcards}>
           {/* <NewFood /> */}
