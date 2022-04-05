@@ -28,14 +28,19 @@ const Recipes = () => {
         <h1 className={styles.sectionTitle}>Recipes</h1>
       </div>
       <h3
-        style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '50px',
+          fontWeight: 'bold',
+        }}
       >
         Recommended
       </h3>
       <Container className={styles.carouselContainer}>
         <RecRecipes />
       </Container>
-      <div style={{display: 'flex', justifyContent: 'center'}}>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         <hr />
       </div>
       <Container className={styles.allRecipesContainer}>
@@ -44,6 +49,7 @@ const Recipes = () => {
             display: 'flex',
             justifyContent: 'center',
             marginTop: '50px',
+            fontWeight: 'bold',
           }}
         >
           My Recipes
