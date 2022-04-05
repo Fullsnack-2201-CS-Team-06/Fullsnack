@@ -78,7 +78,7 @@ const AddRecipe = () => {
         description,
         rating,
         cuisineType,
-        image,
+        image: image.length ? image : null,
         userId,
         ingredients,
       })
