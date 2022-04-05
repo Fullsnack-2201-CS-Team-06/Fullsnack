@@ -28,7 +28,7 @@ const AddRecipe = () => {
   });
 
   useEffect(() => {
-    dispatch(getFoods(userId));
+    dispatch(getFoods());
   }, []);
 
   const dispatch = useDispatch();
