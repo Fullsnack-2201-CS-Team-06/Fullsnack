@@ -36,7 +36,7 @@ const EditRecipe = () => {
 
   useEffect(() => {
     dispatch(fetchSingleRecipe(id));
-    dispatch(getFoods(userId));
+    dispatch(getFoods());
   }, []);
 
   useEffect(() => {

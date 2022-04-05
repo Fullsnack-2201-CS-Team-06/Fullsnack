@@ -28,7 +28,7 @@ const SingleRecipe = () => {
   }, []);
 
   const addToShoppingList = (recipeId, userId) => {
-    dispatch(addRecToMyRecipes(id, userId));
+    dispatch(addRecToMyRecipes(recipeId, userId));
     setAddedToList(true);
   };
 
