@@ -140,7 +140,7 @@ const HomeGuest = () => {
         <h2 style={{ margin: '25px', fontSize: '62px', fontWeight: 'bold' }}>
           See it in action.
         </h2>
-        <Link to="/">
+        <a href="https://www.youtube.com/watch?v=ZtcdamXMcks" target="_blank">
           <Button
             className={styles.buttonRed}
             variant="primary"
@@ -148,7 +148,7 @@ const HomeGuest = () => {
           >
             Watch Demo
           </Button>
-        </Link>
+        </a>
         <hr />
       </Container>
     </div>
