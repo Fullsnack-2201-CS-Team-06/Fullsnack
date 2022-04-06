@@ -38,7 +38,9 @@ const Recipes = () => {
         Recommended
       </h3>
       <Container className={styles.carouselContainer}>
-        <RecRecipes />
+        <Card className={styles.recRecipeCard}>
+          <RecRecipes />
+        </Card>
       </Container>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <hr />
@@ -78,8 +80,8 @@ const Recipes = () => {
                   </Card.Text>
                   <Link to={`/recipes/${recipe.id}`}>
                     <Button
-                      variant="outline-primary"
-                      className={styles.buttonOutline}
+                      variant="primary"
+                      className={styles.button}
                     >
                       View
                     </Button>

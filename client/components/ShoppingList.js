@@ -23,12 +23,16 @@ const ShoppingList = () => {
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
+    //If this is after the first render and we get pantries, set the selectedPantry as the first in the pantries.
     if (selectedPantry === 'dave' && pantries.length) {
       setSelectedPantry(pantries[0].id);
       dispatch(fetchSinglePantry(pantries[0].id));
-      didMount.current = true;
+      //If we are after the first two renders, a pantry is added from creation on this page. If so, set it to that one (end of pantries array).
     } else if (didMount.current && pantries.length) {
       setSelectedPantry(pantries[pantries.length - 1].id);
+      //First render: Set to didMount to true.
+    } else {
+      didMount.current = true;
     }
   }, [pantries]);
 
@@ -36,6 +40,7 @@ const ShoppingList = () => {
     dispatch(fetchCurrentShoppingList(id));
     dispatch(fetchAllPantries(id));
   }, []);
+
   let otherPantries = [];
   let length = 0;
   if (ingredients) {
@@ -51,11 +56,9 @@ const ShoppingList = () => {
   }
 
   async function handleSubmit() {
-    if (typeof selectedPantry === 'string' && ingredients.length) {
+    if (ingredients.length) {
       dispatch(sendToPantry(id, currentList, selectedPantry));
-      dispatch(fetchSinglePantry(selectedPantry));
-    } else if (ingredients.length) {
-      dispatch(sendToPantry(id, currentList, pantries[0].id));
+      //We need the set the pantry on store, so the Pantry tab knows which set of ingredients to render when redirected there.
       dispatch(fetchSinglePantry(selectedPantry));
     } else {
       window.alert('There are no items to add to your pantry!');
@@ -111,10 +114,6 @@ const ShoppingList = () => {
                 <h4>No items on shopping list.</h4>
               </div>
             )}
-          </div>
-
-          <div className={styles.itemCount}>
-            <h5>Unique Items: {length}</h5>
           </div>
 
           <div className={styles.addToPantry}>

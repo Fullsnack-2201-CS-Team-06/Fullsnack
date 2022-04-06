@@ -3,14 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   showRecRecipes,
-  // addRecRecipe,
   getNewRecRecipes,
   removeRecRecipe,
 } from '../store/recRecipes';
 import { getOurFoods } from '../store/pantriesFoods';
 import { addRecToMyRecipes } from '../store/recipes';
 import styles from './RecRecipes.module.css';
-import { Card, Button, Accordion, Container } from 'react-bootstrap';
+import { Card, Button, Container } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -140,10 +139,6 @@ const RecRecipes = () => {
   };
 
   const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
       items: 3,
@@ -161,47 +156,42 @@ const RecRecipes = () => {
   return (
     <Carousel responsive={responsive} arrows showDots={false}>
       {recRecipes.map((recipe) => (
-        <Container>
-          <Card
-            key={recipe.id}
-            className={
-              recipe.id === currentView
-                ? styles.expandedCard
-                : styles.recRecipeCard
-            }
-          >
-            <Card.Img
-              variant="top"
-              className={styles.recipeImg}
-              src={recipe.image}
-            />
-            <Card.Body>
-              <Card.Title>
-                {recipe.id === currentView
-                  ? recipe.name
-                  : recipe.name.slice(0, 20)}
-                {recipe.id !== currentView && recipe.name.length > 20
-                  ? '...'
-                  : ''}
-              </Card.Title>
-              <Link to={`/recipes/recommended/${recipe.id}`}>
-                <Button
-                  variant="outline-primary"
-                  className={styles.buttonOutline}
-                >
-                  View
-                </Button>
-              </Link>
-              <Button
-                variant="outline-primary"
-                className={styles.buttonOutline}
-                onClick={() => addToMyRecipes(recipe.id)}
-              >
-                Add to My Recipes
+        <Card
+          key={recipe.id}
+          className={
+            recipe.id === currentView
+              ? styles.expandedCard
+              : styles.recRecipeCard
+          }
+        >
+          <Card.Img
+            variant="top"
+            className={styles.recipeImg}
+            src={recipe.image}
+          />
+          <Card.Body>
+            <Card.Title>
+              {recipe.id === currentView
+                ? recipe.name
+                : recipe.name.slice(0, 20)}
+              {recipe.id !== currentView && recipe.name.length > 20
+                ? '...'
+                : ''}
+            </Card.Title>
+            <Link to={`/recipes/recommended/${recipe.id}`}>
+              <Button variant="primary" className={styles.button}>
+                View
               </Button>
-            </Card.Body>
-          </Card>
-        </Container>
+            </Link>
+            <Button
+              variant="outline-primary"
+              className={styles.buttonOutline}
+              onClick={() => addToMyRecipes(recipe.id)}
+            >
+              Add to My Recipes
+            </Button>
+          </Card.Body>
+        </Card>
       ))}
     </Carousel>
   );
