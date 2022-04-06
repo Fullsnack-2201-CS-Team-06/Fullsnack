@@ -113,10 +113,6 @@ const ShoppingList = () => {
             )}
           </div>
 
-          <div className={styles.itemCount}>
-            <h5>Unique Items: {length}</h5>
-          </div>
-
           <div className={styles.addToPantry}>
             <Form.Group className={styles.addToPantryGroup}>
               <div>
