@@ -56,11 +56,9 @@ const ShoppingList = () => {
   }
 
   async function handleSubmit() {
-    if (typeof selectedPantry === 'string' && ingredients.length) {
+    if (ingredients.length) {
       dispatch(sendToPantry(id, currentList, selectedPantry));
-      dispatch(fetchSinglePantry(selectedPantry));
-    } else if (ingredients.length) {
-      dispatch(sendToPantry(id, currentList, pantries[0].id));
+      //We need the set the pantry on store, so the Pantry tab knows which set of ingredients to render when redirected there.
       dispatch(fetchSinglePantry(selectedPantry));
     } else {
       window.alert('There are no items to add to your pantry!');
