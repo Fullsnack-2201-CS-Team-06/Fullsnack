@@ -67,6 +67,8 @@ body {
 .carouselContainer {
   margin-top: 30px;
   margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
 }
 
 .sectionHeader {
@@ -83,4 +85,10 @@ body {
 
 .sectionTitle {
   font-size: 62px;
+}
+
+.recRecipeCard {
+  width: 1000px;
+  display: flex;
+  padding: 25px;
 }

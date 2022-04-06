@@ -19,7 +19,7 @@
 }
 
 .recRecipeCard {
-  margin: 15px;
+  margin: 10px;
   width: 18rem;
 }
 
@@ -45,6 +45,16 @@
 
 .buttonOutline:hover {
   border-color: #e54946;
+  background-color: #e54946;
+}
+
+.button {
+  background-color: #e85f5c;
+  border: none;
+  margin: 5px;
+}
+
+.button:hover {
   background-color: #e54946;
 }
 
