@@ -51,7 +51,7 @@
 .button {
   background-color: #e85f5c;
   border: none;
-  margin: 5px;
+  margin-right: 10px;
 }
 
 .button:hover {

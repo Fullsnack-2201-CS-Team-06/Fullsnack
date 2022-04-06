@@ -46,7 +46,7 @@ body {
 .button {
   background-color: #e85f5c;
   border: none;
-  margin: 15px;
+  margin-right: 10px;
 }
 
 .button:hover {
