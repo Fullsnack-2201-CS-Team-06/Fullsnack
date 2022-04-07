@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+// TOKEN
+const TOKEN = 'token';
+
 // ACTION TYPES
 const SHOW_REC_RECIPES = 'SHOW_REC_RECIPES';
 const ADD_NEW_REC_RECIPE = 'ADD_NEW_REC_RECIPE';
@@ -33,8 +36,14 @@ export const removeRecRecipe = (recRecipeId) => {
 export const showRecRecipes = (cuisinePref) => {
   return async (dispatch) => {
     try {
+      const token = localStorage.getItem(TOKEN);
       const { data } = await axios.get(
-        `api/recipes/recs?cuisinePref=${cuisinePref}`
+        `api/recipes/recs?cuisinePref=${cuisinePref}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
       );
       dispatch(_showRecRecipes(data));
     } catch (error) {
@@ -46,7 +55,12 @@ export const showRecRecipes = (cuisinePref) => {
 export const addRecRecipe = (recRecipe) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`api/recipes/recs`, recRecipe);
+      const token = localStorage.getItem(TOKEN);
+      const { data } = await axios.post(`api/recipes/recs`, recRecipe, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_createRecRecipe(data));
     } catch (error) {
       console.error('Failed to add this recipe to the recommendations', error);
@@ -57,7 +71,16 @@ export const addRecRecipe = (recRecipe) => {
 export const getNewRecRecipes = (apiParams) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('api/recipes/recs/new', { apiParams });
+      const token = localStorage.getItem(TOKEN);
+      const { data } = await axios.post(
+        'api/recipes/recs/new',
+        { apiParams },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       for (let i = 0; i < data.length; i++) {
         const recipe = data[i].recipe;
         dispatch(
