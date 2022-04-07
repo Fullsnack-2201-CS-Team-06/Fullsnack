@@ -7,9 +7,10 @@ const ShoppingList = require('../db/models/ShoppingList');
 const ShoppingListIngredient = require('../db/models/ShoppingListIngredient');
 const { Op } = require('@sequelize/core');
 const axios = require('axios');
+const authenticateToken = require('../auth/authenticateToken')
 
 // GET /api/recipes?userId=1
-router.get('/', async (req, res, next) => {
+router.get('/', authenticateToken, async (req, res, next) => {
   try {
     const recipes = await Recipe.findAll({
       where: { userId: req.query.userId },
@@ -27,7 +28,7 @@ router.get('/', async (req, res, next) => {
 });
 
 // GET /api/recipes/recs?cuisinePref=STRING
-router.get('/recs', async (req, res, next) => {
+router.get('/recs', authenticateToken, async (req, res, next) => {
   try {
     // At this stage, we're just getting all the recipes not assigned to any user. With the api, this route will be entirely replaced.
     let recRecipes = await Recipe.findAll({
@@ -59,7 +60,7 @@ router.get('/recs', async (req, res, next) => {
 });
 
 // GET /api/recipes/:id
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', authenticateToken, async (req, res, next) => {
   try {
     const recipe = await Recipe.findOne({
       where: {
@@ -79,7 +80,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // POST /api/recipes
-router.post('/', async (req, res, next) => {
+router.post('/', authenticateToken, async (req, res, next) => {
   try {
     const {
       name,
@@ -133,8 +134,9 @@ router.post('/', async (req, res, next) => {
 });
 
 //POST api/recipes/recs
-router.post('/recs', async (req, res, next) => {
+router.post('/recs', authenticateToken, async (req, res, next) => {
   try {
+    console.log('inside /recs')
     const {
       name,
       description,
@@ -194,8 +196,9 @@ router.post('/recs', async (req, res, next) => {
 
 //POST /api/recipes/recs/new
 //Makes a request to the edamam api with the apiRequest url and sends the api response.
-router.post('/recs/new', async (req, res, next) => {
+router.post('/recs/new', authenticateToken, async (req, res, next) => {
   try {
+    console.log('inside /recs/new')
     let apiRequest = `https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=${process.env.REACT_APP_RECIPE_APP_ID}&app_key=${process.env.REACT_APP_RECIPE_KEY}&mealType=Dinner`;
     const { apiParams } = req.body;
     apiRequest += apiParams;
@@ -260,7 +263,7 @@ router.put('/recs/:id', async (req, res, next) => {
 });
 
 // PUT /api/recipes/:id
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', authenticateToken, async (req, res, next) => {
   try {
     const recipe = await Recipe.findByPk(req.params.id);
 
@@ -326,7 +329,7 @@ router.put('/:id', async (req, res, next) => {
 });
 
 // DELETE /api/recipe/:id
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', authenticateToken, async (req, res, next) => {
   try {
     const recipe = await Recipe.findByPk(req.params.id);
 

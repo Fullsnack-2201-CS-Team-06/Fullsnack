@@ -3,9 +3,10 @@ module.exports = router;
 const Ingredient = require('../db/models/Ingredient');
 const Pantry = require('../db/models/Pantry');
 const User = require('../db/models/User');
+const authenticateToken = require('../auth/authenticateToken')
 
 //GET /api/pantries?userId=1
-router.get('/', async (req, res, next) => {
+router.get('/', authenticateToken, async (req, res, next) => {
   try {
     const pantries = await Pantry.findAll({
       where: { userId: req.query.userId },
@@ -21,7 +22,7 @@ router.get('/', async (req, res, next) => {
 });
 
 //GET /api/pantries/:pantryId
-router.get('/:pantryId', async (req, res, next) => {
+router.get('/:pantryId', authenticateToken, async (req, res, next) => {
   try {
     console.log('singlepantry return fired');
     const singlePantry = await Pantry.findByPk(req.params.pantryId, {
@@ -37,7 +38,7 @@ router.get('/:pantryId', async (req, res, next) => {
 });
 
 // POST /api/pantries
-router.post('/', async (req, res, next) => {
+router.post('/', authenticateToken, async (req, res, next) => {
   try {
     const { name, id } = req.body;
     const newName = name[0].name;
@@ -54,7 +55,7 @@ router.post('/', async (req, res, next) => {
 });
 
 // POST /api/pantries/add
-router.post('/add', async (req, res, next) => {
+router.post('/add', authenticateToken, async (req, res, next) => {
   try {
     const { id, inputFields } = req.body;
     const [...foodInfo] = inputFields;
@@ -85,7 +86,7 @@ router.post('/add', async (req, res, next) => {
 });
 
 // PUT /api/pantries/
-router.put('/', async (req, res, next) => {
+router.put('/', authenticateToken, async (req, res, next) => {
   try {
     const { itemId, quantity, currentPantryId } = req.body;
     const pantry = await Pantry.findOne({
@@ -110,7 +111,7 @@ router.put('/', async (req, res, next) => {
 });
 
 // PUT /api/pantries/:id
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', authenticateToken, async (req, res, next) => {
   try {
     const pantry = await Pantry.findByPk(req.params.id);
     if (!pantry) {
@@ -130,7 +131,7 @@ router.put('/:id', async (req, res, next) => {
 });
 
 // DELETE /api/pantries/:id
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', authenticateToken, async (req, res, next) => {
   try {
     const pantry = await Pantry.findByPk(req.params.id);
     if (!pantry) {

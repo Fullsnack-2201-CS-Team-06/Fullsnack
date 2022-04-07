@@ -1,6 +1,9 @@
 import axios from 'axios';
 import history from '../history';
 
+// TOKEN
+const TOKEN = 'token';
+
 // ACTION TYPE
 const SHOPPING_HISTORY = 'SHOPPING_HISTORY';
 const CURRENT_SHOPPING_LIST = 'CURRENT_SHOPPING_LIST';
@@ -36,7 +39,12 @@ const singleHistoryView = (singleHistory) => ({
 export const fetchShoppingListHistory = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/shoppinglist/all?userId=${id}`);
+      const token = localStorage.getItem(TOKEN);
+      const { data } = await axios.get(`/api/shoppinglist/all?userId=${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(History(data));
     } catch (error) {
       console.log(error);
@@ -47,7 +55,12 @@ export const fetchShoppingListHistory = (id) => {
 export const fetchCurrentShoppingList = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/shoppinglist?userId=${id}`);
+      const token = localStorage.getItem(TOKEN);
+      const { data } = await axios.get(`/api/shoppinglist?userId=${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(CurrentList(data));
     } catch (error) {
       console.log(error);
@@ -58,7 +71,12 @@ export const fetchCurrentShoppingList = (id) => {
 export const setSingleHistoryView = (listId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/shoppinglist/${listId}`);
+      const token = localStorage.getItem(TOKEN);
+      const { data } = await axios.get(`/api/shoppinglist/${listId}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(singleHistoryView(data));
     } catch (error) {
       console.log(error);
@@ -69,11 +87,20 @@ export const setSingleHistoryView = (listId) => {
 export const editListThunk = (itemId, userId, quantity, cost) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/shoppinglist?userId=${userId}`, {
-        itemId,
-        quantity,
-        cost,
-      });
+      const token = localStorage.getItem(TOKEN);
+      const { data } = await axios.put(
+        `/api/shoppinglist?userId=${userId}`,
+        {
+          itemId,
+          quantity,
+          cost,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       dispatch(editList(data));
     } catch (error) {
       console.log(error);
@@ -84,10 +111,19 @@ export const editListThunk = (itemId, userId, quantity, cost) => {
 export const sendToPantry = (userId, currentList, pantryId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`/api/shoppinglist?userId=${userId}`, {
-        currentList,
-        pantryId,
-      });
+      const token = localStorage.getItem(TOKEN);
+      const { data } = await axios.post(
+        `/api/shoppinglist?userId=${userId}`,
+        {
+          currentList,
+          pantryId,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       dispatch(toPantry(data));
     } catch (error) {
       console.log(error);
