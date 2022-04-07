@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+// Token
+
+const TOKEN = 'token';
+
 // Action types
 
 const SHOW_ALL_RECIPES = 'SHOW_ALL_RECIPES';
@@ -50,7 +54,12 @@ const _deleteRecipe = (recipe) => {
 export const fetchAllRecipes = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/recipes?userId=${id}`);
+      const token = localStorage.getItem(TOKEN);
+      const { data } = await axios.get(`/api/recipes?userId=${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(showAllRecipes(data));
     } catch (error) {
       console.error('Error in fetchAllRecipes thunk!!\n\n', error);
@@ -61,7 +70,12 @@ export const fetchAllRecipes = (id) => {
 export const addNewRecipe = (recipe) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('/api/recipes', recipe);
+      const token = localStorage.getItem(TOKEN);
+      const { data } = await axios.post('/api/recipes', recipe, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_addNewRecipe(data));
     } catch (error) {
       console.error('Error in addNewRecipe thunk!!\n\n', error);
@@ -72,8 +86,14 @@ export const addNewRecipe = (recipe) => {
 export const addRecToMyRecipes = (recRecipeId, userId) => {
   return async (dispatch) => {
     try {
+      const token = localStorage.getItem(TOKEN);
       const { data } = await axios.put(
-        `/api/recipes/recs/${recRecipeId}?userId=${userId}`
+        `/api/recipes/recs/${recRecipeId}?userId=${userId}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
       );
       dispatch(_addRecRecipe(data));
     } catch (error) {
@@ -85,7 +105,12 @@ export const addRecToMyRecipes = (recRecipeId, userId) => {
 export const updateRecipe = (recipe, history) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/recipes/${recipe.id}`, recipe);
+      const token = localStorage.getItem(TOKEN);
+      const { data } = await axios.put(`/api/recipes/${recipe.id}`, recipe, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_updateRecipe(data));
       history.push(`/recipes/${recipe.id}`);
     } catch (error) {
@@ -97,7 +122,12 @@ export const updateRecipe = (recipe, history) => {
 export const deleteRecipe = (id, history) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/recipes/${id}`);
+      const token = localStorage.getItem(TOKEN);
+      const { data } = await axios.delete(`/api/recipes/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_deleteRecipe(data));
       if (history) {
         history.push('/recipes');
