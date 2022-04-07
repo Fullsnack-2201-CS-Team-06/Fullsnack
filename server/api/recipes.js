@@ -136,6 +136,7 @@ router.post('/', authenticateToken, async (req, res, next) => {
 //POST api/recipes/recs
 router.post('/recs', authenticateToken, async (req, res, next) => {
   try {
+    console.log('inside /recs')
     const {
       name,
       description,
@@ -197,6 +198,7 @@ router.post('/recs', authenticateToken, async (req, res, next) => {
 //Makes a request to the edamam api with the apiRequest url and sends the api response.
 router.post('/recs/new', authenticateToken, async (req, res, next) => {
   try {
+    console.log('inside /recs/new')
     let apiRequest = `https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=${process.env.REACT_APP_RECIPE_APP_ID}&app_key=${process.env.REACT_APP_RECIPE_KEY}&mealType=Dinner`;
     const { apiParams } = req.body;
     apiRequest += apiParams;
@@ -212,7 +214,7 @@ router.post('/recs/new', authenticateToken, async (req, res, next) => {
 });
 
 // PUT /api/recipes/recs/:id?userId=INT
-router.put('/recs/:id', authenticateToken, async (req, res, next) => {
+router.put('/recs/:id', async (req, res, next) => {
   try {
     //Step 1: Assign the existing recipe to the user.
     const recRecipeId = req.params.id;
