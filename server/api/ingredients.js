@@ -4,9 +4,10 @@ const Ingredient = require('../db/models/Ingredient');
 const Pantry = require('../db/models/Pantry');
 const ShoppingList = require('../db/models/ShoppingList');
 const Recipe = require('../db/models/Recipe');
+const authenticateToken = require('../auth/authenticateToken')
 
 //GET /api/ingredients/all
-router.get('/all', async (req, res, next) => {
+router.get('/all', authenticateToken, async (req, res, next) => {
   try {
     const foods = await Ingredient.findAll();
     res.send(foods);
@@ -16,7 +17,7 @@ router.get('/all', async (req, res, next) => {
 });
 
 //GET /api/ingredients?userId=INT
-router.get('/', async (req, res, next) => {
+router.get('/', authenticateToken, async (req, res, next) => {
   try {
     let ingredients = [];
     //Get all the pantries of the user and their associated ingredients.
@@ -80,7 +81,7 @@ router.get('/', async (req, res, next) => {
 
 //GET api/ingredients/pantries?userId=INT
 // Get all the foods in all the pantries. Use this data to sort recipes that we can already make with the foods we have. This creates duplicates, which are dealt with in sorting on the front-end.
-router.get('/pantries', async (req, res, next) => {
+router.get('/pantries', authenticateToken, async (req, res, next) => {
   try {
     let ingredients = [];
 
@@ -104,7 +105,7 @@ router.get('/pantries', async (req, res, next) => {
 });
 
 //POST api/ingredients?userId=INT
-router.post('/', async (req, res, next) => {
+router.post('/', authenticateToken, async (req, res, next) => {
   try {
     const newFood = req.body;
     if (newFood) {
@@ -128,7 +129,7 @@ router.post('/', async (req, res, next) => {
 });
 
 //PUT api/ingredients/:id
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', authenticateToken, async (req, res, next) => {
   try {
     const newFood = req.body;
     if (newFood) {

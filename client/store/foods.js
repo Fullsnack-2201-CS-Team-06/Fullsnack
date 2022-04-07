@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+// TOKEN
+const TOKEN = 'token';
+
 //ACTION TYPE
 const GET_FOODS = 'GET_FOODS';
 const ADD_FOOD = 'ADD_FOOD';
@@ -32,10 +35,20 @@ export const getFoods = (id) => {
   return async (dispatch) => {
     try {
       if (id) {
-        const { data } = await axios.get(`/api/ingredients?userId=${id}`);
+        const token = localStorage.getItem(TOKEN);
+        const { data } = await axios.get(`/api/ingredients?userId=${id}`, {
+          headers: {
+            authorization: token,
+          },
+        });
         dispatch(_getFoods(data));
       } else {
-        const { data } = await axios.get('/api/ingredients/all');
+        const token = localStorage.getItem(TOKEN);
+        const { data } = await axios.get('/api/ingredients/all', {
+          headers: {
+            authorization: token,
+          },
+        });
         dispatch(_getFoods(data));
       }
     } catch (error) {
@@ -47,7 +60,12 @@ export const getFoods = (id) => {
 export const addFood = (food) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('/api/ingredients', food);
+      const token = localStorage.getItem(TOKEN)
+      const { data } = await axios.post('/api/ingredients', food, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_addFood(data));
     } catch (error) {
       console.error('Failed to add this food', error);
@@ -58,7 +76,12 @@ export const addFood = (food) => {
 export const updateFood = (food, id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/ingredients/${id}`, food);
+      const token = localStorage.getItem(TOKEN)
+      const { data } = await axios.put(`/api/ingredients/${id}`, food, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_updateFood(data));
     } catch (error) {
       console.error('Failed to update this food', error);

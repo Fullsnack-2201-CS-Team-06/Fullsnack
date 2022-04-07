@@ -2,9 +2,10 @@ const router = require('express').Router();
 module.exports = router;
 const PantryIngredient = require('../db/models/PantryIngredient');
 const Ingredient = require('../db/models/Ingredient');
+const authenticateToken = require('../auth/authenticateToken')
 
 // GET /api/pantryIngredients?pantryId=1
-router.get('/', async (req, res, next) => {
+router.get('/', authenticateToken, async (req, res, next) => {
   try {
     const pantryIngredients = await PantryIngredient.findAll({
       where: { pantryId: req.query.pantryId },
@@ -20,7 +21,7 @@ router.get('/', async (req, res, next) => {
 });
 
 // POST /api/pantryIngredient
-router.post('/', async (req, res, next) => {
+router.post('/', authenticateToken, async (req, res, next) => {
   try {
     const { pantryQty } = req.body;
     if (pantryQty === undefined) {
@@ -36,7 +37,7 @@ router.post('/', async (req, res, next) => {
 });
 
 // PUT /api/pantryIngredients/:id
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', authenticateToken, async (req, res, next) => {
   try {
     const pantryIngredient = await PantryIngredient.findByPk(req.params.id);
     if (!pantryIngredient) {
@@ -56,7 +57,7 @@ router.put('/:id', async (req, res, next) => {
 });
 
 // DELETE /api/pantryIngredients/:id
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', authenticateToken, async (req, res, next) => {
   try {
     const pantryIngredient = await PantryIngredient.findByPk(req.params.id);
     if (!pantryIngredient) {
