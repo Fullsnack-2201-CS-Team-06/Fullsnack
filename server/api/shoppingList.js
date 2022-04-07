@@ -5,9 +5,10 @@ const Ingredient = require('../db/models/Ingredient');
 const ShoppingList = require('../db/models/ShoppingList');
 const ShoppingListIngredient = require('../db/models/ShoppingListIngredient');
 const Pantry = require('../db/models/Pantry')
+const authenticateToken = require('../auth/authenticateToken')
 
 //GET /api/shoppingList/all?userId=1 status: closed
-router.get('/all', async (req, res, next) => {
+router.get('/all', authenticateToken, async (req, res, next) => {
   try {
     const shoppingLists = await ShoppingList.findAll({
       where: { userId: req.query.userId, status: 'closed' },
@@ -23,7 +24,7 @@ router.get('/all', async (req, res, next) => {
 });
 
 //GET /api/shoppingList?userId=1 status: open
-router.get('/', async (req, res, next) => {
+router.get('/', authenticateToken, async (req, res, next) => {
   try {
     const shoppingList = await ShoppingList.findOne({
       where: { userId: req.query.userId, status: 'open' },
@@ -39,7 +40,7 @@ router.get('/', async (req, res, next) => {
 });
 
 //GET /api/shoppingList/:listId status: open
-router.get('/:listId', async (req, res, next) => {
+router.get('/:listId', authenticateToken, async (req, res, next) => {
   try {
     const shoppingList = await ShoppingList.findByPk(req.params.listId, {
       include: Ingredient,
@@ -54,7 +55,7 @@ router.get('/:listId', async (req, res, next) => {
 });
 
 //PUT /api/shoppingList?userId=1
-router.put('/', async (req, res, next) => {
+router.put('/', authenticateToken, async (req, res, next) => {
   try {
     //Find the user's current shopping list
     const shoppingList = await ShoppingList.findOne({
@@ -93,7 +94,7 @@ router.put('/', async (req, res, next) => {
 });
 
 // POST /api/shoppingList?userId=1
-router.post('/', async (req, res, next) => {
+router.post('/', authenticateToken, async (req, res, next) => {
   try {
     const shoppingList = await ShoppingList.findOne({
       where: { userId: req.query.userId, status: 'open' },
@@ -142,7 +143,7 @@ router.post('/', async (req, res, next) => {
 });
 
 // DELETE /api/shoppingList/:id
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', authenticateToken, async (req, res, next) => {
   try {
     const shoppingList = await ShoppingList.findByPk(req.params.id);
     if (!shoppingList) {
