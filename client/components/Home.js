@@ -5,7 +5,8 @@ import { fetchAllPantries } from '../store/pantries';
 import Visuals from './Visuals';
 import Visual2 from './Visual2';
 import VisualNutrition from './VisualNutrition';
-import VisualIngredientLineGraph from './VisualIngredientLineGraph';
+// import VisualIngredientLineGraph from './VisualIngredientLineGraph';
+import ListNutritionGraph from './ListNutritionGraph';
 import styles from './Home.module.css';
 import { Card } from 'react-bootstrap';
 
@@ -46,7 +47,8 @@ const Home = (props) => {
         </Card>
         <Card className={styles.chartCard}>
           <Card.Body>
-            <VisualIngredientLineGraph />
+            {/* <VisualIngredientLineGraph /> */}
+            <ListNutritionGraph />
           </Card.Body>
         </Card>
       </div>
